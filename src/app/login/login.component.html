@@ -1,0 +1,33 @@
+<div class="container-fluid">
+	<div class="d-flex bd-highlight mb-3 full-height">
+		<div class="align-self-center p-2 bd-highlight box">
+			<div class="body">
+				<div class="row">
+					<div class="col-12 text-center">
+
+					</div>
+				</div>
+				<div class="row ">
+					<div class="col-12">
+						<input id="logger" type="email" class="form-control" id="email" aria-label="Email" [value]="value"
+							   placeholder="{{!isNext? 'Enter email':'Enter Password'}}">
+					</div>
+					<div class="col-12 full-width">
+						<button class="btn btn-primary" (click)="checkEmail()"> {{!isNext ? "Suivant" : "Connect"}}</button>
+					</div>
+
+					<hr>
+					<div class="Separator">
+						<span class="textInSeparator">or</span>
+					</div>
+
+					<div class="col-12 full-width">
+						<button class="btn btn-ms" (click)="openRegister()"> S'inscrire</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+

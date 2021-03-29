@@ -1,0 +1,103 @@
+.emi {
+	background-image: url("/assets/EMI.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position-y: 27%;
+	border-radius: 5px;
+}
+
+time {
+	width: 100%;
+	overflow-x: scroll;
+	position: absolute;
+	right: 15%;
+}
+
+.time::-webkit-scrollbar {
+	visibility: hidden;
+
+}
+
+
+.dark {
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 30px 20px;
+	display: flex;
+	width: 100%;
+	border-radius: 5px;
+	font-size: 20px;
+}
+
+.btn-outline-primary{
+	color:#1b3868;
+	border-color: #1b3868;
+}
+.btn-outline-primary:hover{
+	color:white;
+	background: #1b3868;
+}
+
+.btn-type{
+	color: #1b3868;
+	border:2px solid #1b3868;
+	margin: 3px;
+}
+
+.btn-active{
+	color:white;
+	background: #1b3868;
+}
+
+.list-exams{
+	background-color: #1b3868;
+	padding: 30px 0 ;
+	margin-top: 30px;
+	border-radius: 5px;
+}
+.examCard{
+	margin:10px 0;
+	background-color: white;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.details{
+	position: absolute;
+	bottom: -2px;
+	left: 2%;
+	height: 40px;
+	width: 96%;
+	border-radius: 0 0 5px 5px;
+	padding-top: 8px;
+
+}
+
+.animate:hover{
+	color:#1b3868;
+	background-color: white;
+	border-top-color: #1b3868;
+	transition: color,background-color 400ms;
+	transition-delay: 0ms;
+}
+
+@keyframes reveal {
+	from {
+		clip-path: inset(0 100% 0 0 );
+	}
+	to {
+		clip-path: inset(0 0 0 0);
+	}
+}
+
+.animate{
+	color:white;
+	background-color: #1b3868;
+	border: 2px solid white;
+	cursor: pointer;
+	animation: reveal 0.5s forwards;
+}
+
+.spliter{
+	border-left:solid 2px black;
+	padding-left:20px;
+}

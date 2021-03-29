@@ -1,0 +1,125 @@
+<div class="container-fluid">
+	<div class="d-flex bd-highlight mb-3 full-height">
+		<div class="align-self-center p-2 bd-highlight box">
+			<div class="logos">
+				<div>
+					<a href="https://www.emi.ac.ma" target="_blank">
+						<img class="emi-logo" src="assets/logo-emi.png">
+					</a>
+				</div>
+				<div>
+					<img class="logo" routerLink="/" src="assets/logo_transparent.png">
+				</div>
+			</div>
+			<div class="bottom-text text-center">
+
+				<h2>Inscription</h2>
+			</div>
+			<div class="body">
+				<div class="top-hover">
+					<h5>Vous êtes?</h5>
+				</div>
+				<div class="buttons">
+					<div class="btn-toolbar" role="toolbar" aria-label="Login Type">
+						<div class="btn-group" role="group" aria-label="group">
+							<div class="row">
+								<div class="col-12 col-md-6">
+									<button type="button" (click)="resetProf(true)" [class.btn-prof-sel]="!isProf"
+													[class.btn-prof]="isProf" class="btn">Professeur
+									</button>
+								</div>
+								<div class="col-12 col-md-6">
+									<button type="button" (click)="resetProf(false)" [class.btn-stu-sel]="isProf"
+													[class.btn-stu]="!isProf" class="btn">Etudiant
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mseparator">
+
+				</div>
+				<div class="row">
+
+					<div class="col-12 col-md-6 input-dialog">
+						<input [(ngModel)]="credentials.prenom" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
+
+									 type="text" class="form-control" aria-label="Prenom"
+									 placeholder="Prenom">
+					</div>
+					<div class="col-12 col-md-6 input-dialog">
+						<input [(ngModel)]="credentials.nom" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
+									 type="text" class="form-control" aria-label="Nom"
+									 placeholder="Nom">
+					</div>
+					<div class="col-12 input-dialog">
+						<input [(ngModel)]="credentials.email" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
+									 type="email" class="form-control" aria-label="Email" [class.malert]="validateEmail()"
+									 placeholder="{{isProf? 'x@emi.ac.ma':'x@student.emi.ac.ma'}}">
+					</div>
+					<div class="col-12 input-dialog">
+						<input [(ngModel)]="credentials.password" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
+									 type="{{viewPassword? 'text': 'password'}}"  class="form-control" aria-label="password" [class.malert]="validatePassword()"
+									 placeholder="Mot de passe">
+						<div class="iconShowPwd" (click)="viewPassword=!viewPassword" >
+							<fa-icon size="lg" [icon]="!viewPassword? icons.eye:icons.noeye" ></fa-icon>
+						</div>
+
+					</div>
+					<div class="col-12 input-dialog">
+						<input [(ngModel)]="credentials.confPassword" [class.borders-prof]="!isProf"
+									 [class.borders-student]="isProf"
+									 type="{{viewPassword? 'text': 'password'}}" class="form-control" aria-label="passwordConf" [class.malert]="validatePassword()"
+									 placeholder="Confirmer Mot de passe">
+						<div class="iconShowPwd" (click)="viewPassword=!viewPassword" >
+							<fa-icon size="lg" [icon]="!viewPassword? icons.eye:icons.noeye" ></fa-icon>
+						</div>
+					</div>
+					<ng-container *ngIf="!isProf">
+						<div class="col input-dialog">
+							<select class="custom-select mr-sm-2" id="inlineFormCustomSelect"  [(ngModel)]="credentials.promotion" [class.malert]="validate('promo')">
+								<option selected>Promotion...</option>
+								<option *ngFor="let date of getDates()">{{date}}</option>
+							</select>
+						</div>
+						<div class="col input-dialog">
+
+							<select class="custom-select mr-sm-2" id="inlineFormCustomSelect2" [(ngModel)]="credentials.genie" [class.malert]="validate('genie')">
+								<option selected>Génie...</option>
+								<option>Civil</option>
+								<option>Electrique</option>
+								<option>Industriel</option>
+								<option>Informatique</option>
+								<option>Mécanique</option>
+								<option>Minéral</option>
+								<option>MIS</option>
+								<option>Procédés</option>
+								<option>RT</option>
+							</select>
+						</div>
+						<div class="col input-dialog">
+							<select class="custom-select mr-sm-2" id="inlineFormCustomSelect3"  [(ngModel)]="credentials.groupe" [class.malert]="validate('groupe')">
+								<option selected>Groupe...</option>
+								<option value="0">A</option>
+								<option value="A">B</option>
+							</select>
+						</div>
+					</ng-container>
+
+					<div class="col-12 full-width">
+						<button [class.borders-prof]="!isProf" [class.borders-student]="isProf" (click)="signUp()"
+										class="btn btn-next">S'inscrire</button>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="bottom-text text-center">
+				<h5>Vous avez déjà un compte? <strong style="color:{{isProf? '#1ab5b4':'#1b3868'}}" routerLink="/login">Connectez vous</strong></h5>
+			</div>
+		</div>
+	</div>
+
+</div>
+

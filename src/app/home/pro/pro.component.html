@@ -1,0 +1,169 @@
+<div class="container-fluid">
+
+
+	<div class="fill mb-3 text-white text-center d-none">
+		<h2 class="">Bonjour {{fullName}}</h2>
+		<h4 style="color: #e3a855">{{time}}</h4>
+	</div>
+
+
+	<div class="exams-parent m-md-4">
+		<h2 class="text-center title">Examens Proches</h2>
+		<div class="row text-center exams-holder mb-5">
+			<div class="col exam-element" *ngFor="let exam of closeExams">
+				<div class="row text-left">
+					<div class="col-12 mb-2 text-center">
+						<h2>{{exam.title}}</h2>
+					</div>
+					<div class="col-12 col-md-6">
+						<div class="icon-holder">
+							<fa-icon [icon]="icons.course"></fa-icon>
+						</div>
+						Informatique
+					</div>
+
+					<div class="col-12 col-md-6">
+						<div class="icon-holder">
+							<fa-icon [icon]="icons.book"></fa-icon>
+						</div>
+						matière
+					</div>
+
+					<div class="col-12 col-md-6">
+						<div class="icon-holder">
+							<fa-icon [icon]="icons.students"></fa-icon>
+						</div>
+						A,B
+					</div>
+					<div class="col-12 col-md-6">
+						<div class="icon-holder">
+							<fa-icon [icon]="icons.promo"></fa-icon>
+						</div>
+						2023
+					</div>
+
+
+					<div class="col-12 col-md-6 ">
+						<div class="icon-holder">
+							<fa-icon [icon]="icons.length"></fa-icon>
+						</div>
+						{{getLength(exam.length)}}</div>
+					<div class="col-12 col-md-6">
+						<div class="icon-holder">
+							<fa-icon [icon]="icons.day"></fa-icon>
+						</div>
+						{{getDateFormat(exam.date)}} @ {{getJoinTime(exam.startTime)}}</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row m-md-4 exams-parent ">
+		<div class="title">
+			<h2 class="text-center">Calendrier</h2>
+		</div>
+		<div class="col-md-4 offset-md-1 m-3">
+			<div class="btn-group">
+				<div
+					class="btn btn-primary pl-4 pr-4"
+					mwlCalendarPreviousView
+					[view]="view"
+					[(viewDate)]="viewDate"
+				>
+					<fa-icon [icon]="icons.previous"></fa-icon>
+				</div>
+				<div
+					class="btn btn-outline-warning pl-4 pr-4"
+					mwlCalendarToday
+					[(viewDate)]="viewDate"
+				>
+					<fa-icon [icon]="icons.now"></fa-icon>
+				</div>
+				<div
+					class="btn btn-primary pl-4 pr-4"
+					mwlCalendarNextView
+					[view]="view"
+					[(viewDate)]="viewDate"
+				>
+					<fa-icon [icon]="icons.next"></fa-icon>
+				</div>
+			</div>
+		</div>
+		<div class="col align-self-center">
+			<h3>
+				{{showDate()}}
+			</h3>
+		</div>
+		<div class="col-md-4 offset-md-1 m-3">
+			<div class="btn-group float-right">
+				<button class="btn btn-primary" (click)="changeData()"><fa-icon [icon]="calendarDetails.startHour==8? icons.add:icons.minus"></fa-icon> {{calendarDetails.startHour==8? 'Etendre':'Réduire'}} le calendrier</button>
+			</div>
+		</div>
+
+
+		<div class="col-12">
+			<mwl-calendar-week-view
+				[events]="exams"
+				[viewDate]="viewDate"
+				[eventTemplate]="template"
+				[dayStartHour]="calendarDetails.startHour"
+				[dayEndHour]="calendarDetails.endHour"
+				[excludeDays]="calendarDetails.exclude"
+			>
+
+			</mwl-calendar-week-view>
+		</div>
+	</div>
+
+
+	<ng-template #template let-weekEvent="weekEvent" let-locale="locale"
+	>
+
+
+		<div class="cal-event" (click)="eventClicked(weekEvent)">
+			<div class="row">
+				<div class="col">
+					<strong>Titre: </strong> <span> {{weekEvent.event.title}}</span>
+				</div>
+				<div class="col">
+					<strong>Durée: </strong> <span> {{weekEvent.event.length}}</span>
+				</div>
+				<div class="col">
+					<strong>Pour: </strong> <span> {{weekEvent.event.class.speciality}} {{weekEvent.event.class.promo}}</span>
+				</div>
+				<div class="col">
+					<strong>Groupes: </strong> <span> {{showGroups(weekEvent.event.class.groups)}}</span>
+				</div>
+			</div>
+		</div>
+
+	</ng-template>
+
+	<!--<ng-template #template let-weekEvent="weekEvent" let-column="column" let-locale="locale" let-eventClicked="eventClicked">
+		<div class="cal-event" (mwlClick)="eventClicked.emit({ event: weekEvent.event })">
+			{{column.events[0].event.title}}<br>
+			{{show(column)}}
+			ok
+		</div>
+	</ng-template>-->
+
+</div>
+
+<div class="leftButton ">
+	<div class="toggler">
+		<button class="btn">
+			<fa-icon [icon]="icons.add" size="2x"></fa-icon>
+		</button>
+	</div>
+	<div class="buttons  d-block text-center">
+		<strong>Nouveau</strong>
+		<button class="btn d-block" routerLink="/exams/newExam">
+			 <fa-icon [icon]="icons.exam" ></fa-icon> Examen
+		</button>
+		<button class="btn"routerLink="/newGroup">
+			<fa-icon [icon]="icons.students" ></fa-icon> Groupe
+		</button>
+	</div>
+</div>

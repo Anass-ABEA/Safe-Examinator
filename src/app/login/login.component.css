@@ -1,0 +1,88 @@
+
+.container-fluid {
+	height: 100%;
+	width: 100%;
+	vertical-align: middle;
+}
+
+.box {
+	width: 100%;
+}
+
+
+.full-height {
+	height: 100%;
+}
+
+.body {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 500px;
+	padding: 50px;
+	border: solid 1px #cbd2d6;
+	border-radius: 5px;
+
+}
+
+.full-width {
+	width: 100%;
+}
+
+.full-width button {
+	width: 100%;
+	padding: 9px;
+	font-size: 20px;
+	margin: 10px 0;
+}
+
+.full-width button:hover {
+	margin: 5px 5px;
+	padding: 14px;
+	transition: 0.5s;
+}
+
+.form-control {
+	margin: 30px 0;
+}
+
+.Separator {
+	border-top: 1px solid #cbd2d6;
+	position: relative;
+	margin: 25px 0 10px;
+	text-align: center;
+	width: 100%;
+}
+
+.textInSeparator {
+	background-color: #fff;
+	padding: 0 .5em;
+	position: relative;
+	color: #6c7378;
+	top: -.7em;
+}
+
+.btn-ms {
+	background: #cacaca;
+	color: #000000;
+}
+
+.logo-container {
+	margin: 0 auto;
+	padding: 20px;
+	border: #cbd2d6 1px solid;
+	width: fit-content;
+	height: fit-content;
+	border-radius: 5px;
+}
+
+.logo-container img {
+	max-width: 250px;
+	max-height: 250px;
+	width: 80%;
+}
+
+.form-control {
+	border: #cbd2d6 1px solid;
+	padding: 25px 15px;
+}
+

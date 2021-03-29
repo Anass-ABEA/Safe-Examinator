@@ -1,0 +1,54 @@
+<div class="container-fluid">
+	<div class="d-flex bd-highlight mb-3 full-height">
+		<div class="align-self-center p-2 bd-highlight box">
+			<div class="logos">
+				<div>
+					<a href="https://www.emi.ac.ma" target="_blank">
+						<img class="emi-logo" src="assets/logo-emi.png">
+					</a>
+				</div>
+				<div>
+					<img class="logo" routerLink="/" src="assets/logo_transparent.png">
+				</div>
+			</div>
+			<div class="bottom-text text-center">
+				<h3>S'authentifier</h3>
+			</div>
+			<div class="body">
+
+				<div class="row">
+					<div class="col-12 text-center icon ">
+						<fa-icon [icon]='getIcon()' [class.d-none]="isProf==null" style="color:{{isProf? '#1ab5b4':'#1b3868'}}"
+										 size='7x'></fa-icon>
+					</div>
+					<div class="col-12 input-dialog">
+						<input [(ngModel)]="value" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
+									 (ngModelChange)="contentChanged()"
+									 [class.wrongCred]="wrongList.email || wrongList.password"
+									 type="{{isPassword?'password':'email'}}" class="form-control" id="email" aria-label="Email"
+									 placeholder="{{isPassword?  'Mot de passe': 'Email'}}">
+						<div *ngIf="isPassword">
+							<h5><strong style="color:{{isProf? '#1ab5b4':'#1b3868'}};cursor: pointer" routerLink="/login">Mot de pass
+								oublié?</strong></h5>
+						</div>
+						<div *ngIf="wrongList.email">
+							<h5> Ce compte n'existe pas! <strong style="color:red;cursor: pointer" routerLink="/signup">Créer un
+								nouveau compte
+							</strong></h5>
+						</div>
+					</div>
+					<div class="col-12 full-width">
+						<button [class.borders-prof]="!isProf" [class.borders-student]="isProf" (click)="nextButton()"
+										[class.disabled]="checkEmail()"
+										class="btn btn-next">{{isPassword ? 'Se connecter' : 'Suivant'}}</button>
+					</div>
+				</div>
+			</div>
+			<div class="bottom-text text-center">
+				<h5>Vous n'avez pas un compte? <strong routerLink="/signup" style="color:{{isProf ? '#1ab5b4':'#1b3868'}}">Inscrivez
+					vous</strong></h5>
+			</div>
+		</div>
+	</div>
+</div>
+

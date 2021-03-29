@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-md navbar-light w-100">
+	<a class="navbar-brand" href="#" routerLink="/">
+		<div class="logo">
+			<a href="/" target="_blank"><img src="assets/logo.png"></a>
+		</div>
+	</a>
+	<a class="navbar-brand" href="/" routerLink="/" >
+		<div class="col name align-self-center">
+			<h3>{{titleGenerator()}}</h3>
+		</div>
+	</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+					aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+		<div class="form-inline my-2 my-lg-0 ml-auto text-center">
+			<button class="btn element-nav" [class.btn-actie]="active==0" routerLink="/"> <fa-icon [icon]="icons.home"></fa-icon> Acceuil</button>
+			<button class="btn element-nav" [class.btn-actie]="active==1"  routerLink="/exams/past_exams"> <fa-icon [icon]="icons.test"></fa-icon>  Mes Examens</button>
+			<button class="btn element-nav" [class.btn-actie]="active==2"  routerLink="/results"> <fa-icon [icon]="icons.devoirs"></fa-icon>  Mes Résultats</button>
+			<ul class="navbar-nav">
+				<li class="nav-item dropdown">
+					<a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown"> <fa-icon [icon]="icons.user"></fa-icon> {{userName}}  </a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item disabled text-center" href="#" >{{userName}}</a></li>
+						<li><a class="dropdown-item" href="/profile" disabled="true"> <fa-icon [icon]="icons.user"></fa-icon> Mon Profile</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><a class="dropdown-item" href="#" (click)="disconnect()"><fa-icon [icon]="icons.disconnect"></fa-icon>  Se Déconnecter </a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>

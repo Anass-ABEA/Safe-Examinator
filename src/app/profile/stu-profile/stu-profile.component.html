@@ -1,0 +1,115 @@
+<div class="container-fluid">
+	<div class="row pt-5 myMargin">
+		<div class="col-12 col-md-6 col-lg-4 col-xl-3 p-2 text-white">
+			<div class="row left-Part p-3">
+				<div class="col-12 text-center">
+					<img class="image" src="assets/person.png">
+				</div>
+				<div class="col-12 text-center pt-2 pb-5">
+					John <strong>DOE</strong>
+				</div>
+				<div class="col-12">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 c col-md-12">
+							<strong>Promotion:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-6 c col-md-12 ">
+							<span>{{data.year}}</span>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-12 ">
+							<strong>Génie:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-6 c col-md-12 ">
+							<span>{{data.genie}}</span>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 c col-md-12 ">
+							<strong>Groupe:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-6 c col-md-12 ">
+							<span>{{data.groupe}}</span>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 c col-md-12 ">
+							<strong>Email:</strong>
+						</div>
+						<div class="col-xs-12 col-sm-6 c col-md-12 ">
+							<span>{{data.email}}</span>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-md-6 col-lg-8 col-xl-9 p-2 p-lg-1">
+			<div class="row  p-lg-3">
+
+
+				<div class="col-md-10 offset-md-1 col-12 offset-0 p-3 pt-5 pb-5 personal-info">
+					<div class="row">
+						<div class="col-12 text-center">
+							<h2>Informations personelles</h2>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-6">
+							<label for="formGroupExampleInput">Nom</label>
+							<input type="text" id="formGroupExampleInput" class="form-control" placeholder="Nom" [value]="data.lname"
+										 disabled>
+						</div>
+						<div class="col-6">
+							<label for="formGroupExampleInputx">Prénom</label>
+							<input type="text" class="form-control" id="formGroupExampleInputx" placeholder="Prénom"
+										 [value]="data.fname" disabled>
+						</div>
+
+						<div class="col-6 col-lg-4">
+							<label for="part21">Génie</label>
+							<input type="text" class="form-control" id="part21" placeholder="Génie" [value]="data.genie" disabled>
+						</div>
+						<div class="col-6 col-lg-4">
+							<label for="part22">Promotion</label>
+							<input type="text" class="form-control" id="part22" placeholder="Année" [value]="data.year" disabled>
+						</div>
+						<div class="col-6 col-lg-4">
+							<label for="part23">Groupe</label>
+							<input type="text" class="form-control" id="part23" placeholder="Groupe" [value]="data.groupe" disabled>
+						</div>
+
+						<div class="col-6 col-lg-4  offset-lg-4">
+							<label for="part23">Email</label>
+							<input type="text" class="form-control" id="part31" placeholder="Email" [value]="data.email" disabled>
+						</div>
+
+					</div>
+					<div class="form-group row">
+						<h4 class="text-center col-12">Mot de passe</h4>
+						<div class="col">
+							<input type="password" class="form-control" placeholder="Ancien Mot de passe" [disabled]="verified" [class.text-success]="verified"
+										 [(ngModel)]="credentials.passwordOld" (ngModelChange)="passChange()">
+						</div>
+						<div class="col" *ngIf="verified">
+							<input type="password" class="form-control" placeholder="Nouveau Mot de passe"
+										 [(ngModel)]="credentials.passwordNew">
+						</div>
+						<div class="col" *ngIf="verified">
+							<input type="password" class="form-control" placeholder="Confirmation du nouveau mot de passe"
+										 [(ngModel)]="credentials.passwordNewCOnf">
+						</div>
+
+
+					</div>
+					<div class="row">
+						<div class="col-12 col-md-6 col-lg-4 offset-md-3 offset-lg-4 text-center">
+							<button class="btn btn-success w-100" [disabled]="verify()"  (click)="CheckPassword()">{{verified? 'Enregistrer':'Vérifier'}}</button>
+						</div>
+						<div class="col-10 offset-1 bg-success text-white mt-4 p-2 text-center" *ngIf="confirmChange">
+							<h3>Votre Mot de pass a été changé correctement. </h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

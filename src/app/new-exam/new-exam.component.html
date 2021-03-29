@@ -1,0 +1,387 @@
+<app-header></app-header>
+
+<div class="container">
+	<div class="row p-md-3">
+		<div class="col-12 text-center">
+			<h2>Nouvel Examen</h2>
+		</div>
+	</div>
+	<ng-container *ngIf="firstPage">
+		<div *animIf="firstPage; info: { startAnim: 'fadeIn', endAnim: 'fadeOutTopLeft', time: 500 }"
+				 class="row  rowItem p-md-3">
+			<div class="col-12">
+				<h4 class="text-center">
+					<fa-icon [icon]="icons.info"></fa-icon>
+					Informations relatives à l'examen
+				</h4>
+				<div class="row">
+					<label class="col-12">
+						<strong>Nom de l'examen</strong>
+						<input type="text" class="form-control" [(ngModel)]="formValues.examName" placeholder="Nom de l'examen">
+					</label>
+
+					<!--<label class="col-12">
+						Nombre de questions à afficher (à la fin)
+						<input type="number"  class="form-control">
+					</label>-->
+
+					<label class="col-12 col-md-6 col-lg-4">
+						<strong>Date de l'examen</strong> {{getDateSelected()}}
+						<input type="date" class="form-control" [(ngModel)]="formValues.date">
+
+					</label>
+					<label class="col-12 col-md-6 col-lg-4">
+						<strong>Heure de début de l'examen</strong>
+						<input type="time" class="form-control" [(ngModel)]="formValues.time">
+					</label>
+
+					<label class="col-12 col-lg-4">
+						<strong>Durée de l'examen</strong>
+						<div class="d-flex row m-0">
+							<input type="number" class="form-control col-4" placeholder="heures" min="0"
+										 [(ngModel)]="formValues.length.h">
+							<span class="align-self-center col-2"> h </span>
+							<input type="number" class="form-control col-4" placeholder="minutes" min="0"
+										 [(ngModel)]="formValues.length.m">
+							<span class="align-self-center col-2">min</span>
+						</div>
+					</label>
+
+					<label class="col-12 col-md-6">
+						<strong>Nombre d'essais possible</strong>
+						<input type="number" min="1" class="form-control" [(ngModel)]="formValues.tries">
+					</label>
+
+					<label class="col-12 col-md-6">
+						<strong>Promotion</strong>
+						<select class="form-control custom-select" [(ngModel)]="formValues.promo">
+							<option>--</option>
+							<option *ngFor="let prom of promotions">{{prom}} </option>
+						</select>
+					</label>
+					<label class="col-12 col-md-6">
+						<strong>Génie</strong>
+
+						<select class="form-control custom-select" [(ngModel)]="elementGen" (ngModelChange)="genieChanged()"
+										multiple>
+							<option *ngFor="let gen of genie">{{gen}} </option>
+						</select>
+					</label>
+					<label class="col-12 col-md-6" *ngIf="selectedgenie.length>0">
+						<strong>Génies selectionnées</strong>
+						<ng-container *ngFor="let gen of selectedgenie; let i = index">
+							<div *animIf="true; info: { startAnim: 'bounceIn', endAnim: 'bounceOut', time: 500 }"
+									 class="element-selected ">
+								<span style="vertical-align: -webkit-baseline-middle;">{{gen}}</span>
+								<button class="btn btn-danger float-right" (click)="deleteGenie(gen)">
+									<fa-icon [icon]="icons.trash"></fa-icon>
+								</button>
+							</div>
+						</ng-container>
+
+					</label>
+					<label class="col-12 col-md-6 ">
+						<strong>Groupe</strong>
+						<button class="btn ml-2 myButton float-right" routerLink="/newGroup">
+							<fa-icon [icon]="icons.add"></fa-icon>
+							Créer nouveau Groupe
+						</button>
+						<select class="form-control custom-select" [(ngModel)]="elementGrp" (ngModelChange)="groupChanged()"
+										multiple>
+							<option *ngFor="let grp of groups">{{grp}} </option>
+						</select>
+					</label>
+					<label class="col-12 col-md-6 " *ngIf="selectedGroups.length>0">
+						<strong>Groupes Selectionnées</strong>
+						<ng-container *ngFor="let gen of selectedGroups; let i = index">
+							<div *animIf="true; info: { startAnim: 'bounceIn', endAnim: 'bounceOut', time: 500 }"
+									 class="element-selected ">
+								<span style="vertical-align: -webkit-baseline-middle;">{{gen}}</span>
+								<button class="btn btn-danger float-right" (click)="deleteGroup(gen)">
+									<fa-icon [icon]="icons.trash"></fa-icon>
+								</button>
+							</div>
+						</ng-container>
+					</label>
+
+
+					<div class="col-12">
+						<h3 class="text-center mt-4">
+							<fa-icon [icon]="icons.options"></fa-icon>
+							Préférences
+						</h3>
+					</div>
+					<div class="col-12 tooglers m-bg ">
+						<div class="align-self-center d-inline-block w-100">
+							<label class="p-2 m-0 w-100" for="ok">Afficher Note à la fin</label>
+						</div>
+						<label class="switch d-inline-flex float-right ">
+							<input type="checkbox" [(ngModel)]="booleans.mark" id="ok">
+							<span class="slider round"></span>
+						</label>
+					</div>
+
+					<div class="col-12 tooglers m-bg  mt-2">
+						<div class="align-self-center d-inline-block w-100">
+							<label class="p-2 m-0 w-100" for="ok1">Afficher un rapport à la fin</label>
+						</div>
+						<label class="switch d-inline-flex float-right ">
+							<input type="checkbox" [(ngModel)]="booleans.finalReport" id="ok1">
+							<span class="slider round"></span>
+						</label>
+					</div>
+
+					<div class="col-12 tooglers m-bg  mt-2">
+						<div class="align-self-center d-inline-block w-100">
+							<label class="p-2 m-0 w-100" for="ok2">Activer le feedback des étudiants</label>
+						</div>
+						<label class="switch d-inline-flex float-right ">
+							<input type="checkbox" [(ngModel)]="booleans.feedback" id="ok2">
+							<span class="slider round"></span>
+						</label>
+					</div>
+
+					<div class="col-12 tooglers m-bg  mt-2">
+						<div class="align-self-center d-inline-block w-100">
+							<label class="p-2 m-0 w-100" for="ok4">Afficher les réponses correctes à la fin</label>
+						</div>
+						<label class="switch d-inline-flex float-right ">
+							<input type="checkbox" [(ngModel)]="booleans.correctAns" id="ok4">
+							<span class="slider round"></span>
+						</label>
+					</div>
+
+					<div class="col-12 tooglers m-bg  mt-2">
+						<div class="align-self-center d-inline-block w-100">
+							<label class="p-2 m-0 w-100" for="ok3">Question aléatoires</label>
+						</div>
+						<label class="switch d-inline-flex float-right ">
+							<input type="checkbox" [(ngModel)]="booleans.random" id="ok3">
+							<span class="slider round"></span>
+						</label>
+					</div>
+
+					<div class="col-12 tooglers m-bg  mt-2">
+						<div class="align-self-center d-inline-block w-100">
+							<label class="p-2 m-0 w-100" for="ok6">réponses aléatoire</label>
+						</div>
+						<label class="switch d-inline-flex float-right ">
+							<input type="checkbox" [(ngModel)]="booleans.randomRep" id="ok6">
+							<span class="slider round"></span>
+						</label>
+					</div>
+
+					<div class="col-12 tooglers m-bg  mt-2">
+						<div class="align-self-center d-inline-block w-100">
+							<label class="p-2 m-0 w-100" for="ok5">Détecteur de fraude</label>
+						</div>
+						<label class="switch d-inline-flex float-right ">
+							<input type="checkbox" [(ngModel)]="booleans.fraude" id="ok5">
+							<span class="slider round"></span>
+						</label>
+					</div>
+
+					<div class="col-12 tooglers m-bg  mt-2">
+						<div class="align-self-center d-inline-block w-100">
+							<label class="p-2 m-0 w-100" for="ok8">Système canadien</label>
+						</div>
+						<label class="switch d-inline-flex float-right ">
+							<input type="checkbox" [(ngModel)]="booleans.canadien" id="ok8">
+							<span class="slider round"></span>
+						</label>
+					</div>
+
+					<div class="col-12 tooglers m-bg  mt-2">
+						<div class="align-self-center d-inline-block w-100">
+							<label class="p-2 m-0 w-100" for="ok7">Compter une partie de la question</label>
+						</div>
+						<label class="switch d-inline-flex float-right ">
+							<input type="checkbox" [(ngModel)]="booleans.goodgood" id="ok7">
+							<span class="slider round"></span>
+						</label>
+					</div>
+
+
+					<div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-4 text-center mt-4">
+						<button class="btn w-100 next-btn bg-success" (click)="scrollTop();firstPage = false;">Suivant
+							<fa-icon [icon]="icons.next"></fa-icon>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-container>
+
+	<div class="row rowItem p-md-3" *ngIf="!firstPage && !thirdPage">
+		<button class="btn return-btn " (click)="firstPage = true">
+			<fa-icon [icon]="icons.back"></fa-icon>
+			Retour
+		</button>
+
+		<div class="col text-center">
+			<h4>Questions et réponses de l'examen</h4>
+		</div>
+
+		<button class="btn btn-success save-btn float-right" (click)="thirdPage = true;">
+
+			Suivant
+			<fa-icon [icon]="icons.next"></fa-icon>
+		</button>
+	</div>
+
+	<div class="row p-md-3 mt-3" *ngIf="!firstPage && !thirdPage">
+		<div class="col-12 col-md-10 offset-1 col-lg-8 offset-lg-2">
+			<div class="row rowItem p-md-3 mb-md-5" *ngFor="let qst of questionList;let i = index;">
+				<div *animIf="true; info: { startAnim: 'flipInX', endAnim: 'fadeOutTopLeft', time: 500 }" class="col-12">
+					<div class="separator-bottom row" style="margin-top: 8px">
+						<div class="col">
+							<textarea class="form-control" placeholder="{{i+1}} - Question"
+												[(ngModel)]="questionList[i].body"></textarea>
+						</div>
+						<div class="align-self-center">
+							<button class="btn questionType" data-toggle="modal" data-target="#questionType"
+											(click)="selectedQuestion = i">
+								<fa-icon [icon]="questionsIcons[qst.type]"></fa-icon>
+								{{questionsText[qst.type]}}
+							</button>
+						</div>
+					</div>
+				</div>
+				<div *animIf="true; info: { startAnim: 'flipInX', endAnim: 'fadeOutTopLeft', time: 500 }" class="col-12">
+
+					<div class="row p-md-2" *ngFor="let answer of qst.answers;let j = index;">
+						<div class="text-center" style="cursor: auto;width: 70px;padding: 6px 0"
+								 *ngIf="qst.type==='single' || qst.type ==='multiple'">
+							<!--<fa-icon [icon]="questionsIcons[qst.type]" style="color:#1b3868;"></fa-icon>-->
+							<span [class.text-success]="answer.isCorrect"
+										[class.text-danger]="!answer.isCorrect">{{answer.isCorrect ? 'correct' : 'incorrect'}}</span>
+						</div>
+						<ng-container *ngIf="qst.type==='long'">
+							<div class="col">
+								<textarea class="form-control" disabled placeholder="réponse longue de l'étudiant"></textarea>
+							</div>
+						</ng-container>
+
+						<ng-container *ngIf="qst.type==='short'">
+							<div class="col">
+								<input type="text" class="form-control" disabled placeholder="réponse courte de l'étudiant"/>
+							</div>
+						</ng-container>
+
+						<ng-container *ngIf="qst.type==='file'">
+							<div class="col">
+								<input type="file" class="form-control" disabled/>
+							</div>
+						</ng-container>
+
+						<div class="col" *ngIf="qst.type!=='long' && qst.type!=='short' &&  qst.type!=='file'">
+							<input class="form-control" type="text" [(ngModel)]="questionList[i].answers[j].body"
+										 placeholder="réponse" [class.correct-answer]="answer.isCorrect">
+						</div>
+						<ng-container *ngIf="checkValidity(i)">
+							<button class="btn" (click)="reverseCorrectness(i,j)" [class.active-correct]="answer.isCorrect"
+											data-toggle="tooltip" data-placement="bottom" title="Marquer la réponse comme correcte">
+								<fa-icon [icon]="icons.check" style="color:green;"></fa-icon>
+							</button>
+							<button class="btn" (click)="deleteQuestion(i,j)"
+											data-toggle="tooltip" data-placement="bottom" title="Supprimer la réponse">
+								<fa-icon [icon]="icons.close" style="color:red;"></fa-icon>
+							</button>
+						</ng-container>
+					</div>
+					<div class="row p-md-2" *ngIf="checkValidity(i)">
+						<div class="col-12 add-answer">
+							<button class="btn " (click)="addAnswer(i)">
+								<fa-icon [icon]="icons.add"></fa-icon>
+								Ajouter une autre réponse
+							</button>
+						</div>
+					</div>
+					<div class="buttons-hover">
+						<label class="text-muted">Note</label>
+						<input class="form-control" min="0" type="number" style="width: 70px" data-toggle="tooltip"
+									 data-placement="right" title="Note de la question" [(ngModel)]="qst.note">
+						<button class="btn" (click)="addNewQuestion(i+1)" data-toggle="tooltip" data-placement="right"
+										title="Ajouter une nouvelle question en-dessous">
+							<fa-icon [icon]="icons.add" style="color: green"></fa-icon>
+						</button>
+						<button class="btn" (click)="duplicate(i+1)" data-toggle="tooltip" data-placement="right"
+										title="Dupliquer la question">
+							<fa-icon [icon]="icons.duplicate" style="color:#1b3868"></fa-icon>
+						</button>
+						<button class="btn" *ngIf="i!=0" (click)="delete(i)" data-toggle="tooltip" data-placement="right"
+										title="Supprimer de la question">
+							<fa-icon [icon]="icons.trash" style="color: red"></fa-icon>
+						</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="row rowItem p-md-3" *ngIf="thirdPage">
+		<button class="btn return-btn " (click)="thirdPage=false">
+			<fa-icon [icon]="icons.back"></fa-icon>
+			Retour
+		</button>
+
+		<div class="col text-center">
+			<h4>Paramiètres finaux de l'examen</h4>
+		</div>
+
+		<button class="btn btn-success save-btn float-right" (click)="saveExam()">
+			<fa-icon [icon]="icons.save"></fa-icon>
+			Enregistrer
+		</button>
+
+		<div class="col-12 mt-3">
+			<div class="row">
+				<label class="col">
+					<strong>Nombre de questions à afficher</strong>
+					<span class="text-muted"> Nombre de questions: {{questionList.length}}</span>
+
+					<input type="number" class="form-control" min="1" max="{{questionList.length}}"
+								 [(ngModel)]="formValues.display" placeholder="Nombre de questions à afficher">
+				</label>
+				<div class="min-max align-self-end">
+					<button class="btn" (click)="formValues.display= '1'">min</button>
+					<button class="btn" (click)="formValues.display= ''+questionList.length">max</button>
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="backTop" *animIf="showScrollTop; info: { startAnim: 'bounceIn', endAnim: 'bounceOut', time: 500 }">
+	<button class="btn" (click)="scrollTop()">
+		<fa-icon [icon]="icons.up"></fa-icon>
+	</button>
+</div>
+
+<div class="modal fade" id="questionType" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		 aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Type de question</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<ng-container *ngFor="let key of keys">
+					<button class="btn buttonRespChoice w-100 text-left mb-2" (click)="setQuestionType(key)"
+									data-dismiss="modal">
+						<fa-icon [icon]="questionsIcons[key]"></fa-icon>
+						{{questionsText[key]}}</button>
+				</ng-container>
+			</div>
+
+		</div>
+	</div>
+</div>

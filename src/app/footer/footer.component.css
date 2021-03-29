@@ -1,0 +1,32 @@
+.mfooter{
+	margin-top: 20px;
+}
+.row{
+	background: #1b3868;
+	padding: 20px;
+	margin: 0 10px ;
+	border-radius: 5px 5px 0 0;
+}
+@media screen  and (max-width: 500px){
+	.row{
+		padding: 10px;
+	}
+}
+
+.mfooter * {
+	font-size: 20px;
+}
+
+.mfooter a {
+	color: #C6C6C6;
+}
+
+.mfooter img{
+	max-width: 250px;
+}
+.copyright div{
+	background-color: #08204e;
+	font-size: 20px;
+	padding: 10px;
+	margin: 0 10px ;
+}

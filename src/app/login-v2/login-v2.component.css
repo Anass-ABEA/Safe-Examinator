@@ -1,0 +1,194 @@
+button{
+	font-size: 25px;
+}
+
+.container-fluid {
+	min-height: 100%;
+	width: 100%;
+	vertical-align: middle;
+	background: #f8f8f8;
+	padding: 0;
+}
+
+.box {
+	width: 100%;
+
+}
+.box .body{
+	background: white;
+}
+
+.full-height {
+	height: 100%;
+}
+
+.body {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 500px;
+	padding: 50px;
+	border: solid 1px #cbd2d6;
+	border-radius: 5px;
+
+}
+
+.full-width {
+	width: 100%;
+}
+
+.full-width button {
+	width: 100%;
+	padding: 9px;
+	font-size: 20px;
+	margin: 10px 0;
+}
+
+
+.form-control {
+	margin: 30px 0;
+}
+
+.Separator {
+	border-top: 1px solid #cbd2d6;
+	position: relative;
+	margin: 25px 0 10px;
+	text-align: center;
+	width: 100%;
+}
+
+.textInSeparator {
+	background-color: #fff;
+	padding: 0 .5em;
+	position: relative;
+	color: #6c7378;
+	top: -.7em;
+}
+
+.btn-ms {
+	background: #cacaca;
+	color: #000000;
+}
+
+.logo-container {
+	margin: 0 auto;
+	padding: 20px;
+	border: #cbd2d6 1px solid;
+	width: fit-content;
+	height: fit-content;
+	border-radius: 5px;
+}
+
+.logo-container img {
+	max-width: 250px;
+	max-height: 250px;
+	width: 80%;
+}
+
+.form-control {
+	border: #cbd2d6 1px solid;
+	padding: 25px 15px;
+}
+
+.top-hover h5{
+	margin-left: 15px;
+	color: #6c7378;
+}
+
+
+.btn-group button,.row{
+	width: 100%;
+	margin:0;
+}
+
+.btn-group{
+	width: 100%;
+}
+
+
+
+.btn-stu{
+	background: #1b3868;
+	border: 3px solid #1b3868;
+	color:white;
+	border-radius: 5px;
+}
+
+.btn-prof{
+	background: #1ab5b4;
+	border: 3px solid #1ab5b4;
+	color:white;
+	border-radius: 5px;
+}
+
+.btn-stu-sel{
+	background: white;
+	border: 3px solid #1b3868;
+	color:#1b3868;
+	border-radius: 5px;
+}
+
+.btn-prof-sel{
+	background: white;
+	border: 3px solid #1ab5b4;
+	border-radius: 5px;
+	color:#1ab5b4;
+}
+
+.borders-prof{
+	border-color: #1b3868;
+	background: #F5F5F5;
+}
+.borders-student{
+	border-color: #1ab5b4;
+	background: #F5F5F5;
+}
+
+
+.full-width button{
+	border-width: 3px;
+}
+
+.bottom-text strong{
+	color: #1ab5b4;
+	cursor: pointer;
+}
+.bottom-text{
+	margin-top: 20px;
+}
+.icon{
+	margin-top:30px;
+}
+.logos{
+	width: 100%;
+	position: absolute;
+	top:0;
+	padding: 20px;
+}
+
+.logos div{
+	width: 50%;
+	height: 100px;
+	display: inline-block;
+}
+
+.logos div img{
+	height: 100%;
+	max-width: 100%;
+	object-fit: contain;
+}
+
+.logos div:last-child{
+	text-align: right;
+}
+@media screen and (max-width: 768px) {
+	.logos{
+		width: 100%;
+		position: relative;
+		padding: 20px;
+	}
+}
+
+.wrongCred{
+	border-color: red;
+	color:red;
+}

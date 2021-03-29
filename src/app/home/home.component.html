@@ -1,0 +1,5 @@
+<app-header></app-header>
+
+<app-disco *ngIf="!connected"></app-disco>
+<app-pro *ngIf="connected && isProf"></app-pro>
+<app-stu *ngIf="connected && !isProf"></app-stu>

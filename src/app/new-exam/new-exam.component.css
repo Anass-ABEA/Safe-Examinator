@@ -1,0 +1,200 @@
+.rowItem{
+	box-shadow: 0 0 6px 0 grey;
+
+	border-radius: 5px;
+
+}
+
+.element-selected{
+	background-color: #cacaca;
+	margin: 5px 0;
+	padding: 10px;
+	display: flow-root;
+	border-radius: 5px;
+}
+
+.switch {
+	position: absolute;
+	display: inline-block;
+	width: 40px;
+	height: 20px;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #de6800;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 20px;
+	width: 20px;
+	left: -1px;
+	bottom: 0px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .slider {
+	background-color: #0ba40e;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #0ba40e;
+}
+
+input:checked + .slider:before {
+	-webkit-transform: translateX(22px);
+	-ms-transform: translateX(22px);
+	transform: translateX(22px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
+.m-bg{
+	background-color: #f5f4f4;
+	border-radius: 50px;
+	border: solid 1px;
+}
+
+.next-btn{
+	border-radius: 50px;
+	color:white;
+}
+
+.return-btn{
+	background-color: #1b3868;
+	color: white;
+	border-radius: 50px;
+	z-index: 3;
+}
+
+.retrun-cotainer{
+	padding: 15px;
+	width: 50%;
+}
+.retrun-cotainer .return-btn{
+	width: 100%;
+}
+
+
+
+.separator-bottom{
+	border-bottom: solid 2px #cbcbcb;
+	padding-bottom: 10px;
+}
+
+.save-btn{
+	border-radius: 50px;
+}
+
+.add-answer{
+	padding-left: 15px;
+
+}
+.add-answer .btn{
+	background-color: #1b3868;
+	border-radius: 50px;
+	color: white;
+}
+
+.active-correct{
+	background-color: #0ba40e;
+}
+
+.active-correct fa-icon{
+	color:white!important;
+}
+
+.correct-answer{
+	color:#0ba40e;
+	border-color: #0ba40e;
+	border-width: 2px;
+}
+
+.buttonRespChoice{
+	border: solid 2px #1b3868;
+	border-radius: 50px;
+	color: #1b3868;
+}
+
+.buttonRespChoice:hover{
+	background-color: #1b3868;
+	color: white;
+}
+
+.buttons-hover{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	transform: translate(150%,11%);
+	display: grid;
+}
+
+.questionType{
+	background-color: #1b3868;
+	color: white;
+	border-radius: 56px;
+}
+
+.backTop{
+	position: fixed;
+	z-index: 300;
+	background-color: #1b3868;
+	border-radius: 50px;
+	width: fit-content;
+	height:fit-content;
+	right: 20px;
+	bottom: 50px;
+	border: solid 2px white;
+}
+
+.backTop fa-icon{
+	color: white;
+}
+
+
+.myButton{
+	background-color: #1b3868;
+	border-radius: 5px;
+	color:white;
+}
+
+.min-max button{
+	border: solid 2px #1b3868;
+	color: #1b3868;
+	margin-left:10px;
+}
+
+.min-max{
+	padding:10px 0;
+}
+
+.min-max button:hover{
+	color: white;
+	background-color: #1b3868;
+}

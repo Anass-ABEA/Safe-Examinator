@@ -1,0 +1,27 @@
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+.div-black{
+  background:#000;
+  color:#fff;
+  padding:30px;
+}
+
+html,body{
+  height: 100%;
+  margin: 0;
+
+}
+
+
+*{
+  font-family: HelveticaNeue,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.current{
+	background: #1b3868!important;
+	color: white!important;
+}
+
+
+html{
+	scroll-behavior: smooth;
+}

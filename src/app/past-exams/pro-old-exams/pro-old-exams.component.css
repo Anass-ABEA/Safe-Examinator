@@ -1,0 +1,85 @@
+.mborders {
+	border: solid #1b3868 2px;
+	border-radius: 5px;
+	background-color: #f7f7f7;
+	background-clip: content-box;
+	background-origin: content-box;
+}
+
+.element, .element .bg-white {
+	padding: 20px 10px;
+}
+
+.element .bg-white{
+	box-shadow: 0 0 14px 0 #86868670;
+
+}
+
+.element .bg-white {
+	border-radius: 5px;
+	padding-bottom: 50px;
+}
+
+.btn-type {
+	color: #1b3868;
+	border: 2px solid #1b3868;
+	margin: 3px;
+}
+
+.btn-active {
+	color: white;
+	background-color: #1b3868;
+	border: 2px solid #1b3868;
+	margin: 3px;
+}
+
+.bottom-element {
+	position: absolute;
+	bottom: 0;
+	left: 10px;
+	right: 10px;
+	transform: translateY(-45%);
+	border-radius: 0 0 5px 5px;
+}
+
+.bottom-element button {
+	width: 100%;
+	color: white;
+}
+
+.animate:hover {
+	color: #1b3868 !important;
+	background-color: white;
+	border-top-color: #1b3868;
+	transition: color, background-color 400ms;
+	transition-delay: 0ms;
+}
+
+@keyframes reveal {
+	from {
+		clip-path: inset(0 100% 0 0);
+	}
+	to {
+		clip-path: inset(0 0 0 0);
+	}
+}
+
+.animate {
+	color: white;
+	background-color: #1b3868;
+	border: 2px solid white;
+	cursor: pointer;
+}
+
+.addNew {
+	font-size: 1.3rem;
+	color: #1b3868;
+	border: solid 2px #1b3868;
+}
+
+.addNew:hover {
+	font-size: 1.3rem;
+	color: white;
+	background: #1b3868;
+	border: solid 2px #1b3868;
+}

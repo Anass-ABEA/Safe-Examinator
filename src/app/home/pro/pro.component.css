@@ -1,0 +1,268 @@
+.emi {
+	background-image: url("/assets/EMI.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position-y: 27%;
+	border-radius: 5px;
+}
+
+.dark {
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 30px 20px;
+	display: flex;
+	width: 100%;
+	border-radius: 5px;
+	font-size: 20px;
+}
+
+.container-fluid {
+	padding: 30px 15px;
+}
+
+.time {
+	width: 100%;
+	overflow-x: scroll;
+	position: absolute;
+	right: 15%;
+}
+
+.time::-webkit-scrollbar {
+	visibility: hidden;
+
+}
+
+.fill {
+	margin: 30px -15px;
+	padding: 20px;
+	background: linear-gradient(180deg, rgba(27, 56, 104, 1) 23%, rgba(0, 0, 0, 1) 100%);
+
+}
+
+.holder {
+	display: flex;
+	padding: 0 10%;
+}
+
+.item {
+	flex: 1;
+	text-align: -webkit-center;
+}
+
+.item-content {
+	width: fit-content;
+	background-color: white;
+	border-radius: 5px;
+	padding: 10px;
+	font-weight: bold;
+}
+
+.item span {
+	font-size: 24px;
+	display: block;
+}
+
+.exams-holder {
+	padding: 0 20px;
+}
+
+.exam-element {
+	border: 2px solid white;
+	border-radius: 5px;
+	margin: 5px 5px;
+	box-shadow: grey 2px 2px 10px 2px;
+}
+
+.exam-element fa-icon {
+	color: #1b3868;
+	font-size: 20px;
+}
+
+.icon-holder {
+	display: inline-block;
+	width: 25px;
+	text-align: center;
+}
+
+.list-unstyled a {
+	text-decoration: none;
+	color: black;
+	display: block;
+	padding: 10px 5px;
+}
+
+.list-unstyled fa-icon {
+	color: #1b3868;
+}
+
+.left-box {
+	border: solid 2px black;
+}
+
+.left-box .title {
+	border-bottom: solid 2px black;
+}
+
+.list-unstyled {
+	padding: 20px;
+}
+
+
+.list-unstyled li:hover {
+	background-color: #cacaca;
+}
+
+.exams-parent {
+	padding: 30px 0 10px 0;
+	border-radius: 5px;
+	border: solid 2px #1b3868;
+	position: relative;
+}
+
+.exams-parent .exam-element {
+	background-color: white;
+}
+
+.exams-parent .title{
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	background-color: white;
+	padding: 0 20px ;
+}
+
+.top-icon fa-icon {
+	font-size: 40px;
+}
+
+.top-element fa-icon {
+	color: #1b3868;
+}
+
+.top-element a {
+	text-decoration: none;
+	color: black;
+}
+
+.element-mark * {
+	font-size: 20px;
+}
+
+.element-mark strong {
+	color: #0edc00;
+}
+
+.top-element {
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.element-mark {
+	background-color: white;
+	padding: 5px 20px;
+	border-radius: 20px;
+	position: absolute;
+	top: 0;
+	text-align: center;
+	left: 50%;
+	transform: translate(-50%, 0);
+	border: solid 1px #1b3868;
+}
+
+@media screen and (max-width: 1450px ) {
+	.element-mark {
+		width: 80%;
+	}
+	.time {
+		position: relative;
+		padding-bottom: 0;
+	}
+	.holder {
+		display: flex;
+		padding: 0;
+	}
+}
+
+.top-element-x {
+	border: solid 2px #1b3868;
+	margin: 0 5px;
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.first-part-top {
+	margin-top: -15px;
+	background-color: rgba(227, 227, 227,0.7);
+	padding: 20px 10px !important;
+	border-radius: 10px 10px 0 0;
+}
+
+.detail {
+	margin: 5px 0;
+}
+
+.spinner-div {
+	position: absolute;
+	right: 0;
+	top: 0;
+	transform: translateY(-25%);
+}
+
+.inner-progress {
+	width: 100%;
+	display: block;
+	position: relative;
+}
+
+.btn-primary{
+	background: #1b3868;
+}
+
+.leftButton{
+	position: fixed;
+	left: 0;
+	top: 100px;
+	transform: translateX(-50%);
+}
+.leftButton .toggler .btn{
+	color: white;
+	border-radius: 50%;
+	background-color: #1b3868;
+	border: solid 3px white;
+}
+
+.leftButton:hover{
+	transform: translateX(0);
+}
+
+.leftButton:hover .buttons{
+	transform: translate(50%,20%);
+}
+
+.leftButton .buttons{
+	position: absolute;
+	inline-size: max-content;
+	top: 0;
+	right: 0;
+	transform: translate(-60%,20%);
+}
+.buttons{
+	background-color: rgba(27, 56, 104,0.8);
+	padding: 30px 10px 10px 10px;
+	border-radius: 0 25px 25px 0;
+	color: white;
+}
+
+.buttons .btn{
+	color: white;
+	border: solid 1px white;
+	margin: 5px 0;
+}
+.buttons .btn:hover{
+	color: #1b3868;
+	background-color: white;
+}
+
+.buttons strong{
+	padding-top: 40px;
+}

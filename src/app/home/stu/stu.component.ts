@@ -1,0 +1,186 @@
+import { Component, OnInit } from '@angular/core';
+import {
+	faBook,
+	faCalendarAlt,
+	faChalkboardTeacher, faChevronCircleLeft, faChevronCircleRight,
+	faClock,
+	faEnvelope,
+	faGraduationCap,
+	faHourglass,
+	faInfo, faNeuter,
+
+} from '@fortawesome/free-solid-svg-icons';
+import {CalendarView, DAYS_OF_WEEK, MOMENT} from 'angular-calendar';
+import * as moment from 'moment';
+import {HttpClient} from '@angular/common/http';
+import {base_url} from '../../../environments/environment';
+import {CookieService} from 'ngx-cookie-service';
+import CheckCookies from '../../CheckCookies';
+
+
+
+@Component({
+  selector: 'app-stu',
+  templateUrl: './stu.component.html',
+  styleUrls: ['./stu.component.css']
+})
+export class StuComponent implements OnInit {
+	weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+	weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
+	view: CalendarView = CalendarView.Month;
+	activeDayIsOpen: boolean = true;
+
+
+
+	constructor(private http:HttpClient,private cookie : CookieService) { }
+	events = [{
+		title:"examen SE",
+		start:new Date(),
+		time:"08:00",
+		length:"1h30min",
+	}]
+	viewDate = new Date();
+
+	time = moment().lang('fr').format('dddd Do MMMM YYYY, HH:mm:ss');
+	fullName="";
+	homeValues={
+		succeeded : 23,
+		passed : 25,
+		avg:14.68
+	};
+
+	icons = {
+		length:faHourglass,
+		starTime:faClock,
+		day : faCalendarAlt,
+		professor:faChalkboardTeacher,
+		course: faGraduationCap,
+		email:faEnvelope,
+		book:faBook,
+		info:faInfo,
+		now:faNeuter,
+		next : faChevronCircleRight,
+		previous:faChevronCircleLeft
+	}
+
+	closeExams = [
+
+	]
+
+	top3=[
+		{
+			class:"Java",
+			professor:"James DOE",
+			email:"jamesdoe",
+			length:"45:37",
+			testlength:"1h",
+			avg:"02:09",
+			classavg:"03:17",
+			mark:17.32
+		},
+		{
+			class:"IHM",
+			professor:"James DOE",
+			email:"jamesdoe",
+			length:"45:37",
+			testlength:"1h",
+			avg:"02:09",
+			classavg:"03:17",
+			mark:16.75
+
+		},
+		{
+			class:"C",
+			professor:"James DOE",
+			email:"jamesdoe",
+			length:"01:55:37",
+			testlength:"2h",
+			avg:"07:09",
+			classavg:"08:17",
+			mark:16.23
+
+		}
+	]
+	latestExams=[
+		{
+			title:"Hello World",
+			id:"A2EAZEAZ87AZ89DU7AZ0D9ZAD098"
+		},
+		{
+			title:"Hello World2",
+			id:"AZDDAZ87AZ89DU7AZ0D9ZAD098"
+		},
+		{
+			title:"Hello World3",
+			id:"HGBRYZ87AZ89DU7AZ0D9ZAD098"
+		}
+	];
+
+	dbRes = null;
+
+	id = new CheckCookies(this.cookie).getId();
+
+	ngOnInit(): void {
+		this.http.get(base_url+"students/data/"+this.id).subscribe(res=>{
+				this.dbRes = res;
+				this.setupData(res);
+		})
+		this.http.get(base_url+"exams/3examsSorted/"+this.id).subscribe(res=>{
+			// @ts-ignore
+			this.closeExams = res;
+		})
+
+		this.http.get(base_url+"exams/StudentExams/"+this.id).subscribe(res=>{
+
+			this.events=[];
+
+
+			// @ts-ignore
+			for(let x of res){
+
+				const strdate=x['date']['y']+"-"+(x['date']['m']+1)+"-"+x['date']['d'];
+				const da = new Date(strdate);
+				this.events.push({
+					title:x['title'],
+					start:da,
+					time:x['startTime']['h']+":"+x['startTime']['m'],
+					length:x['length']['h']+"h "+x['length']['m']+"m",
+				});
+			}
+		})
+
+		setInterval(() => {
+			this.getDate()
+		}, 1000);
+	}
+
+	setupData(res) {
+		this.fullName = res.fname+" "+res.lname;
+		this.homeValues = res.homevalues;
+
+	}
+
+	getDate() {
+		this.time =  moment().lang('fr').format('dddd Do MMMM YYYY, HH:mm:ss');
+	}
+
+	getLength(length: { h: number; m: number } ) {
+		return ""+length.h+"h"+length.m+"min";
+	}
+
+	getDateFormat(date: { d: number; y: number; m: number }) {
+		return ""+date.d+" / "+date.m+" / "+date.y;
+	}
+
+	getJoinTime(startTime: { h: number; m: number } ) {
+		return ""+startTime.h+":"+startTime.m
+	}
+
+	closeOpenMonthViewDay() {
+		this.activeDayIsOpen = false;
+	}
+
+	displayMonth() {
+		return moment(this.viewDate).lang('fr').format('MMMM YYYY');
+	}
+}
