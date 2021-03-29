@@ -7,55 +7,75 @@
 	</div>
 
 
-	<div class="exams-parent m-md-4">
+	<div class="exams-parent m-md-4 my-5">
 		<h2 class="text-center title">Examens Proches</h2>
 		<div class="row text-center exams-holder mb-5">
-			<div class="col exam-element" *ngFor="let exam of closeExams">
-				<div class="row text-left">
-					<div class="col-12 mb-2 text-center">
-						<h2>{{exam.title}}</h2>
-					</div>
-					<div class="col-12 col-md-6">
-						<div class="icon-holder">
-							<fa-icon [icon]="icons.course"></fa-icon>
+			<ng-container *ngFor="let exam of getFutureExams(); let i = index;">
+				<div class="col-12 col-md-6 col-lg-4 p-2" [class.m-md-auto]="getFutureExams().length<3">
+					<div class="  exam-element p-2"  >
+						<div class="row text-left">
+							<div class="col-12 mb-2 text-center">
+								<h2>{{exam.title}}</h2>
+							</div>
+							<div class="col-12 col-md-6">
+								<div class="icon-holder">
+									<fa-icon [icon]="icons.course"></fa-icon>
+								</div>
+								{{exam.dept}} {{exam.promo}}
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="icon-holder">
+									<fa-icon [icon]="icons.book"></fa-icon>
+								</div>
+								{{showDifference(exam.start)}}
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="icon-holder">
+									<fa-icon [icon]="icons.students"></fa-icon>
+								</div>
+								{{showGroups(exam.groups)}}
+							</div>
+							<div class="col-12 col-md-6">
+								<div class="icon-holder">
+									<fa-icon [icon]="exam.isVisible? icons.visible:icons.invisible"></fa-icon>
+								</div>
+								{{exam.isVisible? "Visible":"Invisible"}}
+							</div>
+
+							<div class="col-12 col-md-6 ">
+								<div class="icon-holder">
+									<fa-icon [icon]="icons.length"></fa-icon>
+								</div>
+								{{getLength(exam.length)}}</div>
+							<div class="col-12 col-md-6">
+								<div class="icon-holder">
+									<fa-icon [icon]="icons.day"></fa-icon>
+								</div>
+								{{getDateFormat(exam.start)}} </div>
+
 						</div>
-						Informatique
+						<div class="button-holder d-flex mt-2">
+							<button class="btn d-f  btn-classic"  (click)="openExam(exam.id)">
+								<fa-icon [icon]="icons.pen"></fa-icon> Modifier
+							</button>
+							<button class="btn  btn-classic" (click)="changeVisibility(exam.id,i)">
+								<fa-icon [icon]="icons.visible"></fa-icon> Changer La Visibilité
+							</button>
+						</div>
 					</div>
 
-					<div class="col-12 col-md-6">
-						<div class="icon-holder">
-							<fa-icon [icon]="icons.book"></fa-icon>
+					<div class="loader" *ngIf="loaders[i]" (click)="loaders[i]= false">
+						<div class="spinner-border text-white" role="status">
+							<span class="sr-only">Loading...</span>
 						</div>
-						matière
 					</div>
-
-					<div class="col-12 col-md-6">
-						<div class="icon-holder">
-							<fa-icon [icon]="icons.students"></fa-icon>
-						</div>
-						A,B
-					</div>
-					<div class="col-12 col-md-6">
-						<div class="icon-holder">
-							<fa-icon [icon]="icons.promo"></fa-icon>
-						</div>
-						2023
-					</div>
-
-
-					<div class="col-12 col-md-6 ">
-						<div class="icon-holder">
-							<fa-icon [icon]="icons.length"></fa-icon>
-						</div>
-						{{getLength(exam.length)}}</div>
-					<div class="col-12 col-md-6">
-						<div class="icon-holder">
-							<fa-icon [icon]="icons.day"></fa-icon>
-						</div>
-						{{getDateFormat(exam.date)}} @ {{getJoinTime(exam.startTime)}}</div>
 
 				</div>
-			</div>
+
+			</ng-container>
+
 		</div>
 	</div>
 
@@ -111,6 +131,7 @@
 				[dayStartHour]="calendarDetails.startHour"
 				[dayEndHour]="calendarDetails.endHour"
 				[excludeDays]="calendarDetails.exclude"
+				[hourSegmentHeight]="50"
 			>
 
 			</mwl-calendar-week-view>
@@ -122,19 +143,19 @@
 	>
 
 
-		<div class="cal-event" (click)="eventClicked(weekEvent)">
+		<div class="cal-event" (click)="openExam(weekEvent.event.id)">
 			<div class="row">
 				<div class="col">
 					<strong>Titre: </strong> <span> {{weekEvent.event.title}}</span>
 				</div>
 				<div class="col">
-					<strong>Durée: </strong> <span> {{weekEvent.event.length}}</span>
+					<strong>Durée: </strong> <span> {{weekEvent.event.length.h}}h{{weekEvent.event.length.m}}</span>
 				</div>
 				<div class="col">
-					<strong>Pour: </strong> <span> {{weekEvent.event.class.speciality}} {{weekEvent.event.class.promo}}</span>
+					<strong>Pour: </strong> <span> {{weekEvent.event.dept}} {{weekEvent.event.promo}}</span>
 				</div>
 				<div class="col">
-					<strong>Groupes: </strong> <span> {{showGroups(weekEvent.event.class.groups)}}</span>
+					<strong>Groupes: </strong> <span> {{weekEvent.event.groups}}</span>
 				</div>
 			</div>
 		</div>

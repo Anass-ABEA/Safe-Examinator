@@ -45,7 +45,6 @@ export class NewExamComponent implements OnInit {
 		}
 
 	];
-
 	icons = {
 		trash: faTrash,
 		info: faInfo,
@@ -78,6 +77,7 @@ export class NewExamComponent implements OnInit {
 
 	// form data
 	booleans = {
+		isVisible:false,
 		mark: false,
 		finalReport: false,
 		feedback: false,

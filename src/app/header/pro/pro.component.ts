@@ -40,6 +40,7 @@ export class ProComponentHeader implements OnInit {
 		console.log(url)
 		this.http.get(url).subscribe(res=>{
 			this.userName = res['name'];
+
 		})
 
 		if(window.location.pathname.includes("exams/past_exams")){
