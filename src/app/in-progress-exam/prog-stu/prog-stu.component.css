@@ -1,0 +1,39 @@
+.container{
+	box-shadow: 0 0 14px 0 grey;
+	border-radius: 5px;
+
+}
+
+.title{
+	margin-bottom: 20px;
+}
+
+.title:after{
+	content: '';
+	width: 100px;
+	height: 5px;
+	border-radius: 20px;
+	background-color: #1b3868;
+	bottom: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	position: absolute;
+}
+
+.ready-button{
+	background-color: #de6800;
+	color: white;
+	max-width: 300px;
+}
+
+.ready-button:after{
+	content: '';
+	width: 100px;
+	height: 5px;
+	border-radius: 20px;
+	background-color: #1b3868;
+	top: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	position: absolute;
+}

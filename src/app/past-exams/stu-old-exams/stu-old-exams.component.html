@@ -49,7 +49,7 @@
 			<img src="assets/nothing.png" class="w-100">
 			<h3 class="text-white text-center">Vous n'avez pas d'examens pour le moment</h3>
 		</div>
-		<div class="col-12 col-sm-6 col-md-4 p-2"
+		<div class="col-12 col-sm-6 col-md-4 p-2 m-auto"
 				 *ngFor="let exam of exams | paginate: { itemsPerPage: display, currentPage: p }">
 			<div class="examCard h-100 pb-4">
 				<h3 class="text-center">Examen en : {{exam.title}}</h3>
@@ -73,14 +73,7 @@
 						<a href="mailto:{{exam.email}}@emi.ac.ma">{{exam.email}}@emi.ac.ma</a>
 					</div>
 
-					<div class="col-6">
-						<strong>
-							Pour:
-						</strong>
-					</div>
-					<div class="col-6 ">
-						{{exam.classe.specialty}}{{exam.classe.year}} {{exam.classe.Groups}}
-					</div>
+
 
 					<div class="col-6">
 						<strong>
@@ -94,7 +87,7 @@
 
 					<div class="col-6">
 						<strong>
-							Effectué à:
+							Commencé à:
 						</strong>
 					</div>
 					<div class="col-6 ">
@@ -107,7 +100,7 @@
 						</strong>
 					</div>
 					<div class="col-6 ">
-						{{exam.length.split(":")[0]}}h{{exam.length.split(":")[1]}}
+						{{exam.length.split("h")[0]}}h{{exam.length.split("h")[1]}}
 					</div>
 					<div class="col-6">
 						<strong>
@@ -140,7 +133,6 @@
 				<th scope="col">Matière</th>
 				<th scope="col">Enseignant</th>
 				<th scope="col">Email</th>
-				<th scope="col">Groupe</th>
 				<th scope="col">Effectué le</th>
 				<th scope="col">Effectué à</th>
 				<th scope="col">Durée</th>
@@ -153,7 +145,6 @@
 				<td>{{exam.title}}</td>
 				<td>{{exam.tLname}} {{exam.tFname.substr(0,1)}}.</td>
 				<td><a href="mailto:{{exam.email}}@emi.ac.ma">{{exam.email}}@emi.ac.ma</a></td>
-				<td>{{exam.classe.Speciality}}{{exam.classe.year}} {{exam.classe.Group}}</td>
 				<td>{{displayDate(exam.start)}}</td>
 				<td>{{displayTime(exam.start)}}</td>
 				<td>{{exam.length.split(":")[0]}}h{{exam.length.split(":")[1]}}</td>

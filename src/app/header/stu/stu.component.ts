@@ -4,6 +4,7 @@ import {CookieService} from 'ngx-cookie-service';
 import CheckCookies from '../../CheckCookies';
 import {HttpClient} from '@angular/common/http';
 import {base_url} from '../../../environments/environment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-stu-header',
@@ -13,6 +14,7 @@ import {base_url} from '../../../environments/environment';
 export class StuComponentHeader implements OnInit {
 	screenWidth = window.innerWidth;
 	userName: Object = "John D.";
+	time = moment().lang('fr').format('dddd Do MMMM YYYY, HH:mm:ss');
 
 	icons = {
 		disconnect : faPowerOff,
@@ -27,6 +29,10 @@ export class StuComponentHeader implements OnInit {
 	}
 
 	ngOnInit(): void {
+		setInterval(() => {
+			this.time = moment().lang('fr').format('dddd Do MMMM YYYY, HH:mm:ss');
+		}, 1000);
+
 		window.addEventListener('resize', (e) => {
 			this.screenWidth = e.target['innerWidth'];
 		});

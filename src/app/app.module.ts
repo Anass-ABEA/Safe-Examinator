@@ -38,6 +38,9 @@ import { StuProfessorComponent } from './profile/stu-professor/stu-professor.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxAnimationsModule } from 'ngx-animations';
 import { NewExamComponent } from './new-exam/new-exam.component';
+import { InProgressExamComponent } from './in-progress-exam/in-progress-exam.component';
+import { ProgStuComponent } from './in-progress-exam/prog-stu/prog-stu.component';
+import { ProgProComponent } from './in-progress-exam/prog-pro/prog-pro.component';
 
 export function momentAdapterFactory() {
 	return adapterFactory(moment);
@@ -68,7 +71,10 @@ export function momentAdapterFactory() {
 		ProfileComponent,
 		StuProfileComponent,
 		StuProfessorComponent,
-		NewExamComponent
+		NewExamComponent,
+		InProgressExamComponent,
+		ProgStuComponent,
+		ProgProComponent
 	],
 	imports: [
 		HttpClientModule,

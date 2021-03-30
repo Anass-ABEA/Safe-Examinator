@@ -11,7 +11,7 @@
 		<h2 class="text-center title">Examens Proches</h2>
 		<div class="row text-center exams-holder mb-5">
 			<ng-container *ngFor="let exam of getFutureExams(); let i = index;">
-				<div class="col-12 col-md-6 col-lg-4 p-2" [class.m-md-auto]="getFutureExams().length<3">
+				<div class="col-12 col-md-6 col-lg-5 p-2" [class.m-md-auto]="getFutureExams().length<3">
 					<div class="  exam-element p-2"  >
 						<div class="row text-left">
 							<div class="col-12 mb-2 text-center">
@@ -57,12 +57,16 @@
 
 						</div>
 						<div class="button-holder d-flex mt-2">
+							<button class="btn  btn-classic" [class.bg-started]="exam.isStarted" (click)="StartExam(exam.id,i)">
+								<fa-icon [icon]="icons.visible"></fa-icon> {{exam.isStarted? 'Arréter':'Commencer'}}
+							</button>
 							<button class="btn d-f  btn-classic"  (click)="openExam(exam.id)">
 								<fa-icon [icon]="icons.pen"></fa-icon> Modifier
 							</button>
 							<button class="btn  btn-classic" (click)="changeVisibility(exam.id,i)">
-								<fa-icon [icon]="icons.visible"></fa-icon> Changer La Visibilité
+								<fa-icon [icon]="icons.visible"></fa-icon> Visibilité
 							</button>
+
 						</div>
 					</div>
 

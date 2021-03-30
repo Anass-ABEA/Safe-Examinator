@@ -37,7 +37,6 @@ export class ProComponentHeader implements OnInit {
 			this.screenWidth = e.target['innerWidth'];
 		});
 		const url = base_url+"teachers/name/"+new CheckCookies(this.cookie).getId();
-		console.log(url)
 		this.http.get(url).subscribe(res=>{
 			this.userName = res['name'];
 

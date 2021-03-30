@@ -57,7 +57,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2">
+		<div class="col-12 col-md-10 offset-md-1">
 			<div class="exams-parent">
 				<h2 class="text-center">Examens Proches</h2>
 				<div class="row text-center exams-holder mb-5">
@@ -65,33 +65,39 @@
 						<img src="assets/nothing.png" class="w-100">
 						<h2>Aucun examens n'a été programmé</h2>
 					</div>
-					<div class="col exam-element" *ngFor="let exam of closeExams">
-						<div class="row text-left">
-							<div class="col-12 mb-2 text-center">
-								<h2>{{exam.title}}</h2>
+					<ng-container *ngFor="let exam of closeExams">
+						<div class="col-12 col-md-6 col-lg-4 m-md-auto ">
+							<div class="row exam-element text-left p-2">
+								<div class="col-12 mb-2 text-center">
+									<h2>{{exam.title}}</h2>
+								</div>
+								<div class="col-12 col-lg-6 ">
+									<div class="icon-holder">
+										<fa-icon [icon]="icons.professor"></fa-icon>
+									</div>
+									{{exam.professor}}</div>
+								<div class="col-12 col-lg-6 ">
+									<div class="icon-holder">
+										<fa-icon [icon]="icons.length"></fa-icon>
+									</div>
+									{{getLength(exam.length)}}</div>
+								<div class="col-12 col-lg-6 ">
+									<div class="icon-holder">
+										<fa-icon [icon]="icons.day"></fa-icon>
+									</div>
+									{{getDateFormat(exam.date)}}</div>
+								<div class="col-12 col-lg-6 ">
+									<div class="icon-holder">
+										<fa-icon [icon]="icons.starTime"></fa-icon>
+									</div>
+									{{getJoinTime(exam.startTime)}}
+								</div>
+								<div class="col-12 mt-3" *ngIf="exam.isStarted">
+									<button class="btn btn-classic w-100" (click)="startExam(exam.id)">Commencer L'examen</button>
+								</div>
 							</div>
-							<div class="col-12 col-lg-6 text-center">
-								<div class="icon-holder">
-									<fa-icon [icon]="icons.professor"></fa-icon>
-								</div>
-								{{exam.professor}}</div>
-							<div class="col-12 col-lg-6 text-center">
-								<div class="icon-holder">
-									<fa-icon [icon]="icons.length"></fa-icon>
-								</div>
-								{{getLength(exam.length)}}</div>
-							<div class="col-12 col-lg-6 text-center">
-								<div class="icon-holder">
-									<fa-icon [icon]="icons.day"></fa-icon>
-								</div>
-								{{getDateFormat(exam.date)}}</div>
-							<div class="col-12 col-lg-6 text-center">
-								<div class="icon-holder">
-									<fa-icon [icon]="icons.starTime"></fa-icon>
-								</div>
-								{{getJoinTime(exam.startTime)}}</div>
 						</div>
-					</div>
+					</ng-container>
 				</div>
 			</div>
 		</div>
@@ -215,7 +221,7 @@
 			<strong>Titre:</strong> {{ day.events[0].title }}<br><strong>heure: </strong>{{day.events[0].time}}<br><strong>durée: </strong>{{day.events[0].length}}
 		</small>
 		<small style="margin: 5px;" *ngIf="day.events.length==0">
-			&nbsp;<br>	&nbsp;<br>	&nbsp;
+			&nbsp;<br> &nbsp;<br> &nbsp;
 		</small>
 	</ng-template>
 
@@ -253,7 +259,7 @@
 			</div>
 		</div>
 		<div class="col offset-md-1">
-			<h2 >{{displayMonth()}}</h2>
+			<h2>{{displayMonth()}}</h2>
 		</div>
 		<div class="col-12 col-md-10 offset-md-1">
 			<mwl-calendar-month-view
@@ -262,6 +268,7 @@
 				[weekStartsOn]="weekStartsOn"
 				[cellTemplate]="customCellTemplate"
 				[weekendDays]="weekendDays"
+				[excludeDays]="[6,0]"
 			>
 
 			</mwl-calendar-month-view>

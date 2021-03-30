@@ -1,0 +1,13 @@
+<div class="container my-5 p-md-3" *ngIf="examIntro">
+	<div class="row py-2">
+		<div class="col-12 text-center title">
+			<h2>Examen : {{exam.title}}</h2>
+		</div>
+		<div class="col-12 p-md-3 py-3 bg-primary">
+			DISPLAY SOME OF THE EXAMS DATA
+		</div>
+		<div class="col-12 text-center mt-3">
+			<button class="btn ready-button w-100" (click)="getStarted()" [class.bg-success]="isReady">{{isReady? 'Commencer':'Pret'}}</button>
+		</div>
+	</div>
+</div>

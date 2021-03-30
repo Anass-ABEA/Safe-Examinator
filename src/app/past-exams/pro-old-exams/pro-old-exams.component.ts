@@ -178,12 +178,11 @@ export class ProOldExamsComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		console.log(moment("2021 03 30 16 30", "YYYY MM DD HH mm").fromNow());
 	}
 
 	displayDate(start) {
 		return moment(new Date(start)).lang('fr').format('dddd Do MMMM YYYY @ HH:mm');
-	}	
+	}
 
 	displayLength(start, end) {
 		// @ts-ignore
@@ -202,7 +201,6 @@ export class ProOldExamsComponent implements OnInit {
 	}
 
 	openExam(id: string) {
-		console.log('OPEN DETAILSSS' + id);
 		window.open("/exams/past_exams/"+id,"_self");
 	}
 }

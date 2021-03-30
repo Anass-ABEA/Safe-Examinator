@@ -7,6 +7,7 @@ import {PastExamsComponent} from './past-exams/past-exams.component';
 import {PassedExamDetailsComponent} from './passed-exam-details/passed-exam-details.component';
 import {ProfileComponent} from './profile/profile.component';
 import {NewExamComponent} from './new-exam/new-exam.component';
+import {InProgressExamComponent} from './in-progress-exam/in-progress-exam.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,9 @@ const routes: Routes = [
 	},
 	{
 		path:"newGroup", component:HomeComponent
+	},
+	{
+		path:"exam/:examId", component:InProgressExamComponent
 	}
 ];
 

@@ -25,6 +25,11 @@ import CheckCookies from '../../CheckCookies';
   styleUrls: ['./stu.component.css']
 })
 export class StuComponent implements OnInit {
+	calendarStyle={
+
+	}
+
+
 	weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
 	weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 	view: CalendarView = CalendarView.Month;
@@ -134,7 +139,6 @@ export class StuComponent implements OnInit {
 
 			this.events=[];
 
-
 			// @ts-ignore
 			for(let x of res){
 
@@ -143,8 +147,10 @@ export class StuComponent implements OnInit {
 				this.events.push({
 					title:x['title'],
 					start:da,
-					time:x['startTime']['h']+":"+x['startTime']['m'],
-					length:x['length']['h']+"h "+x['length']['m']+"m",
+					time:(x['startTime']['h'].length!==1? '0'+x['startTime']['h']:x['startTime']['h'])
+						+":"+(x['startTime']['m'].length!==1? '0'+x['startTime']['m']:x['startTime']['m']),
+					length:(x['length']['h'].length!==1? '0'+x['length']['h']:x['length']['h'])
+					+":"+(x['length']['m'].length!==1? '0'+x['length']['m']:x['length']['m']),
 				});
 			}
 		})
@@ -164,16 +170,16 @@ export class StuComponent implements OnInit {
 		this.time =  moment().lang('fr').format('dddd Do MMMM YYYY, HH:mm:ss');
 	}
 
-	getLength(length: { h: number; m: number } ) {
-		return ""+length.h+"h"+length.m+"min";
+	getLength(startTime: { h: number; m: number } ) {
+		return ""+(startTime.h<9? '0'+startTime.h:startTime.h)+"h"+(startTime.m<9? '0'+startTime.m:startTime.m)+"min";
 	}
 
 	getDateFormat(date: { d: number; y: number; m: number }) {
-		return ""+date.d+" / "+date.m+" / "+date.y;
+		return ""+(date.d<9? '0'+date.d:date.d)+" / "+(date.m<9? '0'+date.m:date.m)+" / "+date.y;
 	}
 
 	getJoinTime(startTime: { h: number; m: number } ) {
-		return ""+startTime.h+":"+startTime.m
+		return ""+(startTime.h<9? '0'+startTime.h:startTime.h)+":"+(startTime.m<9? '0'+startTime.m:startTime.m)
 	}
 
 	closeOpenMonthViewDay() {
@@ -182,5 +188,9 @@ export class StuComponent implements OnInit {
 
 	displayMonth() {
 		return moment(this.viewDate).lang('fr').format('MMMM YYYY');
+	}
+
+	startExam(id: any) {
+		window.open("/exam/"+id,"_self");
 	}
 }

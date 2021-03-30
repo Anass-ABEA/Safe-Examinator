@@ -144,7 +144,7 @@ export class NewExamComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.id = new CheckCookies(this.cookie).getId();
-		console.log("RIGHT PAGE");
+
 		if (new CheckCookies(this.cookie).isProf() != 1) {
 			window.open('/', '_self');
 		}
@@ -227,10 +227,10 @@ export class NewExamComponent implements OnInit {
 			values : this.formValues,
 			questions : this.questionList
 		}
-		console.log(data);
+
 		this.http.post(base_url+"newExam/"+this.id,data).subscribe(res=>{
 
-			console.log(res);
+
 		})
 	}
 
@@ -252,7 +252,7 @@ export class NewExamComponent implements OnInit {
 	setQuestionType(str) {
 		this.questionList[this.selectedQuestion].type = str;
 		const type = this.questionList[this.selectedQuestion].type;
-		console.log(type);
+
 		if (type === 'multiple' || type === 'single') {
 			return;
 		} else {

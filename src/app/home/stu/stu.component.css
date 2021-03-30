@@ -209,3 +209,8 @@
 .warning .icon{
 	padding: 10px;
 }
+
+.btn-classic{
+	background-color: #0ba40e;
+	color: white;
+}

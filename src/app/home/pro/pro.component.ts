@@ -142,20 +142,16 @@ export class ProComponent implements OnInit {
 		}, 1000);
 
 		this.http.get(base_url + 'exams/TeacherExams3/' + this.id).subscribe(res => {
-			console.log(res);
 			// @ts-ignore
 			this.exams = res;
+			console.log(res);
 			for(let e of this.exams){
-
 				e.start = new Date(this.displayDate(e.start));
 				e.end   = new Date(this.displayDate(e.end));
-				console.log(e.start, e.end)
 			}
 
-
-
 		}, error => {
-			console.log(error);
+
 		});
 	}
 
@@ -210,9 +206,6 @@ export class ProComponent implements OnInit {
 	}
 
 
-	eventClicked(weekEvent: any) {
-		console.log('CLICKED', weekEvent);
-	}
 
 	changeData() {
 		if (this.calendarDetails.startHour == 8) {
@@ -282,5 +275,18 @@ export class ProComponent implements OnInit {
 
 	openExam(id: any) {
 		window.open("/exams/past_exams/"+id,"_self");
+	}
+
+	StartExam(id: any, i: number) {
+		this.loaders[i] = true;
+		console.log(base_url+"exams/BeginExam/"+id);
+		this.http.post(base_url+"exams/BeginExam/"+id,!this.exams[i].isStarted).subscribe(
+			res =>{
+				if(res){
+					this.exams[i].isStarted = !this.exams[i].isStarted;
+				}
+				this.loaders[i] = false;
+			}
+		)
 	}
 }

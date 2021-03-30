@@ -4,7 +4,8 @@
 			<a href="/" target="_blank"><img src="assets/logo.png"></a>
 		</div>
 	</a>
-	<a class="navbar-brand" href="/" routerLink="/" >
+
+	<a class="navbar-brand w-50 text-center d-none d-sm-block" href="/" routerLink="/" >
 		<div class="col name align-self-center">
 			<h3>{{titleGenerator()}}</h3>
 		</div>
@@ -17,7 +18,7 @@
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 
 		<div class="form-inline my-2 my-lg-0 ml-auto text-center">
-			<button class="btn element-nav" [class.btn-actie]="active==0" routerLink="/"> <fa-icon [icon]="icons.home"></fa-icon> Acceuil</button>
+			<span class="text-muted p-3">{{time}}</span>
 			<button class="btn element-nav" [class.btn-actie]="active==1"  routerLink="/exams/past_exams"> <fa-icon [icon]="icons.test"></fa-icon>  Mes Examens</button>
 			<button class="btn element-nav" [class.btn-actie]="active==2"  routerLink="/results"> <fa-icon [icon]="icons.devoirs"></fa-icon>  Mes Résultats</button>
 			<ul class="navbar-nav">
