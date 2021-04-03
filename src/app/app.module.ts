@@ -93,7 +93,7 @@ export function momentAdapterFactory() {
 		CalendarModule.forRoot({provide: DateAdapter, useFactory: momentAdapterFactory}),
 		NgxPaginationModule,
 		BrowserAnimationsModule,
-		NgxAnimationsModule
+		NgxAnimationsModule,
 
 
 	],

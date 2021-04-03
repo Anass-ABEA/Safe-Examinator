@@ -92,8 +92,8 @@
 									</div>
 									{{getJoinTime(exam.startTime)}}
 								</div>
-								<div class="col-12 mt-3" *ngIf="exam.isStarted">
-									<button class="btn btn-classic w-100" (click)="startExam(exam.id)">Commencer L'examen</button>
+								<div class="col-12 mt-3">
+									<button class="btn btn-classic w-100" [disabled]="!exam.isStarted" (click)="startExam(exam.id)">Commencer L'examen</button>
 								</div>
 							</div>
 						</div>
@@ -252,8 +252,7 @@
 					mwlCalendarNextView
 					[view]="view"
 					[(viewDate)]="viewDate"
-					(viewDateChange)="closeOpenMonthViewDay()"
-				>
+					(viewDateChange)="closeOpenMonthViewDay()">
 					<fa-icon [icon]="icons.next"></fa-icon>
 				</div>
 			</div>

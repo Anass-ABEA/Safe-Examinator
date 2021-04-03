@@ -8,14 +8,26 @@
 
 
 	<div class="exams-parent m-md-4 my-5">
-		<h2 class="text-center title">Examens Proches</h2>
+		<h2 class="text-center title">Examens Créés</h2>
 		<div class="row text-center exams-holder mb-5">
-			<ng-container *ngFor="let exam of getFutureExams(); let i = index;">
-				<div class="col-12 col-md-6 col-lg-5 p-2" [class.m-md-auto]="getFutureExams().length<3">
+			<ng-container *ngFor="let exam of myList; let i = index;">
+				<div class="col-12 col-md-6 col-lg-5 p-2" [class.m-md-auto]="myList.length<3">
 					<div class="  exam-element p-2"  >
 						<div class="row text-left">
-							<div class="col-12 mb-2 text-center">
-								<h2>{{exam.title}}</h2>
+							<div class="col-12 mb-2 text-center mcard-header">
+									<div class="row px-3">
+										<div class="align-self-center text-muted">
+											<span *ngFor="let x of showDifference(exam.start)">{{x}}<br></span>
+										</div>
+
+										<h2 class="col align-self-center">{{exam.title}}</h2>
+										<div class="btn-Control align-self-center">
+
+											<button class="btn" [style]="exam.isVisible? visibleCss:invisibleCss"  (click)="changeVisibility(exam.id,i)">
+											<fa-icon [icon]="exam.isVisible? icons.invisible:icons.visible"></fa-icon>
+											</button>
+										</div>
+									</div>
 							</div>
 							<div class="col-12 col-md-6">
 								<div class="icon-holder">
@@ -24,12 +36,6 @@
 								{{exam.dept}} {{exam.promo}}
 							</div>
 
-							<div class="col-12 col-md-6">
-								<div class="icon-holder">
-									<fa-icon [icon]="icons.book"></fa-icon>
-								</div>
-								{{showDifference(exam.start)}}
-							</div>
 
 							<div class="col-12 col-md-6">
 								<div class="icon-holder">
@@ -37,12 +43,7 @@
 								</div>
 								{{showGroups(exam.groups)}}
 							</div>
-							<div class="col-12 col-md-6">
-								<div class="icon-holder">
-									<fa-icon [icon]="exam.isVisible? icons.visible:icons.invisible"></fa-icon>
-								</div>
-								{{exam.isVisible? "Visible":"Invisible"}}
-							</div>
+
 
 							<div class="col-12 col-md-6 ">
 								<div class="icon-holder">
@@ -60,12 +61,12 @@
 							<button class="btn  btn-classic" [class.bg-started]="exam.isStarted" (click)="StartExam(exam.id,i)">
 								<fa-icon [icon]="icons.visible"></fa-icon> {{exam.isStarted? 'Arréter':'Commencer'}}
 							</button>
+
 							<button class="btn d-f  btn-classic"  (click)="openExam(exam.id)">
 								<fa-icon [icon]="icons.pen"></fa-icon> Modifier
 							</button>
-							<button class="btn  btn-classic" (click)="changeVisibility(exam.id,i)">
-								<fa-icon [icon]="icons.visible"></fa-icon> Visibilité
-							</button>
+
+
 
 						</div>
 					</div>

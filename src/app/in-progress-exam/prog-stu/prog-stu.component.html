@@ -1,13 +1,212 @@
 <div class="container my-5 p-md-3" *ngIf="examIntro">
-	<div class="row py-2">
+	<div class="row py-2 description">
 		<div class="col-12 text-center title">
 			<h2>Examen : {{exam.title}}</h2>
 		</div>
-		<div class="col-12 p-md-3 py-3 bg-primary">
-			DISPLAY SOME OF THE EXAMS DATA
+		<div class="col-6 p-md-3  py-3 ">
+			<table class="table">
+				<tr>
+					<th>
+						Mme / Mr :
+					</th>
+					<td>
+						{{exam.profName}}
+					</td>
+				</tr>
+
+				<tr>
+					<th>
+						Durée de L'examen :
+					</th>
+					<td>
+						{{exam.length}}
+					</td>
+				</tr>
+
+				<tr>
+					<th>
+						Nombre d'essai possible :
+					</th>
+					<td>
+						{{exam.tries}}
+					</td>
+				</tr>
+
+				<tr>
+					<th>
+						Nombre de questions :
+					</th>
+					<td>
+						{{exam.nbrQuestions}}
+					</td>
+				</tr>
+
+			</table>
+
+
 		</div>
-		<div class="col-12 text-center mt-3">
-			<button class="btn ready-button w-100" (click)="getStarted()" [class.bg-success]="isReady">{{isReady? 'Commencer':'Pret'}}</button>
+		<div class="col-6 text-center p-md-3 mt-3 d-flex rght-col text-center">
+			<div class="row" style="flex:1" *ngIf="exam.isFraudOn">
+				<div class="col-12  text-muted align-self-center">
+					<fa-icon [icon]="icons.warning"></fa-icon>
+					Cet Examen detecte tout les tentatives de fraude. Tout accès à une autre page ou autre fenetre est considéré
+					comme fraude.
+				</div>
+			</div>
+			<div class="starter px-5" [style]="exam.isFraudOn? {}:{'flex':'1',    'writing-mode': 'vertical-rl'}">
+				<button class="btn btn-success w-100 mx-auto align-self-center" (click)="getStarted()">Commencer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid " [class.container-exam]="focusMode">
+	<div class="container  my-5" *ngIf="!examIntro && !final">
+		<div class="timer-left text-center" *ngIf="isScrolled">
+			<circle-progress class="inner-progress"
+											 [percent]="getWidth()" [innerStrokeWidth]="1"
+											 [outerStrokeWidth]="10"
+											 [responsive]="true"
+											 backgroundColor="rgba(0,0,0,0)"
+											 outerStrokeColor="{{getColor()}}"
+											 [titleFontSize]="'30'"
+											 [imageWidth]="20"
+											 [animation]="false">
+			</circle-progress>
+			<span *ngFor = "let x of getTimeLeft().split(' ');let i = index;">
+				{{x}}<br *ngIf="i%2==1">
+			</span>
+		</div>
+		<div class="row my-card p-md-3 position-relative ">
+			<div class="col-12 exam-head position-relative ">
+				<div class="time-line" [ngStyle]="{'width':getWidth()+'%','background-color': getColor()}"></div>
+				<div class="timer py-2 text-center">
+					temps restant:
+					<strong>
+						{{getTimeLeft()}}
+					</strong>
+					<!--					[ngStyle]="{'width':getWidth()%,'transform': 'translateX({{getCompWidth()}}%)}'"-->
+				</div>
+				<div class=" position-absolute d-none" style="right: 20px;top: 50%; transform: translateY(-50%)">
+					<button class="btn btn-primary float-right" (click)="enableFocusMode()">Mode Focus</button>
+				</div>
+			</div>
+			<div class="col-12 question">
+				<div class="row p-2">
+					<div class="col-1 text-center text-muted align-self-center">
+						Question N° {{i + 1}}
+					</div>
+					<div class="col-10 align-self-center">
+						<p>{{questions[i].body}}</p>
+					</div>
+					<div class="col-1 text-center text-muted align-self-center">
+						{{questions[i].points}} points
+					</div>
+					<div class="col-12 py-3 px-md-3">
+						<ng-container *ngIf="questions[i].type==types.SHORT">
+							<input type="text" class="form-control" [(ngModel)]="choices[i].value" placeholder="Réponse">
+						</ng-container>
+
+						<ng-container *ngIf="questions[i].type==types.LONG">
+							<textarea placeholder="Réponse" [(ngModel)]="choices[i].value" class="form-control" rows="10"></textarea>
+						</ng-container>
+
+						<ng-container *ngIf="questions[i].type==types.SINGLE">
+							<ng-container>
+								<div class="form-check position-relative" *ngFor="let resp of questions[i].rep;let j = index;">
+									<input class="form-check-input" type="radio" (change)="showSelection(i,j)" name="flexRadioDefault" id="flexRadioDefault{{j}}">
+									<label class="form-check-label" for="flexRadioDefault{{j}}">
+										{{resp.val}}
+									</label>
+								</div>
+							</ng-container>
+						</ng-container>
+						<ng-container *ngIf="questions[i].type==types.MULTIPLE">
+							<ng-container>
+								<div class="form-check position-relative" *ngFor="let resp of questions[i].rep;let j = index;">
+									<input class="form-check-input" type="checkbox" [(ngModel)]="choices[i].value[j]" name="flexCheckDefault" id="flexCheckDefault{{j}}">
+									<label class="form-check-label" for="flexCheckDefault{{j}}">
+										{{resp.val}}
+									</label>
+								</div>
+							</ng-container>
+						</ng-container>
+					</div>
+					<div class="col-4">
+						<button class="btn btn-primary w-50" (click)="i=i-1">Précédent</button>
+					</div>
+					<div class="col-4 offset-4 text-right">
+						<button class="btn btn-primary w-50" (click)="i=i+1">Suivant</button>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-4 offset-4">
+				<button class="btn btn-primary w-100" (click)="saveExam()">Enregistrer</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="container my-5 p-md-3" *ngIf="final">
+	<div class="row py-2 description">
+		<div class="col-12 text-center title">
+			<h2>Examen : {{exam.title}}</h2>
+		</div>
+		<div class="col-6 p-md-3  py-3 ">
+			<table class="table">
+				<tr>
+					<th>
+						Mme / Mr :
+					</th>
+					<td>
+						{{exam.profName}}
+					</td>
+				</tr>
+
+				<tr>
+					<th>
+						Durée de L'examen :
+					</th>
+					<td>
+						{{exam.length}}
+					</td>
+				</tr>
+
+				<tr>
+					<th>
+						Nombre d'essai possible :
+					</th>
+					<td>
+						{{exam.tries}}
+					</td>
+				</tr>
+
+				<tr>
+					<th>
+						Nombre de questions :
+					</th>
+					<td>
+						{{exam.nbrQuestions}}
+					</td>
+				</tr>
+
+			</table>
+
+
+		</div>
+		<div class="col-6 text-center p-md-3 mt-3 d-flex rght-col text-center">
+			<div class="row" style="flex:1" *ngIf="exam.isFraudOn">
+				<div class="col-12  text-muted align-self-center">
+					<fa-icon [icon]="icons.warning"></fa-icon>
+					Cet Examen detecte tout les tentatives de fraude. Tout accès à une autre page ou autre fenetre est considéré
+					comme fraude.
+				</div>
+			</div>
+			<div class="starter px-5" [style]="exam.isFraudOn? {}:{'flex':'1',    'writing-mode': 'vertical-rl'}">
+				<button class="btn btn-success w-100 mx-auto align-self-center" (click)="getStarted()">Commencer</button>
+			</div>
 		</div>
 	</div>
 </div>

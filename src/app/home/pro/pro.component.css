@@ -297,3 +297,33 @@
 .bg-started{
 	background-color: #0ba40e!important;
 }
+
+.btn-Control{
+	width: 50px!important;
+	height: 50px!important;
+
+}
+.btn-Control button{
+	box-shadow: grey 2px 2px 10px 2px;
+	border-radius:50%;
+	width: 50px!important;
+	text-align:center;
+	height: 50px!important;
+	border:solid 2px #1b3868;
+}
+.mcard-header{
+	position:relative;
+	padding-bottom:10px;
+}
+
+.mcard-header:after{
+	content:' ';
+	position:absolute;
+	bottom: 0;
+	background-color:#1b3868;
+	height:3px;
+	left: 10%;
+	right: 10%;
+	border-radius:5px;
+
+}

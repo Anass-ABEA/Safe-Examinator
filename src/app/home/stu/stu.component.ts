@@ -124,17 +124,19 @@ export class StuComponent implements OnInit {
 	dbRes = null;
 
 	id = new CheckCookies(this.cookie).getId();
-
-	ngOnInit(): void {
+	loadStudentData(){
 		this.http.get(base_url+"students/data/"+this.id).subscribe(res=>{
-				this.dbRes = res;
-				this.setupData(res);
+			this.dbRes = res;
+			this.setupData(res);
 		})
+	}
+	load3exams(){
 		this.http.get(base_url+"exams/3examsSorted/"+this.id).subscribe(res=>{
 			// @ts-ignore
 			this.closeExams = res;
 		})
-
+	}
+	loadCalendarExams(){
 		this.http.get(base_url+"exams/StudentExams/"+this.id).subscribe(res=>{
 
 			this.events=[];
@@ -150,10 +152,20 @@ export class StuComponent implements OnInit {
 					time:(x['startTime']['h'].length!==1? '0'+x['startTime']['h']:x['startTime']['h'])
 						+":"+(x['startTime']['m'].length!==1? '0'+x['startTime']['m']:x['startTime']['m']),
 					length:(x['length']['h'].length!==1? '0'+x['length']['h']:x['length']['h'])
-					+":"+(x['length']['m'].length!==1? '0'+x['length']['m']:x['length']['m']),
+						+":"+(x['length']['m'].length!==1? '0'+x['length']['m']:x['length']['m']),
 				});
 			}
 		})
+	}
+	ngOnInit(): void {
+		this.loadStudentData();
+		this.load3exams();
+		this.loadCalendarExams();
+
+		setInterval(()=>{
+			this.load3exams();
+			this.loadCalendarExams();
+		},10000)
 
 		setInterval(() => {
 			this.getDate()

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Md5} from 'ts-md5';
 import {CookieService} from 'ngx-cookie-service';
 import {HttpClient} from '@angular/common/http';
-import {base_url} from '../../../environments/environment.prod';
+import {base_url} from '../../../environments/environment';
 import CheckCookies from '../../CheckCookies';
 import has = Reflect.has;
 
@@ -52,6 +52,7 @@ export class StuProfileComponent implements OnInit {
 		const id = new CheckCookies(this.cookie).getId();
 			if(!this.verified){
 				const hashed =  new Md5().appendStr(this.credentials.passwordOld).end();
+				console.log(base_url+"students/connect/"+id+"/"+hashed);
 				this.http.get(base_url+"students/connect/"+id+"/"+hashed).subscribe(res=>{
 					if(res == true){
 						this.verified = true;

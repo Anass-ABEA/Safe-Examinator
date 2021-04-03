@@ -1,13 +1,18 @@
-.container{
+.container .my-card{
 	box-shadow: 0 0 14px 0 grey;
 	border-radius: 5px;
+	background-color: white;
+}
 
+.container .description{
+	box-shadow: 0 0 14px 0 grey;
+	border-radius: 5px;
+	background-color: white;
 }
 
 .title{
 	margin-bottom: 20px;
 }
-
 .title:after{
 	content: '';
 	width: 100px;
@@ -26,14 +31,82 @@
 	max-width: 300px;
 }
 
-.ready-button:after{
-	content: '';
-	width: 100px;
-	height: 5px;
-	border-radius: 20px;
-	background-color: #1b3868;
-	top: -10px;
+
+
+.container-exam{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 999;
+	background-color: rgba(0, 0, 0, 0.9);
+}
+
+.container-exam .container .my-card{
+	position: absolute;
+	top: 50%;
 	left: 50%;
 	transform: translateX(-50%);
+}
+.time-line{
+	content: ' ';
+	height: 5px;
+	border-radius: 10px;
 	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	right: 0;
+}
+
+.exam-head{
+	background-color: #F5F5F5;
+	padding-bottom: 20px;
+	padding-top: 20px;
+	margin-bottom: 10px;
+}
+
+.form-check .form-check-input{
+	width:30px;
+	height:30px;
+	position : absolute;
+	left:30px;
+	top:0;
+}
+
+.form-check{
+	padding:10px;
+	margin:5px 0;
+	background-color: #f1f1f1;
+}
+
+.form-check .form-check-label{
+	width:100%;
+	padding-left: 50px;
+}
+
+.rght-col{
+	flex-direction:column;
+}
+
+.question{
+	margin-bottom:20px;
+	padding-bottom:10px;
+	border-bottom:solid 2px #1b3868;
+}
+.timer-left{
+	position:fixed;
+	left:30px;
+	top:30vh;
+	z-index:10;
+}
+.timer-left .inner-progress{
+	display:block;
+	width: 100px;
+}
+
+input[type="text"]:focus,textarea:focus{
+	border:solid 1px #1b3868;
+	box-shadow: 0 0 2px 1px #1b3868;
 }

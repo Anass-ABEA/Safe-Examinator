@@ -21,6 +21,14 @@ import {CookieService} from 'ngx-cookie-service';
 	styleUrls: ['./pro.component.css']
 })
 export class ProComponent implements OnInit {
+	invisibleCss={
+		"box-shadow": "#dedede 2px 2px 10px 5px",
+	}
+	visibleCss={
+		"box-shadow": "#dedede 2px 2px 10px 5px",
+		"opacity":"0.5"
+	}
+	myList = [];
 	calendarDetails = {
 		startHour: 8,
 		endHour: 18,
@@ -41,75 +49,7 @@ export class ProComponent implements OnInit {
 	};
 
 	exams = [
-		/*{
-			promo: 'INF',
-			length: {
-				'h': '01',
-				'm': '00'
-			},
-			start: 'Thu Apr 01 11:52:43 WEST 2021',
-			groups: 'A',
-			startTime: {
-				h: '11',
-				m: '52'
-			},
-			end: 'Thu Apr 01 12:52:43 WEST 2021',
-			id: '70647bb1b46cf31e5d439e10b6759aze',
-			dept: 'INF',
-			title: 'Gestion de Projet'
-		},
-		{
-			start: new Date('Thu Mar 25 2021 08:00:31 GMT+0100 (GMT+01:00)'),
-			title: 'SE',
-			time: '08:00',
-			end: new Date('Thu Mar 25 2021 10:00:31 GMT+0100 (GMT+01:00)'),
-			class: {
-				speciality: 'INF',
-				promo: '2023',
-				groups: [
-					'A', 'B'
-				]
-			},
-			length: {
-				h: 1,
-				m: 30
-			}
-		},
-		{
-			start: new Date('Thu Mar 25 2021 14:00:31 GMT+0100 (GMT+01:00)'),
-			title: 'Cloud',
-			time: '08:00',
-			end: new Date('Thu Mar 25 2021 16:00:31 GMT+0100 (GMT+01:00)'),
-			class: {
-				speciality: 'IND',
-				promo: '2023',
-				groups: [
-					'A', 'B'
-				]
-			},
-			length: {
-				h: 1,
-				m: 30
-			}
 
-		},
-		{
-			start: new Date('Thu Mar 25 2021 14:00:31 GMT+0100 (GMT+01:00)'),
-			title: 'MAHA',
-			time: '08:00',
-			end: new Date('Thu Mar 25 2021 16:00:31 GMT+0100 (GMT+01:00)'),
-			class: {
-				speciality: 'IND',
-				promo: '2023',
-				groups: [
-					'A', 'B'
-				]
-			},
-			length: {
-				h: 1,
-				m: 30
-			},
-		}*/
 	];
 
 	icons = {
@@ -141,20 +81,41 @@ export class ProComponent implements OnInit {
 			this.getDate();
 		}, 1000);
 
+		this.load3Exams();
+	}
+	load3Exams(){
 		this.http.get(base_url + 'exams/TeacherExams3/' + this.id).subscribe(res => {
 			// @ts-ignore
 			this.exams = res;
+
 			console.log(res);
 			for(let e of this.exams){
 				e.start = new Date(this.displayDate(e.start));
 				e.end   = new Date(this.displayDate(e.end));
 			}
+			this.getMyList();
 
 		}, error => {
 
 		});
+
 	}
 
+	getMyList(){
+		let mres = []
+		let index = 0;
+		for (let x of this.exams){
+			if (x.start > new Date()){
+				x["i"] = index;
+				mres.push(x);
+				if(mres.length==3){
+					break;
+				}
+			}
+			index ++;
+		}
+		this.myList =  mres.slice(0,3);
+	}
 	getDate() {
 		this.time = new Date().toUTCString();
 	}
@@ -230,18 +191,7 @@ export class ProComponent implements OnInit {
 		return new Date(start.split("WEST")[0]+start.split("WEST")[1])
 	}
 
-	getFutureExams() {
-		let res = []
-		for (let x of this.exams){
-			if (x.start > new Date()){
-				res.push(x);
-				if(res.length==3){
-					break;
-				}
-			}
-		}
-		return res.slice(0,3);
-	}
+
 
 	showDifference(start: Date) {
 		const a = moment(start);
@@ -250,23 +200,27 @@ export class ProComponent implements OnInit {
 		const days = a.diff(b,'days');
 		const hours= a.diff(b,'hours') - (days *24);
 		const minuts= a.diff(b,'minutes') - (days*24*60 + hours*60);
-		let res = "";
+		let res = [];
 		if(days != 0){
-			res += days + "J "
+			res.push( days + " jour")
 		}
 		if(hours != 0){
-			res += hours +"h "
+			res.push(hours +" heures ")
 		}
-		res += minuts+"m"
+		res.push(minuts+" minutes");
 		return res;
 	}
 
 	changeVisibility(id: any,i) {
 		this.loaders[i] = true;
-		this.http.post(base_url+"exams/visibility/"+id,!this.exams[i].isVisible).subscribe(
-			res =>{
+		console.log(base_url+"exams/visibility/"+id,!this.exams[i].isVisible);
+		this.http.post(base_url+"exams/visibility/"+this.myList[i].id,!this.myList[i].isVisible).subscribe(
+			(res) =>{
+				console.log(res);
+
 				if(res){
-					this.exams[i].isVisible = !this.exams[i].isVisible;
+					this.exams[this.myList[i].i].isVisible = !this.exams[this.myList[i].i].isVisible;
+					this.getMyList();
 				}
 				this.loaders[i] = false;
 			}
@@ -280,10 +234,12 @@ export class ProComponent implements OnInit {
 	StartExam(id: any, i: number) {
 		this.loaders[i] = true;
 		console.log(base_url+"exams/BeginExam/"+id);
-		this.http.post(base_url+"exams/BeginExam/"+id,!this.exams[i].isStarted).subscribe(
+		this.http.post(base_url+"exams/BeginExam/"+this.myList[i].id,!this.myList[i].isStarted).subscribe(
 			res =>{
 				if(res){
-					this.exams[i].isStarted = !this.exams[i].isStarted;
+					console.log(i,this.myList[i].i,id,this.exams);
+					this.exams[this.myList[i].i].isStarted = !this.exams[this.myList[i].i].isStarted;
+					this.getMyList();
 				}
 				this.loaders[i] = false;
 			}
