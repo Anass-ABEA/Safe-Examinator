@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons';
 import {base_url} from '../../../environments/environment';
+import {CookieService} from 'ngx-cookie-service';
+import CheckCookies from '../../CheckCookies';
 
 
 @Component({
@@ -13,6 +15,7 @@ import {base_url} from '../../../environments/environment';
 
 
 export class ProgStuComponent implements OnInit {
+	id = null;
 	isScrolled = false;
 	examIntro = true; //default TRUE
 	examId = this.route.params['_value'].examId;
@@ -54,10 +57,12 @@ export class ProgStuComponent implements OnInit {
 	choices = [];
 	final= false;
 
-	constructor(private http: HttpClient, private route: ActivatedRoute) {
+	constructor(private http: HttpClient, private route: ActivatedRoute,private cookie:CookieService) {
 	}
 
 	ngOnInit(): void {
+		this.id = new CheckCookies(this.cookie).getId();
+
 		this.getExamInfo();
 		this.getExams();
 
@@ -120,6 +125,9 @@ export class ProgStuComponent implements OnInit {
 				points: 5
 			}
 		];
+		this.http.get(base_url+"exams/questions/"+this.examId).subscribe((res)=>{
+			this.questions = res;
+		})
 		this.setupChoices();
 	}
 	setupChoices(){
