@@ -15,11 +15,28 @@ import CheckCookies from '../../CheckCookies';
 
 
 export class ProgStuComponent implements OnInit {
+	/*
+	* FEEDBACK CONTENT IS STORED IN THIS VARIABLE (feedback) just send it to the database
+	* Using the function "closeExam()" at the end of the file
+	* */
+	feedback = '';
+
+
+	/*
+	* ANSWSERS of the students are stored in here (choices) just send it to the database
+	* Using the function "sendcurrentQuestion()" at the end of the file
+	* */
+	choices = [];
+	hastext = false;
 	id = null;
 	isScrolled = false;
-	examIntro = true; //default TRUE
+	examIntro = false; //default TRUE
+	notes = [];
 	examId = this.route.params['_value'].examId;
 	isStarted = true;
+	isGoodGood = false;
+	note = 0;
+	totalNotes = 0;
 	exam = {
 		title: 'EXAM TITLE',
 		profName: 'DOE J.',
@@ -32,7 +49,6 @@ export class ProgStuComponent implements OnInit {
 		warning: faExclamationTriangle
 	};
 	isReady = false;
-
 
 	focusMode = false;
 	types = {
@@ -47,21 +63,35 @@ export class ProgStuComponent implements OnInit {
 		m: 0,
 		s: 30
 	};
+
 	length = 12;
 
-	questions =[];
+	questions = [];
 	i = 0;
 
 
 	inter = null;
-	choices = [];
-	final= false;
 
-	constructor(private http: HttpClient, private route: ActivatedRoute,private cookie:CookieService) {
+	final = false;  // DEFAULT FALSE
+
+	constructor(private http: HttpClient, private route: ActivatedRoute, private cookie: CookieService) {
 	}
 
 	ngOnInit(): void {
 		this.id = new CheckCookies(this.cookie).getId();
+		//check if exam is on
+
+		this.http.get(base_url + 'exam/isExamStarted/' + this.examId).subscribe(res => {
+			// @ts-ignore
+			if (res.isOpen == false) {
+				window.open('/', '_self');
+			}
+			// @ts-ignore
+			this.isGoodGood = res.isgoodgood;
+		}, err => {
+			window.open('/', '_self');
+			alert('une erreur a survenue');
+		});
 
 		this.getExamInfo();
 		this.getExams();
@@ -79,20 +109,19 @@ export class ProgStuComponent implements OnInit {
 		this.inter = setInterval(() => {
 			this.changeDate();
 		}, 1000);
-		if (!this.isStarted) {
-			window.open('/', '_self');
-		}
+
 
 	}
-	getExamInfo(){
-		this.http.get(base_url+"exams/firstData/"+this.examId).subscribe((res)=>{
+
+	getExamInfo() {
+		this.http.get(base_url + 'exams/firstData/' + this.examId).subscribe((res) => {
 			// @ts-ignore
-			this.exam= res;
+			this.exam = res;
 		});
 	}
-	getExams(){
 
-		this.questions =  [
+	getExams() {
+		/*this.questions =  [
 			{
 				body: 'HELLO THIS IS GOING TO BE A SIMPLE EXAMPLE OF A QUESTION SO PLEASE WAIT',
 				type: 0,
@@ -124,36 +153,67 @@ export class ProgStuComponent implements OnInit {
 				type: 1,
 				points: 5
 			}
-		];
-		this.http.get(base_url+"exams/questions/"+this.examId).subscribe((res)=>{
-			this.questions = res;
-		})
-		this.setupChoices();
+		];*/
+		this.http.get(base_url + 'exams/questions/' + this.examId).subscribe((res: Array<any>) => {
+
+			this.questions = res.sort((a, b) => 0.5 - Math.random());
+			this.setupChoices(res);
+		});
 	}
-	setupChoices(){
+
+	setupChoices(res) {
 		this.choices = [];
-		for( let e of this.questions){
-			if(e.type==this.types.SHORT){
-				this.choices.push({value:""})
+		let r = 0;
+		for (let e of res) {
+			if (e.type == this.types.SHORT) {
+				this.hastext = true;
+				this.choices.push({
+					value: '',
+					index: r,
+					note: 0,
+					total: e.points
+				});
+
 			}
-			if(e.type==this.types.LONG){
-				this.choices.push({value:""})
+			if (e.type == this.types.LONG) {
+				this.hastext = true;
+				this.choices.push({
+					value: '',
+					index: r,
+					note: 0,
+					total: e.points
+				});
+
 			}
-			if(e.type==this.types.SINGLE || e.type==this.types.MULTIPLE){
+			if (e.type == this.types.MULTIPLE) {
 				let list = [];
-				for (let i=0;i<e.rep.length;i++){
+				for (let i = 0; i < e.rep.length; i++) {
 					list.push(false);
 				}
-				this.choices.push({value:list})
+				this.choices.push({
+					value: list,
+					index: r,
+					note: 0,
+					total: e.points
+				});
 			}
+			if (e.type == this.types.SINGLE) {
+				this.choices.push({
+					value: '',
+					index: r,
+					note: 0,
+					total: e.points
+				});
+			}
+			r++;
 		}
 	}
-	saveExam(){
-		console.log(this.choices);
+
+	saveExam() {
+		this.setMark();
 	}
 
 	endExam() {
-		console.log(this.choices);
 		clearInterval(this.inter);
 		this.time = {
 			h: 0,
@@ -178,7 +238,6 @@ export class ProgStuComponent implements OnInit {
 		this.examIntro = false;
 	}
 
-
 	getTimeLeft() {
 		if (this.time.h == 0) {
 			if (this.time.m == 0) {
@@ -195,7 +254,7 @@ export class ProgStuComponent implements OnInit {
 
 	getWidth() {
 		const res = this.time.s + this.time.m * 60 + this.time.h * 3600;
-		return Math.floor((res* 10000 / this.length) )/100;
+		return Math.floor((res * 10000 / this.length)) / 100;
 	}
 
 	getCompWidth() {
@@ -221,10 +280,109 @@ export class ProgStuComponent implements OnInit {
 
 	showSelection(i: number, j: number) {
 		let temp = [];
-		for(let x = 0; x < this.choices[i].value.length;x++){
+		for (let x = 0; x < this.choices[i].value.length; x++) {
 			temp.push(false);
 		}
 		this.choices[i].value = temp;
 		this.choices[i].value[j] = true;
+	}
+
+	goNext() {
+		this.setMark();
+
+		if (this.i < this.questions.length - 1) {
+			this.i++;
+		} else {
+			this.final = true;
+			clearInterval(this.inter);
+		}
+		this.sendcurrentQuestion();
+		this.calculerNote();
+
+	}
+
+	setMark() {
+		const qst = this.questions[this.i];
+		if (qst.type <= 1) {
+			this.choices[this.i].note = 0;
+			return;
+		}
+		const rep = this.choices[this.i];
+		if (qst.type == this.types.SINGLE) {
+			if (qst.rep[rep.value]) {
+				if (qst.rep[rep.value].isCorrect) {
+					this.choices[this.i].note = this.choices[this.i].total;
+				} else {
+					this.choices[this.i].note = 0;
+				}
+				return;
+			}
+			return;
+		}
+		if (this.isGoodGood) {
+			for (let r = 0; r < rep.value.length; r++) {
+				if (rep.value[r] != qst.rep[r].isCorrect) {
+					this.choices[this.i].note = 0;
+					return;
+				}
+			}
+			this.choices[this.i].note = this.choices[this.i].total;
+		} else {
+			let corre = 0;
+			let check = 0;
+			let norml = 0;
+			for (let r = 0; r < rep.value.length; r++) {
+				if (rep.value[r] == qst.rep[r].isCorrect) {
+					corre++;
+				}
+				if (rep.value[r]) {
+					check++;
+				}
+				if (qst.rep[r].isCorrect) {
+					norml++;
+				}
+			}
+			if (norml == check || norml == check + 1 || norml == check - 1) {
+				this.choices[this.i].note = Math.floor(this.choices[this.i].total * (corre / rep.value.length) * 100) / 100;
+			} else {
+				this.choices[this.i].note = 0;
+			}
+
+		}
+	}
+
+	goPrevious() {
+		this.setMark();
+		if (this.i > 0) {
+			this.i--;
+		}
+		this.calculerNote();
+		this.sendcurrentQuestion();
+	}
+
+	calculerNote() {
+		/*for(let index = 0 ; index<this.questions.length;i++){
+			this.note+=
+		}*/
+		this.note = 0;
+		this.totalNotes = 0;
+		for (let x of this.choices) {
+			this.note += x.note;
+			this.totalNotes += x.total;
+		}
+		console.log(this.note, '/', this.totalNotes);
+
+	}
+
+	closeExam() {
+		//save feedback TO THE DATABASE HERE and close;
+		window.open('/', '_self');
+	}
+	sendcurrentQuestion(){
+		// send the curent data to the database
+	}
+
+	getPourcentage() {
+		return Math.floor(this.note*10000/this.totalNotes)/100;
 	}
 }

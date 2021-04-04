@@ -60,7 +60,6 @@ export class StuOldExamsComponent implements OnInit {
 		this.http.get(base_url + 'exams/getExams/' + this.id).subscribe((res: Exams[]) => {
 			this.exams = res;
 			this.data = res;
-			console.log(res);
 		});
 	}
 

@@ -13,6 +13,7 @@
 .title{
 	margin-bottom: 20px;
 }
+
 .title:after{
 	content: '';
 	width: 100px;
@@ -30,8 +31,6 @@
 	color: white;
 	max-width: 300px;
 }
-
-
 
 .container-exam{
 	position: absolute;
@@ -108,5 +107,14 @@
 
 input[type="text"]:focus,textarea:focus{
 	border:solid 1px #1b3868;
+	box-shadow: 0 0 2px 1px #1b3868;
+}
+.btn-primary{
+	background-color:#1b3868;
+}
+.btn-primary:active{
+	background-color:#1b3868!important;
+}
+.btn-primary:focus{
 	box-shadow: 0 0 2px 1px #1b3868;
 }

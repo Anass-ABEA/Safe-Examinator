@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
   openRegister() {
-    console.log('REGSTERING');
+    //console.log('REGSTERING');
 
   }
 }

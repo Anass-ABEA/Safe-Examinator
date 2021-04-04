@@ -88,7 +88,6 @@ export class ProComponent implements OnInit {
 			// @ts-ignore
 			this.exams = res;
 
-			console.log(res);
 			for(let e of this.exams){
 				e.start = new Date(this.displayDate(e.start));
 				e.end   = new Date(this.displayDate(e.end));
@@ -146,7 +145,7 @@ export class ProComponent implements OnInit {
 
 
 	show(column: any) {
-		console.log(column);
+		// console.log(column);
 	}
 
 	showGroups(groups: { [p: string]: string }) {
@@ -203,9 +202,13 @@ export class ProComponent implements OnInit {
 		let res = [];
 		if(days != 0){
 			res.push( days + " jour")
+		}else{
+			res.push("  ")
 		}
 		if(hours != 0){
 			res.push(hours +" heures ")
+		}else{
+			res.push("  ")
 		}
 		res.push(minuts+" minutes");
 		return res;
@@ -213,10 +216,8 @@ export class ProComponent implements OnInit {
 
 	changeVisibility(id: any,i) {
 		this.loaders[i] = true;
-		console.log(base_url+"exams/visibility/"+id,!this.exams[i].isVisible);
 		this.http.post(base_url+"exams/visibility/"+this.myList[i].id,!this.myList[i].isVisible).subscribe(
 			(res) =>{
-				console.log(res);
 
 				if(res){
 					this.exams[this.myList[i].i].isVisible = !this.exams[this.myList[i].i].isVisible;
@@ -233,11 +234,9 @@ export class ProComponent implements OnInit {
 
 	StartExam(id: any, i: number) {
 		this.loaders[i] = true;
-		console.log(base_url+"exams/BeginExam/"+id);
 		this.http.post(base_url+"exams/BeginExam/"+this.myList[i].id,!this.myList[i].isStarted).subscribe(
 			res =>{
 				if(res){
-					console.log(i,this.myList[i].i,id,this.exams);
 					this.exams[this.myList[i].i].isStarted = !this.exams[this.myList[i].i].isStarted;
 					this.getMyList();
 				}
