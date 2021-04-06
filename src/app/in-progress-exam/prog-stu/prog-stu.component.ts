@@ -28,9 +28,11 @@ export class ProgStuComponent implements OnInit {
 	* */
 	choices = [];
 	hastext = false;
+	startDate = null;
+	endDate = null;
 	id = null;
 	isScrolled = false;
-	examIntro = false; //default TRUE
+	examIntro = true; //default TRUE
 	notes = [];
 	examId = this.route.params['_value'].examId;
 	isStarted = true;
@@ -57,11 +59,12 @@ export class ProgStuComponent implements OnInit {
 		MULTIPLE: 2,
 		SINGLE: 3,
 		FILE: 4
+
 	};
 	time = {
-		h: 1,
-		m: 0,
-		s: 30
+		h: 0,
+		m: 2,
+		s: 0
 	};
 
 	length = 12;
@@ -168,6 +171,7 @@ export class ProgStuComponent implements OnInit {
 			if (e.type == this.types.SHORT) {
 				this.hastext = true;
 				this.choices.push({
+					type:e.type,
 					value: '',
 					index: r,
 					note: 0,
@@ -178,6 +182,7 @@ export class ProgStuComponent implements OnInit {
 			if (e.type == this.types.LONG) {
 				this.hastext = true;
 				this.choices.push({
+					type:e.type,
 					value: '',
 					index: r,
 					note: 0,
@@ -191,6 +196,7 @@ export class ProgStuComponent implements OnInit {
 					list.push(false);
 				}
 				this.choices.push({
+					type:e.type,
 					value: list,
 					index: r,
 					note: 0,
@@ -199,6 +205,7 @@ export class ProgStuComponent implements OnInit {
 			}
 			if (e.type == this.types.SINGLE) {
 				this.choices.push({
+					type:e.type,
 					value: '',
 					index: r,
 					note: 0,
@@ -221,6 +228,7 @@ export class ProgStuComponent implements OnInit {
 			s: 0
 		};
 		this.final = true;
+		this.endDate= new Date();
 	}
 
 	changeDate() {
@@ -236,6 +244,7 @@ export class ProgStuComponent implements OnInit {
 
 	getStarted() {
 		this.examIntro = false;
+		this.startDate = new Date();
 	}
 
 	getTimeLeft() {
@@ -295,6 +304,11 @@ export class ProgStuComponent implements OnInit {
 		} else {
 			this.final = true;
 			clearInterval(this.inter);
+			this.endDate= new Date();
+			console.log(this.totalNotes);
+			console.log(this.note);
+			console.log(this.choices);
+			console.log(this.questions);
 		}
 		this.sendcurrentQuestion();
 		this.calculerNote();
@@ -375,14 +389,28 @@ export class ProgStuComponent implements OnInit {
 	}
 
 	closeExam() {
-		//save feedback TO THE DATABASE HERE and close;
+		this.http.post(base_url + '/exams/' + this.examId + '/feedback/' + this.id, this.feedback).subscribe(res => {
+			console.log(res, this.feedback);
+		});
 		window.open('/', '_self');
 	}
-	sendcurrentQuestion(){
+
+	sendcurrentQuestion() {
+		console.clear();
+		const data = {
+			id: this.id,
+			startDate: this.startDate,
+			endDate: this.endDate,
+			reponses: this.choices
+		};
+		console.log(data);
 		// send the curent data to the database
+		this.http.post(base_url + 'exams/updateresult/' + this.examId, data).subscribe(res => {
+			console.log(res);
+		});
 	}
 
 	getPourcentage() {
-		return Math.floor(this.note*10000/this.totalNotes)/100;
+		return Math.floor(this.note * 10000 / this.totalNotes) / 100;
 	}
 }
