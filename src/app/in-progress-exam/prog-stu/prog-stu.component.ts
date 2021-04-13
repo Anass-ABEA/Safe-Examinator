@@ -5,6 +5,7 @@ import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons';
 import {base_url} from '../../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
 import CheckCookies from '../../CheckCookies';
+import * as moment from 'moment';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class ProgStuComponent implements OnInit {
 	* */
 	feedback = '';
 
-
+	width = 20;
 	/*
 	* ANSWSERS of the students are stored in here (choices) just send it to the database
 	* Using the function "sendcurrentQuestion()" at the end of the file
@@ -42,7 +43,7 @@ export class ProgStuComponent implements OnInit {
 	exam = {
 		title: 'EXAM TITLE',
 		profName: 'DOE J.',
-		length: '1h30',
+		len: '1h30',
 		tries: '1',
 		nbrQuestions: '20',
 		isFraudOn: true,
@@ -72,17 +73,23 @@ export class ProgStuComponent implements OnInit {
 	questions = [];
 	i = 0;
 
-
+	CHEATER= false;
+	frauded = [];
 	inter = null;
-
+	allowStart = true;
 	final = false;  // DEFAULT FALSE
 
 	constructor(private http: HttpClient, private route: ActivatedRoute, private cookie: CookieService) {
 	}
 
 	ngOnInit(): void {
+
 		this.id = new CheckCookies(this.cookie).getId();
 		//check if exam is on
+
+		this.http.get(base_url+`/exam/isPassed/${this.id}/${this.examId}`).subscribe(res=>{
+			this.allowStart = !res;
+		})
 
 		this.http.get(base_url + 'exam/isExamStarted/' + this.examId).subscribe(res => {
 			// @ts-ignore
@@ -120,43 +127,12 @@ export class ProgStuComponent implements OnInit {
 		this.http.get(base_url + 'exams/firstData/' + this.examId).subscribe((res) => {
 			// @ts-ignore
 			this.exam = res;
+			this.getTime(res);
 		});
 	}
 
 	getExams() {
-		/*this.questions =  [
-			{
-				body: 'HELLO THIS IS GOING TO BE A SIMPLE EXAMPLE OF A QUESTION SO PLEASE WAIT',
-				type: 0,
-				points: 10
 
-			},
-			{
-				body: 'HELLO THIS IS GOING TO BE A SIMPLE EXAMPLE OF A QUESTION SO PLEASE WAIT',
-				type: 2,
-				points: 7,
-				rep: [
-					{val:"lorem",isCorrect:false},
-					{val:"lorem",isCorrect:false},
-					{val:"lorem",isCorrect:false},
-				]
-			},
-			{
-				body: 'HELLO THIS IS GOING TO BE A SIMPLE EXAMPLE OF A QUESTION SO PLEASE WAIT',
-				type: 3,
-				points: 3,
-				rep: [
-					{val:"lorem",isCorrect:false},
-					{val:"lorem",isCorrect:false},
-					{val:"lorem",isCorrect:false},
-				]
-			},
-			{
-				body: 'HELLO THIS IS GOING TO BE A SIMPLE EXAMPLE OF A QUESTION SO PLEASE WAIT',
-				type: 1,
-				points: 5
-			}
-		];*/
 		this.http.get(base_url + 'exams/questions/' + this.examId).subscribe((res: Array<any>) => {
 
 			this.questions = res.sort((a, b) => 0.5 - Math.random());
@@ -168,9 +144,11 @@ export class ProgStuComponent implements OnInit {
 		this.choices = [];
 		let r = 0;
 		for (let e of res) {
+			this.frauded.push(false);
 			if (e.type == this.types.SHORT) {
 				this.hastext = true;
 				this.choices.push({
+					isCheating:false,
 					type:e.type,
 					value: '',
 					index: r,
@@ -182,6 +160,7 @@ export class ProgStuComponent implements OnInit {
 			if (e.type == this.types.LONG) {
 				this.hastext = true;
 				this.choices.push({
+					isCheating:false,
 					type:e.type,
 					value: '',
 					index: r,
@@ -196,6 +175,7 @@ export class ProgStuComponent implements OnInit {
 					list.push(false);
 				}
 				this.choices.push({
+					isCheating:false,
 					type:e.type,
 					value: list,
 					index: r,
@@ -205,6 +185,7 @@ export class ProgStuComponent implements OnInit {
 			}
 			if (e.type == this.types.SINGLE) {
 				this.choices.push({
+					isCheating:false,
 					type:e.type,
 					value: '',
 					index: r,
@@ -243,8 +224,15 @@ export class ProgStuComponent implements OnInit {
 	}
 
 	getStarted() {
+		window.onblur = ()=>{
+			this.frauded[this.i] = true;
+			this.choices[this.i].isCheating = true;
+		}
 		this.examIntro = false;
 		this.startDate = new Date();
+		this.http.get(base_url+"exams/addToStudent/"+this.id+"/"+this.examId).subscribe(res=>{
+			console.log(res);
+		});
 	}
 
 	getTimeLeft() {
@@ -397,10 +385,14 @@ export class ProgStuComponent implements OnInit {
 
 	sendcurrentQuestion() {
 		console.clear();
+		const st  = moment(this.startDate).lang('fr').format('DD/MM/YYYY hh:mm:ss');;
+		const en  = moment(this.endDate).lang('fr').format('DD/MM/YYYY hh:mm:ss');
+
+
 		const data = {
 			id: this.id,
-			startDate: this.startDate,
-			endDate: this.endDate,
+			startDate: st,
+			endDate: en,
 			reponses: this.choices
 		};
 		console.log(data);
@@ -412,5 +404,20 @@ export class ProgStuComponent implements OnInit {
 
 	getPourcentage() {
 		return Math.floor(this.note * 10000 / this.totalNotes) / 100;
+	}
+
+	private getTime(res) {
+		const length = this.exam.len.split("h");
+		const h = length[0];
+		const m = length[1];
+
+		this.time = {
+			h: Number(h),
+			m: Number(m),
+			s: 0
+		};
+
+		this.length= this.time.s + this.time.m * 60 + this.time.h * 3600
+		this.width = this.getWidth();
 	}
 }

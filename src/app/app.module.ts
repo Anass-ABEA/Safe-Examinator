@@ -41,6 +41,7 @@ import { NewExamComponent } from './new-exam/new-exam.component';
 import { InProgressExamComponent } from './in-progress-exam/in-progress-exam.component';
 import { ProgStuComponent } from './in-progress-exam/prog-stu/prog-stu.component';
 import { ProgProComponent } from './in-progress-exam/prog-pro/prog-pro.component';
+import { TestComponent } from './test/test.component';
 
 export function momentAdapterFactory() {
 	return adapterFactory(moment);
@@ -74,7 +75,8 @@ export function momentAdapterFactory() {
 		NewExamComponent,
 		InProgressExamComponent,
 		ProgStuComponent,
-		ProgProComponent
+		ProgProComponent,
+		TestComponent
 	],
 	imports: [
 		HttpClientModule,

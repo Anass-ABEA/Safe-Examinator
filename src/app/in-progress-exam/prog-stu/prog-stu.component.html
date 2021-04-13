@@ -19,7 +19,7 @@
 						Durée de L'examen :
 					</th>
 					<td>
-						{{exam.length}}
+						{{exam.len}}
 					</td>
 				</tr>
 
@@ -54,13 +54,13 @@
 				</div>
 			</div>
 			<div class="starter px-5" [style]="exam.isFraudOn? {}:{'flex':'1',    'writing-mode': 'vertical-rl'}">
-				<button class="btn btn-success w-100 mx-auto align-self-center" (click)="getStarted()">Commencer</button>
+				<button class="btn btn-success w-100 mx-auto align-self-center" [disabled]="allowStart" (click)="getStarted()">Commencer</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="container-fluid " [class.container-exam]="focusMode">
+<div class="container-fluid " [class.container-exam]="focusMode" >
 	<div class="container  my-5" *ngIf="!examIntro && !final">
 		<div class="timer-left text-center" *ngIf="isScrolled">
 			<circle-progress class="inner-progress"
@@ -81,10 +81,10 @@
 			<div class="col-12 exam-head position-relative ">
 				<div class="time-line" [ngStyle]="{'width':getWidth()+'%','background-color': getColor()}"></div>
 				<div class="timer py-2 text-center">
-					temps restant:
+					<span  [ngStyle]="{color:frauded[i]?'red':'black'}" ><span *ngIf="frauded[i]">Fraude Detectée || </span>temps restant:
 					<strong>
 						{{getTimeLeft()}}
-					</strong>
+					</strong></span>
 					<!--					[ngStyle]="{'width':getWidth()%,'transform': 'translateX({{getCompWidth()}}%)}'"-->
 				</div>
 				<div class=" position-absolute d-none" style="right: 20px;top: 50%; transform: translateY(-50%)">
@@ -171,7 +171,7 @@
 						Durée de L'examen :
 					</th>
 					<td>
-						{{exam.length}}
+						{{exam.len}}
 					</td>
 				</tr>
 
@@ -210,7 +210,7 @@
 				</div>
 			</div>
 			<div class="starter px-5" [style]="exam.isFraudOn? {}:{'flex':'1',    'writing-mode': 'vertical-rl'}">
-				<button class="btn btn-primary w-100 mx-auto align-self-center" (click)="closeExam()">Terminer</button>
+				<button class="btn btn-primary w-100 mx-auto align-self-center" (click)="closeExam()" [disabled]="feedback.length==0">Terminer</button>
 			</div>
 		</div>
 	</div>
