@@ -1,0 +1,35 @@
+.examsContent{
+	border-radius:5px;
+	box-shadow:0 0  14px 0 grey;
+}
+.orange{
+	background:orange;
+}
+
+.red{
+	background:red;
+}
+
+.banned{
+	background: #d68888;
+}
+.key-orange,.key-red{
+	position:relative;
+}
+.key-orange:after{
+	content:' ';
+	position:absolute;
+	left: 0;
+	top: 0;
+	height:24px;
+	width:24px;
+	background:orange;
+}
+.key-red:after{
+	content:' ';
+	position:absolute;
+	left: 0;
+	height:24px;
+	width:24px;
+	background:red;
+}

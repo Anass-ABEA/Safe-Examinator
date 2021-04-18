@@ -62,9 +62,13 @@
 								<fa-icon [icon]="icons.visible"></fa-icon> {{exam.isStarted? 'Arréter':'Commencer'}}
 							</button>
 
-							<button class="btn d-f  btn-classic"  (click)="openExam(exam.id)">
+							<button class="btn d-f  btn-classic"  *ngIf="!exam.isStarted" (click)="openExam(exam.id)">
 								<fa-icon [icon]="icons.pen"></fa-icon> Modifier
 							</button>
+							<button class="btn d-f  btn-classic" *ngIf="exam.isStarted" (click)="superviseExam(exam.id)">
+								<fa-icon [icon]="icons.eye"></fa-icon> Superviser
+							</button>
+
 
 
 

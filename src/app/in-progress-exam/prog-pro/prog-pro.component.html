@@ -1,1 +1,75 @@
-<p>prog-pro works!</p>
+<div class="container my-5 p-md-3 examsContent">
+	<div class="row">
+		<div class="col-12  text-center">
+				<h2>Examen : {{exam.title}}</h2>
+		</div>
+		<div class="col-8 py-4">
+			<table class="w-100">
+				<tr>
+					<th>Promotion</th>
+					<th>Génie</th>
+					<th>Groupes</th>
+					<th>Date & Heure de début</th>
+				</tr>
+				<tr>
+					<td>
+						{{exam.target.promo}}
+					</td>
+					<td>
+						{{exam.target.genie}}
+					</td>
+					<td>
+						{{exam.target.grps}}
+					</td>
+					<td>
+						{{getExamDate()}}
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-4 py-4 text-center align-self-center">
+			<h4>({{connectedStud.length}}) étudiants connectés</h4>
+			<div>
+				<div class="key-orange">Question courante</div>
+				<div class="key-red" >Fraude détecté</div>
+			</div>
+		</div>
+
+		<div class="col-12">
+			<table class="w-100 table table-striped table-bordered">
+				<tr style="background:#d9d9d9;">
+					<th>Début</th>
+					<th>Nom de l'étudiant</th>
+					<th>Note</th>
+					<th *ngFor="let x of [].constructor(exam.qstCount);let i = index">Q #{{i+1}}</th>
+					<th>Fin</th>
+					<th>Bannir</th>
+				</tr>
+				<tr *ngFor="let stud of connectedStud; let ind = index;" [class.banned] = stud.isbanned>
+					<td>
+						{{getStartDate(stud.start)}}
+					</td>
+					<td>
+						{{stud.name}}
+					</td>
+					<td>
+						{{calculateNote(stud.note)}}
+					</td>
+					<td *ngFor="let x of [].constructor(exam.qstCount);let i = index">
+						<div [class.orange]="i==stud.qstCourante" [class.red]="stud.answers[i].isFraud">
+							&nbsp;
+						</div>
+					</td>
+					<td>
+						{{getEnd(stud.end)}}
+					</td>
+					<td>
+						<button class="btn w-100 btn-danger" (click)="banStudent(stud.id,ind)"><fa-icon [icon]="icons.ban"></fa-icon> </button>
+					</td>
+				</tr>
+
+
+			</table>
+		</div>
+	</div>
+</div>

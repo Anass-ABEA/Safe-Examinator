@@ -69,6 +69,8 @@ export class ProComponent implements OnInit {
 		exam: faTasks,
 		minus: faMinus,
 		pen : faPen,
+		eye: faEye
+
 
 	};
 
@@ -243,5 +245,9 @@ export class ProComponent implements OnInit {
 				this.loaders[i] = false;
 			}
 		)
+	}
+
+	superviseExam(id: any) {
+		window.open("/exam/"+id,"_self");
 	}
 }

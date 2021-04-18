@@ -83,7 +83,6 @@ export class ProgStuComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-
 		this.id = new CheckCookies(this.cookie).getId();
 		//check if exam is on
 
@@ -292,6 +291,9 @@ export class ProgStuComponent implements OnInit {
 		} else {
 			this.final = true;
 			clearInterval(this.inter);
+			window.onblur = ()=>{
+				console.log("BLURRR");
+			}
 			this.endDate= new Date();
 			console.log(this.totalNotes);
 			console.log(this.note);
@@ -385,17 +387,18 @@ export class ProgStuComponent implements OnInit {
 
 	sendcurrentQuestion() {
 		console.clear();
-		const st  = moment(this.startDate).lang('fr').format('DD/MM/YYYY hh:mm:ss');;
-		const en  = moment(this.endDate).lang('fr').format('DD/MM/YYYY hh:mm:ss');
+		const st  = moment(this.startDate).lang('fr').format('DD/MM/YYYY HH:mm:ss');;
+		const en  = moment(this.endDate).lang('fr').format('DD/MM/YYYY HH:mm:ss');
 
 
 		const data = {
 			id: this.id,
 			startDate: st,
 			endDate: en,
-			reponses: this.choices
+			reponses: this.choices,
+			currentQst:this.choices[this.i].index
 		};
-		console.log(data);
+		console.log(this.choices[this.i].index,"data to be sent", data);
 		// send the curent data to the database
 		this.http.post(base_url + 'exams/updateresult/' + this.examId, data).subscribe(res => {
 			console.log(res);
