@@ -14,18 +14,18 @@ import has = Reflect.has;
   styleUrls: ['./stu-profile.component.css']
 })
 export class StuProfileComponent implements OnInit {
-
+	id = "";
   constructor(private cookie:CookieService,private http:HttpClient) { }
 	password = "5f4dcc3b5aa765d61d8327deb882cf99";
   val1 = false;
 	confirmChange = false;
   data = {
-  	fname : "John",
-		lname : 'DOE',
-		groupe: 'A',
-		year : '2023',
-		genie: "Informatique",
-		email:"johndoe@student.emi.ac.ma"
+  	fname : "N/A",
+		lname : 'N/A',
+		groupe: 'N/A',
+		year : 'N/A',
+		genie: "N/A",
+		email:"N/A"
 	}
 	credentials = {
   	passwordOld : "",
@@ -35,6 +35,11 @@ export class StuProfileComponent implements OnInit {
 	verified = false;
 
   ngOnInit(): void {
+  	this.id = new CheckCookies(this.cookie).getId();
+		this.http.get(base_url+"student/profileDetails/"+this.id).subscribe(res=>{
+			// @ts-ignore
+			this.data = res;
+		})
   }
 
   // password is = "password"

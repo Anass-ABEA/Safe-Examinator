@@ -49,16 +49,23 @@ time {
 }
 
 .list-exams{
-	background-color: #1b3868;
-	padding: 30px 0 ;
 	margin-top: 30px;
+	padding: 5px 0 20px 0;
+	border: solid #1b3868 2px;
 	border-radius: 5px;
+	background-color: #f7f7f7;
+
 }
 .examCard{
 	margin:10px 0;
 	background-color: white;
 	border-radius: 5px;
 	padding: 10px;
+	box-shadow : 0 0 14px 0 #86868670;
+}
+
+.table th,td{
+	color:black;
 }
 
 .details{
@@ -69,7 +76,6 @@ time {
 	width: 96%;
 	border-radius: 0 0 5px 5px;
 	padding-top: 8px;
-
 }
 
 .animate:hover{
@@ -100,4 +106,9 @@ time {
 .spliter{
 	border-left:solid 2px black;
 	padding-left:20px;
+}
+
+.nth-to-see{
+	border:solid 3px #7ac4d3;
+	border-radius:10px;
 }

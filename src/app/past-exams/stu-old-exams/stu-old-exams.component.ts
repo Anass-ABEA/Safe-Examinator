@@ -88,7 +88,7 @@ export class StuOldExamsComponent implements OnInit {
 	}
 
 	openExam(id: string) {
-		window.open('/exams/past_exams/' + id, '_self');
+		window.open('/examResults/' + id, '_self');
 	}
 
 	displayDate(start: string) {

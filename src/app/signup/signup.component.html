@@ -43,13 +43,13 @@
 				<div class="row">
 
 					<div class="col-12 col-md-6 input-dialog">
-						<input [(ngModel)]="credentials.prenom" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
+						<input [(ngModel)]="credentials.student.fname" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
 
 									 type="text" class="form-control" aria-label="Prenom"
 									 placeholder="Prenom">
 					</div>
 					<div class="col-12 col-md-6 input-dialog">
-						<input [(ngModel)]="credentials.nom" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
+						<input [(ngModel)]="credentials.student.lname" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
 									 type="text" class="form-control" aria-label="Nom"
 									 placeholder="Nom">
 					</div>
@@ -59,7 +59,7 @@
 									 placeholder="{{isProf? 'x@emi.ac.ma':'x@student.emi.ac.ma'}}">
 					</div>
 					<div class="col-12 input-dialog">
-						<input [(ngModel)]="credentials.password" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
+						<input [(ngModel)]="credentials.student.password" [class.borders-prof]="!isProf" [class.borders-student]="isProf"
 									 type="{{viewPassword? 'text': 'password'}}"  class="form-control" aria-label="password" [class.malert]="validatePassword()"
 									 placeholder="Mot de passe">
 						<div class="iconShowPwd" (click)="viewPassword=!viewPassword" >
@@ -78,14 +78,14 @@
 					</div>
 					<ng-container *ngIf="!isProf">
 						<div class="col input-dialog">
-							<select class="custom-select mr-sm-2" id="inlineFormCustomSelect"  [(ngModel)]="credentials.promotion" [class.malert]="validate('promo')">
+							<select class="custom-select mr-sm-2" id="inlineFormCustomSelect"  [(ngModel)]="credentials.student.classe.year" [class.malert]="validate('promo')">
 								<option selected>Promotion...</option>
 								<option *ngFor="let date of getDates()">{{date}}</option>
 							</select>
 						</div>
 						<div class="col input-dialog">
 
-							<select class="custom-select mr-sm-2" id="inlineFormCustomSelect2" [(ngModel)]="credentials.genie" [class.malert]="validate('genie')">
+							<select class="custom-select mr-sm-2" id="inlineFormCustomSelect2" [(ngModel)]="credentials.student.classe.specialty" [class.malert]="validate('genie')">
 								<option selected>Génie...</option>
 								<option>Civil</option>
 								<option>Electrique</option>
@@ -99,7 +99,7 @@
 							</select>
 						</div>
 						<div class="col input-dialog">
-							<select class="custom-select mr-sm-2" id="inlineFormCustomSelect3"  [(ngModel)]="credentials.groupe" [class.malert]="validate('groupe')">
+							<select class="custom-select mr-sm-2" id="inlineFormCustomSelect3"  [(ngModel)]="credentials.groupsAffichage" [class.malert]="validate('groupe')">
 								<option selected>Groupe...</option>
 								<option value="0">A</option>
 								<option value="A">B</option>

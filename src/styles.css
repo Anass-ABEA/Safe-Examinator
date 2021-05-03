@@ -25,3 +25,7 @@ html,body{
 html{
 	scroll-behavior: smooth;
 }
+
+circle-progress svg{
+	max-width:200px;
+}

@@ -11,49 +11,10 @@
 				</div>
 			</div>
 		</div>
-		<div class=" emi row">
-
-			<div class="dark text-white">
-				<div class="col-6 d-none d-md-inline-block">
-					Ecole Mohammadia D'ingénieurs
-				</div>
-				<div class="col-12 col-md-6 text-center text-md-right ">
-					<div class="time">
-						{{time}}
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<div class="fill mb-3">
-		<h2 class="text-white text-center">Bonjour {{fullName}}</h2>
-		<div class="holder">
-			<div class="item">
-				<div class="item-content ">
-					Examens Passés
-					<span class="text-primary">
-						{{homeValues.passed}}
-					</span>
-				</div>
-			</div>
-			<div class="item">
-				<div class="item-content">
-					Examens réussis
-					<span class=" text-success">
-						{{homeValues.succeeded}}
-					</span>
-				</div>
-			</div>
-			<div class="item">
-				<div class="item-content ">
-					Note Moyenne
-					<span class="text-warning">
-						{{homeValues.avg}}
-					</span>
-				</div>
-			</div>
-		</div>
+		<h2 class="text-white text-center">Bonjour, {{fullName}}</h2>
 	</div>
 
 	<div class="row">
@@ -62,7 +23,7 @@
 				<h2 class="text-center">Examens Proches</h2>
 				<div class="row text-center exams-holder mb-5">
 					<div class="col-12 col-sm-6 col-md-4 offset-sm-3 offset-md-4" *ngIf="closeExams.length==0">
-						<img src="assets/nothing.png" class="w-100">
+						<img src="assets/nthing2.png" style="border:solid 3px #7ac4d3;	border-radius:10px;" class="w-100">
 						<h2>Aucun examens n'a été programmé</h2>
 					</div>
 					<ng-container *ngFor="let exam of closeExams">
@@ -104,13 +65,13 @@
 	</div>
 
 
-	<div class="row m-4">
+	<div class="row m-4" [class.d-none]="top3.length==0">
 		<div class="col-12 mb-4">
 			<h2 class="text-center">Mes Meilleurs Résultats</h2>
 		</div>
 
 
-		<div class="top-element col col-md-4" *ngFor="let x of top3">
+		<div class="top-element col m-auto col-md-4" *ngFor="let x of top3">
 			<div class="top-element-x">
 				<div class="row first-part-top pt-3">
 					<div class="element-mark">

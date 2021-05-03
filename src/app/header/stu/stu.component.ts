@@ -45,7 +45,7 @@ export class StuComponentHeader implements OnInit {
 		if(window.location.pathname.includes("exams/past_exams")){
 			this.active=1;
 		}else{
-			if(window.location.pathname.includes("results")){
+			if(window.location.pathname.includes("examResults")){
 				this.active=2;
 			}else{
 				if(window.location.pathname.length<2){

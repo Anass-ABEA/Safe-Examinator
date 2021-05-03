@@ -229,7 +229,14 @@ export class NewExamComponent implements OnInit {
 		}
 
 		this.http.post(base_url+"newExam/"+this.id,data).subscribe(res=>{
-
+				// @ts-ignore
+			if(res.isAdded){
+					alert("Votre examen a été ajouté avec succes");
+					window.open("/","_self");
+				}else{
+					// @ts-ignore
+				alert(res.Error);
+				}
 
 		})
 	}

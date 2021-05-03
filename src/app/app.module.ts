@@ -42,6 +42,9 @@ import { InProgressExamComponent } from './in-progress-exam/in-progress-exam.com
 import { ProgStuComponent } from './in-progress-exam/prog-stu/prog-stu.component';
 import { ProgProComponent } from './in-progress-exam/prog-pro/prog-pro.component';
 import { TestComponent } from './test/test.component';
+import { ExamResultsComponent } from './exam-results/exam-results.component';
+import { ExamResultsStudComponent } from './exam-results/exam-results-stud/exam-results-stud.component';
+import { ExamResultsProfComponent } from './exam-results/exam-results-prof/exam-results-prof.component';
 
 export function momentAdapterFactory() {
 	return adapterFactory(moment);
@@ -76,7 +79,10 @@ export function momentAdapterFactory() {
 		InProgressExamComponent,
 		ProgStuComponent,
 		ProgProComponent,
-		TestComponent
+		TestComponent,
+		ExamResultsComponent,
+		ExamResultsStudComponent,
+		ExamResultsProfComponent
 	],
 	imports: [
 		HttpClientModule,

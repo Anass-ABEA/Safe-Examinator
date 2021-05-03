@@ -9,9 +9,9 @@
 
 	<div class="exams-parent m-md-4 my-5">
 		<h2 class="text-center title">Examens Créés</h2>
-		<div class="row text-center exams-holder mb-5">
+		<div class="row text-center exams-holder mb-5" *ngIf="myList.length!=0">
 			<ng-container *ngFor="let exam of myList; let i = index;">
-				<div class="col-12 col-md-6 col-lg-5 p-2" [class.m-md-auto]="myList.length<3">
+				<div class="col-12 col-md-6 m-auto col-lg-5 p-2" [class.m-md-auto]="myList.length<3">
 					<div class="  exam-element p-2"  >
 						<div class="row text-left">
 							<div class="col-12 mb-2 text-center mcard-header">
@@ -85,6 +85,10 @@
 
 			</ng-container>
 
+		</div >
+		<div class="col-12 col-sm-6 col-md-4 offset-sm-3 offset-md-4" *ngIf="myList.length==0">
+			<img src="assets/nthing2.png" style="border:solid 3px #7ac4d3;	border-radius:10px;" class="w-100">
+			<h2>Aucun examens n'a été créé</h2>
 		</div>
 	</div>
 

@@ -1,0 +1,56 @@
+<div class="container pt-5">
+
+	<div class="row">
+		<div class="col-12 text-center">
+			<h3>Examen : {{exam.title}}</h3>
+		</div>
+		<div class="col-12 col-lg-8 top-icon align-self-center">
+
+			<table class="table">
+				<tr>
+					<th>Matière</th>
+					<td>{{exam.title}}</td>
+				</tr>
+				<tr>
+					<th>Date</th>
+					<td>{{exam.date}}</td>
+				</tr>
+				<tr>
+					<th>Heure</th>
+					<td>{{exam.title}}</td>
+				</tr>
+				<tr>
+					<th>Durée</th>
+					<td>{{exam.length.h}} h {{exam.length.m}} min</td>
+				</tr>
+				<tr>
+					<th>Professeur</th>
+					<td>{{exam.prof}}</td>
+				</tr>
+				<tr>
+					<th>Email Professeur</th>
+					<td><a href="mailto:{{exam.profEmail}}">{{exam.profEmail}}</a></td>
+				</tr>
+
+			</table>
+		</div>
+
+		<div class="col-12 col-lg-4 top-icon text-center align-self-center">
+			<h4 class="text-center" >Note de l'examen:</h4>
+			<circle-progress
+				[percent]="exam.note*100/exam.total"
+				[radius]="60"
+				[subtitle]="getString(exam.note, exam.total)"
+				[showSubtitle]="true"
+				[animateSubtitle]="true"
+				[showTitle]="true"
+				[subtitleColor]="'#1fd723'"
+				[responsive]="true"
+				[animation]="true">
+
+			</circle-progress>
+		</div>
+
+	</div>
+
+</div>
