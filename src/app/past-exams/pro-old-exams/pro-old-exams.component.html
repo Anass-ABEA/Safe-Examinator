@@ -35,9 +35,12 @@
 								<strong class="mr-3"> Par Page</strong>
 							</div>
 						</div>
+						<div class="offset-md-4 col-md-4 col-12 text-center" *ngIf="cardsNew.length==0">
+							<img class="w-100" src="assets/nthing2.png" alt="">
+						</div>
 						<ng-container
-							*ngFor="let card of cardsNew  | paginate: {id:'second',itemsPerPage: itemsPerPageNew, currentPage: pageNew }">
-							<div class="col-12 col-md-6 col-lg-4 element "
+							*ngFor="let card of cardsNew  | paginate: {id:'second',itemsPerPage: itemsPerPageNew, currentPage: pageNew } let i = index;">
+							<div class="col-12 col-md-6 m-auto col-lg-4 element "
 									 *animIf="isCardsNew; info: { startAnim: 'bounceIn', endAnim: 'fadeOut', time: 500 }">
 
 								<div class="row bg-white m-0">
@@ -56,7 +59,7 @@
 										<strong>
 											<fa-icon [icon]="icons.length"></fa-icon>
 											Durée: </strong>
-										{{displayLength(card.start, card.end)}}
+										{{card.length}}
 									</div>
 
 									<div class="col-12 col-md-6">
@@ -69,13 +72,16 @@
 										<strong>
 											<fa-icon [icon]="icons.group"></fa-icon>
 											Groupe(s):</strong>
-										<span *ngFor="let grp of card.class.groups"> {{grp}} </span>
+										<span> {{card.class.groups}} </span>
 									</div>
 
+									<div class="col-12 text-center incomming-exams">
+										<button class="btn " (click)="changeVisibility(card.id,card.visible,i)"> <fa-icon [icon]="!card.visible? icons.eye:icons.noEye"></fa-icon> rendre {{card.visible? "Invisible":"Visible"}}</button>
+										<button class="btn " (click)="startExam(card.id,card.started,i)"> <fa-icon [icon]="!card.started? icons.check:icons.close"></fa-icon> {{card.started? "Arreter":"Démarer"}} l'examen</button>
+										<button class="btn " (click)="editExam(card.id)"> <fa-icon [icon]="icons.pen"></fa-icon> Modifier l'examen</button>
+									</div>
 								</div>
-								<div class="bottom-element ">
-									<button class="btn animate" (click)="openExam(card.id)">Plus de détails</button>
-								</div>
+
 							</div>
 
 						</ng-container>
@@ -92,16 +98,18 @@
 									<th scope="col"></th>
 								</tr>
 								<ng-container
-									*ngFor="let card of cardsNew  | paginate: {id:'second', itemsPerPage: itemsPerPageNew, currentPage: pageNew }">
+									*ngFor="let card of cardsNew  | paginate: {id:'second', itemsPerPage: itemsPerPageNew, currentPage: pageNew }; let i = index">
 									<tr *animIf="!isCardsNew; info: { startAnim: 'fadeInUp', endAnim: 'fadeOutUp', time: 500}">
 										<td>{{card.title}}</td>
 										<td>{{displayDate(card.start)}}</td>
-										<td>{{displayLength(card.start, card.end)}}</td>
+										<td>{{card.length}}</td>
 										<td>{{card.class.speciality}}</td>
 										<td>{{card.class.year}}</td>
-										<td> <span *ngFor="let grp of card.class.groups"> {{grp}} </span> </td>
-										<td>
-											<button class="btn animate" (click)="openExam(card.id)">Détails</button>
+										<td> <span > {{card.class.groups}} </span> </td>
+										<td class="incomming-exams text-right">
+											<button class="btn " (click)="changeVisibility(card.id,card.visible,i)"> <fa-icon [icon]="!card.visible? icons.eye:icons.noEye"></fa-icon> rendre {{card.visible? "Invisible":"Visible"}}</button>
+											<button class="btn " (click)="startExam(card.id,card.started,i)"> <fa-icon [icon]="!card.started? icons.check:icons.close"></fa-icon> {{card.started? "Arreter":"Démarer"}} l'examen</button>
+											<button class="btn " (click)="editExam(card.id)"> <fa-icon [icon]="icons.pen"></fa-icon> Modifier l'examen</button>
 										</td>
 									</tr>
 								</ng-container>
@@ -176,15 +184,48 @@
 								<strong class="mr-3"> Par Page</strong>
 							</div>
 						</div>
+						<div class="offset-md-4 col-md-4 col-12 text-center" *ngIf="cardsOld.length==0">
+							<img class="w-100" src="assets/nthing2.png" alt="">
+						</div>
+
 						<ng-container
 							*ngFor="let card of cardsOld  | paginate: { itemsPerPage: itemsPerPageOld, currentPage: pageOld }">
-							<div class="col-12 col-md-6 col-lg-4 element "
+							<div class="col-12 m-auto col-md-6 col-lg-4 element "
 									 *animIf="isCardsOld; info: { startAnim: 'bounceIn', endAnim: 'fadeOut', time: 500 }">
 
-								<div class="row bg-white m-0">
-									<div class="col-12 text-center p-2">
-										<h3>{{card.title}}</h3>
-									</div>
+								<div class="row bg-white m-0 pb-3">
+										<div class="col-12 text-center p-2">
+											<h3>{{card.title}}</h3>
+										</div>
+
+										<div class="col-12">
+											<strong>
+												<fa-icon [icon]="icons.start"></fa-icon>
+												Début: </strong>
+											{{displayDate(card.start)}}
+										</div>
+
+
+
+										<div class="col-12">
+											<strong>
+												<fa-icon [icon]="icons.length"></fa-icon>
+												Durée: </strong>
+											{{card.length}}
+										</div>
+
+										<div class="col-12 col-md-6">
+											<strong>
+												<fa-icon [icon]="icons.class"></fa-icon>
+												Classe: </strong> {{card.class.speciality}} {{card.class.year}}
+										</div>
+
+										<div class="col-12 col-md-6">
+											<strong>
+												<fa-icon [icon]="icons.group"></fa-icon>
+												Groupe(s):</strong>
+											<span> {{card.class.groups}} </span>
+										</div>
 
 									<div class="col-12">
 										<strong>
@@ -197,7 +238,7 @@
 										<strong>
 											<fa-icon [icon]="icons.length"></fa-icon>
 											Durée: </strong>
-										{{displayLength(card.start, card.end)}}
+										{{card.length}}
 									</div>
 
 									<div class="col-12 col-md-6">
@@ -210,12 +251,12 @@
 										<strong>
 											<fa-icon [icon]="icons.group"></fa-icon>
 											Groupe(s):</strong>
-										<span *ngFor="let grp of card.class.groups"> {{grp}} </span>
+										<span> {{card.class.groups}} </span>
 									</div>
 
 								</div>
 								<div class="bottom-element ">
-									<button class="btn animate" (click)="openExam(card.id)">Plus de détails</button>
+									<button class="btn animate" (click)="openExam(card.id)">Afficher l'examen</button>
 								</div>
 							</div>
 
@@ -233,14 +274,14 @@
 									<th scope="col"></th>
 								</tr>
 								<ng-container
-									*ngFor="let card of cardsNew  | paginate: { itemsPerPage: itemsPerPageOld, currentPage: pageOld }">
+									*ngFor="let card of cardsOld  | paginate: { itemsPerPage: itemsPerPageOld, currentPage: pageOld }">
 									<tr *animIf="!isCardsOld; info: { startAnim: 'fadeInUp', endAnim: 'fadeOutUp', time: 500}">
 										<td>{{card.title}}</td>
 										<td>{{displayDate(card.start)}}</td>
-										<td>{{displayLength(card.start, card.end)}}</td>
+										<td>{{card.length}}</td>
 										<td>{{card.class.speciality}}</td>
 										<td>{{card.class.year}}</td>
-										<td> <span *ngFor="let grp of card.class.groups"> {{grp}} </span> </td>
+										<td> <span > {{card.class.groups}} </span> </td>
 										<td>
 											<button class="btn animate" (click)="openExam(card.id)">Détails</button>
 										</td>

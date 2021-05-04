@@ -252,7 +252,6 @@
 					<div class="row p-md-2" *ngFor="let answer of qst.answers;let j = index;">
 						<div class="text-center" style="cursor: auto;width: 70px;padding: 6px 0"
 								 *ngIf="qst.type==='single' || qst.type ==='multiple'">
-							<!--<fa-icon [icon]="questionsIcons[qst.type]" style="color:#1b3868;"></fa-icon>-->
 							<span [class.text-success]="answer.isCorrect"
 										[class.text-danger]="!answer.isCorrect">{{answer.isCorrect ? 'correct' : 'incorrect'}}</span>
 						</div>
@@ -348,7 +347,6 @@
 					<button class="btn" (click)="formValues.display= '1'">min</button>
 					<button class="btn" (click)="formValues.display= ''+questionList.length">max</button>
 				</div>
-
 
 
 			</div>

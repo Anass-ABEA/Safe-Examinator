@@ -17,7 +17,6 @@
 
 .element .bg-white {
 	border-radius: 5px;
-	padding-bottom: 50px;
 }
 
 .btn-type {
@@ -82,4 +81,14 @@
 	color: white;
 	background: #1b3868;
 	border: solid 2px #1b3868;
+}
+
+.incomming-exams .btn{
+	background-color:#1b3868;
+	margin:2px;
+	color:white;
+}
+
+.incomming-exams {
+	margin-top:10px;
 }

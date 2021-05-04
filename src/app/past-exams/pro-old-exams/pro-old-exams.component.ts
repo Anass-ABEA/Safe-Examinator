@@ -1,6 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {faBars, faClock, faGraduationCap, faHourglass, faPlus, faPlusCircle, faTable, faUsers} from '@fortawesome/free-solid-svg-icons';
+import {
+	faBars, faCheck,
+	faClock, faEye, faEyeSlash,
+	faGraduationCap,
+	faHourglass,
+	faPen,
+	faPlus,
+	faPlusCircle,
+	faTable, faTimes,
+	faUsers
+} from '@fortawesome/free-solid-svg-icons';
 import * as moment from 'moment';
+import {base_url} from '../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {CookieService} from 'ngx-cookie-service';
+import CheckCookies from '../../CheckCookies';
 
 @Component({
 	selector: 'app-pro-old-exams',
@@ -8,6 +22,8 @@ import * as moment from 'moment';
 	styleUrls: ['./pro-old-exams.component.css']
 })
 export class ProOldExamsComponent implements OnInit {
+	id = new CheckCookies(this.cookie).getId();
+
 	isCardsOld = true;
 	isCardsNew = true;
 	itemsPerPageOld = 3;
@@ -21,7 +37,14 @@ export class ProOldExamsComponent implements OnInit {
 		group: faUsers,
 		list: faBars,
 		table: faTable,
-		plus:faPlusCircle
+		plus: faPlusCircle,
+		pen: faPen,
+		eye: faEye,
+		noEye: faEyeSlash,
+		check: faCheck,
+		close: faTimes,
+
+
 	};
 	data = [];
 	cardsOld = [
@@ -103,7 +126,7 @@ export class ProOldExamsComponent implements OnInit {
 			id: 'ABCDEF',
 			title: 'JEE',
 			start: 'Thu Mar 25 2021 13:00:29 GMT+0100 (GMT+01:00)',
-			end: 'Thu Mar 25 2021 15:00:29 GMT+0100 (GMT+01:00)',
+			length: '2h',
 			class: {
 				speciality: 'INF',
 				year: '2020',
@@ -111,11 +134,8 @@ export class ProOldExamsComponent implements OnInit {
 					'A', 'B'
 				]
 			},
-			params: {
-				nbrQuestions: 38,
-				DisplayQuestions: 20,
-				isRandom: true
-			}
+			visible: true,
+			started: false,
 		},
 		{
 			id: 'ABCDEF',
@@ -129,11 +149,8 @@ export class ProOldExamsComponent implements OnInit {
 					'A', 'B'
 				]
 			},
-			params: {
-				nbrQuestions: 38,
-				DisplayQuestions: 20,
-				isRandom: true
-			}
+			visible: true,
+			started: false,
 		},
 		{
 			id: 'ABCDEF',
@@ -147,11 +164,8 @@ export class ProOldExamsComponent implements OnInit {
 					'A', 'B'
 				]
 			},
-			params: {
-				nbrQuestions: 38,
-				DisplayQuestions: 20,
-				isRandom: true
-			}
+			visible: false,
+			started: true,
 		},
 		{
 			id: 'ABCDEF',
@@ -165,22 +179,25 @@ export class ProOldExamsComponent implements OnInit {
 					'A', 'B'
 				]
 			},
-			params: {
-				nbrQuestions: 38,
-				DisplayQuestions: 20,
-				isRandom: true
-			}
-		},
-
+			visible: false,
+			started: true,
+		}
 	];
 
-	constructor() {
+	constructor(private http:HttpClient,private cookie:CookieService) {
 	}
 
 	ngOnInit(): void {
+		this.http.get(base_url+"exams/MyProfExams/"+this.id).subscribe(res=>{
+			console.log(res[1]);
+			this.cardsNew = res[0];
+			this.cardsOld = res[1];
+		})
 	}
 
 	displayDate(start) {
+		start = start.toString().split("WET").join("");
+		start = start.toString().split("WEST").join("");
 		return moment(new Date(start)).lang('fr').format('dddd Do MMMM YYYY @ HH:mm');
 	}
 
@@ -201,6 +218,33 @@ export class ProOldExamsComponent implements OnInit {
 	}
 
 	openExam(id: string) {
-		window.open("/exams/past_exams/"+id,"_self");
+		window.open('/exams/past_exams/' + id, '_self');
 	}
+
+	changeVisibility(id: string, visible: boolean,i : number) {
+		this.http.post(base_url + 'exams/visibility/' + id, visible).subscribe(
+			(res) => {
+				if (res) {
+					this.cardsNew[i].visible = !visible;
+				}
+			}
+		);
+	}
+
+
+	startExam(id: string,started:boolean,i:number) {
+		this.http.post(base_url+"exams/BeginExam/"+id,!started).subscribe(
+			res =>{
+				if(res){
+					this.cardsNew[i].started = !started;
+				}
+			}
+		)
+	}
+
+	editExam(id: string) {
+
+	}
+
+
 }

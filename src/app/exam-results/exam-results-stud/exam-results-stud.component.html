@@ -5,7 +5,6 @@
 			<h3>Examen : {{exam.title}}</h3>
 		</div>
 		<div class="col-12 col-lg-8 top-icon align-self-center">
-
 			<table class="table">
 				<tr>
 					<th>Matière</th>
@@ -51,6 +50,63 @@
 			</circle-progress>
 		</div>
 
+		<div class="col-12 col-md-4 offset-md-4 mt-3">
+			<button class="btn w-100 mbtn-primary" (click)="showExamDetails()">
+				{{!showDetails? 'Consulter' : 'Cacher'}} les réponses
+			</button>
+		</div>
+
+
+		<div class="row"   *animIf="showDetails; info: { startAnim: 'fadeInUp', endAnim: 'bounceOutRight', time: 400 }">
+			<ng-container *ngFor="let question of questions; let i = index;">
+				<div class="col-12 question">
+					<div class="row p-2">
+						<div class="col-1 text-center text-muted align-self-center">
+							Question N° {{i + 1}}
+						</div>
+						<div class="col-10 align-self-center">
+							<p>{{question.body}}</p>
+						</div>
+						<div class="col-1 text-center text-muted align-self-center" >
+							{{questions[i].type==types.LONG || questions[i].type==types.SHORT ? choices[i].note+" / "+choices[i].total+" points": choices[i].total+" / "+choices[i].note+" points" }}
+						</div>
+						<div class="col-12 py-3 px-md-3">
+							<ng-container *ngIf="questions[i].type==types.SHORT">
+								<input type="text" class="form-control" [(ngModel)]="choices[i].value" placeholder="Réponse" disabled >
+							</ng-container>
+
+							<ng-container *ngIf="questions[i].type==types.LONG">
+								<textarea placeholder="Réponse" [(ngModel)]="choices[i].value" class="form-control" rows="10" disabled></textarea>
+							</ng-container>
+
+							<ng-container *ngIf="questions[i].type==types.SINGLE">
+								<ng-container *ngFor="let resp of question.rep;let j = index;">
+									<div class="form-check position-relative" [class.bg-success]="choices[i].value[j]== resp.isCorrect" [class.bg-danger]="choices[i].value[j]!= resp.isCorrect" >
+										<input class="form-check-input" [checked]="j==choices[i].value"  type="radio" value="{{j}}" [(ngModel)]="choices[i].value"  name="flexRadioDefault" id="flexRadioDefault{{j}}" disabled>
+										<label class="form-check-label" for="flexRadioDefault{{j}}">
+											{{resp.val}}
+										</label>
+									</div>
+								</ng-container>
+							</ng-container>
+							<ng-container *ngIf="question.type==types.MULTIPLE">
+								<ng-container *ngFor="let resp of question.rep;let j = index;" >
+									<div class="form-check position-relative"[class.bg-success]="choices[i].value[j]== resp.isCorrect" [class.bg-danger]="choices[i].value[j]!= resp.isCorrect">
+										<input class="form-check-input"  type="checkbox"  [(ngModel)]="choices[i].value[j]" name="flexCheckDefault" id="flexCheckDefault{{j}}" disabled>
+										<label class="form-check-label" for="flexCheckDefault{{j}}">
+											{{resp.val}}
+										</label>
+									</div>
+								</ng-container>
+							</ng-container>
+						</div>
+
+					</div>
+
+				</div>
+
+			</ng-container>
+		</div>
 	</div>
 
 </div>
