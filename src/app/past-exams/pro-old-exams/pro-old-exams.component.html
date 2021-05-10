@@ -79,6 +79,7 @@
 										<button class="btn " (click)="changeVisibility(card.id,card.visible,i)"> <fa-icon [icon]="!card.visible? icons.eye:icons.noEye"></fa-icon> rendre {{card.visible? "Invisible":"Visible"}}</button>
 										<button class="btn " (click)="startExam(card.id,card.started,i)"> <fa-icon [icon]="!card.started? icons.check:icons.close"></fa-icon> {{card.started? "Arreter":"Démarer"}} l'examen</button>
 										<button class="btn " (click)="editExam(card.id)"> <fa-icon [icon]="icons.pen"></fa-icon> Modifier l'examen</button>
+										<button class="btn animate" (click)="openExam(card.id)">Afficher l'examen</button>
 									</div>
 								</div>
 
@@ -110,6 +111,7 @@
 											<button class="btn " (click)="changeVisibility(card.id,card.visible,i)"> <fa-icon [icon]="!card.visible? icons.eye:icons.noEye"></fa-icon> rendre {{card.visible? "Invisible":"Visible"}}</button>
 											<button class="btn " (click)="startExam(card.id,card.started,i)"> <fa-icon [icon]="!card.started? icons.check:icons.close"></fa-icon> {{card.started? "Arreter":"Démarer"}} l'examen</button>
 											<button class="btn " (click)="editExam(card.id)"> <fa-icon [icon]="icons.pen"></fa-icon> Modifier l'examen</button>
+											<button class="btn animate" (click)="openExam(card.id)">Afficher l'examen</button>
 										</td>
 									</tr>
 								</ng-container>

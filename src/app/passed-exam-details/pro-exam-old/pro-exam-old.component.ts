@@ -5,6 +5,7 @@ import {CookieService} from 'ngx-cookie-service';
 import CheckCookies from '../../CheckCookies';
 import {base_url} from '../../../environments/environment';
 
+
 @Component({
   selector: 'app-pro-exam-old',
   templateUrl: './pro-exam-old.component.html',
@@ -55,7 +56,9 @@ export class ProExamOldComponent implements OnInit {
 
 	exmportExam() {
 		const HTMLCODE = document.getElementById("ExamContent").innerHTML;
-		console.log(HTMLCODE);
+
+
+
 	}
 
 
