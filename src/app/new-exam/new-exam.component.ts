@@ -121,7 +121,7 @@ export class NewExamComponent implements OnInit {
 
 	};
 
-	promotions = [2020, 2021, 2023];
+	promotions = [];
 
 	genie = [
 		'INF',
@@ -156,8 +156,15 @@ export class NewExamComponent implements OnInit {
 				this.showScrollTop = false;
 			}
 		})
+		this.promotions = this.getPromotions();
 
-
+	}
+	getPromotions() {
+		var d = new Date().getFullYear();
+		if(new Date().getMonth()>7){
+			d++;
+		}
+		return [d,d+1,d+2];
 	}
 
 	getDateSelected() {

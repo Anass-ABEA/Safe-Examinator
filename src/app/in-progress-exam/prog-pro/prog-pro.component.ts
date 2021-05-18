@@ -59,6 +59,9 @@ export class ProgProComponent implements OnInit {
 	}
 
 	getStartDate(d) {
+		console.log(d);
+		var list = d.split("WEST ");
+		d = list[0] + list[1];
 		return moment(d).lang("fr").fromNow();
 	}
 
@@ -66,6 +69,9 @@ export class ProgProComponent implements OnInit {
 		if(end==null){
 			return "En cours...";
 		}
+
+		var list = end.split("WEST ");
+		end = list[0] + list[1];
 		return moment(end).lang("fr").fromNow()
 	}
 

@@ -1,44 +1,28 @@
 <div class="container-fluid">
 	<div class="row pt-5 myMargin">
-		<div class="col-12 col-md-6 col-lg-4 col-xl-3 p-2 text-white">
+		<div class="col-12 col-md-6 col-lg-8 col-xl-3 p-2 pt-3 text-white ">
 			<div class="row left-Part p-3">
 				<div class="col-12 text-center">
-					<img class="image" src="assets/person.png">
+					<img class ="image" src="{{imageSrc}}" >
+					<!--img src="{{imageSrc}}" *ngIf="imageSrc" style="height:150px; width:200px"-->
 				</div>
+
 				<div class="col-12 text-center pt-2 pb-5">
-					John <strong>DOE</strong>
+					{{data.fname}}<strong>&nbsp;{{data.lname}}</strong>
 				</div>
-				<div class="col-12">
-					<div class="row">
-						<div class="col-xs-12 col-sm-6 c col-md-12">
-							<strong>Promotion:</strong>
+				<div class="col-12-md-3 container">
+					<form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+						<div class="form-group">
+							<label for="image">Modifier Image:</label>
+							<input formControlName="image" type="file" name="image" class="form-control" (change)="onFileChange($event)" id="image">
+							<div *ngIf="f.image.touched && f.image.invalid" class="alert alert-danger">
+								<div *ngIf="f.image.errors.required">Image is required.</div>
+							</div>
 						</div>
-						<div class="col-xs-12 col-sm-6 c col-md-12 ">
-							<span>{{data.year}}</span>
+						<div class="form-group">
 						</div>
-
-						<div class="col-xs-12 col-sm-6 col-md-12 ">
-							<strong>Génie:</strong>
-						</div>
-						<div class="col-xs-12 col-sm-6 c col-md-12 ">
-							<span>{{data.genie}}</span>
-						</div>
-
-						<div class="col-xs-12 col-sm-6 c col-md-12 ">
-							<strong>Groupe:</strong>
-						</div>
-						<div class="col-xs-12 col-sm-6 c col-md-12 ">
-							<span>{{data.groupe}}</span>
-						</div>
-
-						<div class="col-xs-12 col-sm-6 c col-md-12 ">
-							<strong>Email:</strong>
-						</div>
-						<div class="col-xs-12 col-sm-6 c col-md-12 ">
-							<span>{{data.email}}</span>
-						</div>
-
-					</div>
+						<button class="btn btn-success">Enregistrer</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -46,12 +30,14 @@
 			<div class="row  p-lg-3">
 
 
-				<div class="col-md-10 offset-md-1 col-12 offset-0 p-3 pt-5 pb-5 personal-info">
+
+				<div class="col-md-10 offset-md-1 col-12 offset-0 p-3 pt-1 pb-5 personal-info">
 					<div class="row">
 						<div class="col-12 text-center">
 							<h2>Informations personelles</h2>
 						</div>
 					</div>
+					<p></p>
 					<div class="form-group row">
 						<div class="col-6">
 							<label for="formGroupExampleInput">Nom</label>

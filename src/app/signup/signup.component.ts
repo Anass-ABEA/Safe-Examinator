@@ -7,9 +7,9 @@ import {base_url} from '../../environments/environment';
 import {Md5} from 'ts-md5';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+	selector: 'app-signup',
+	templateUrl: './signup.component.html',
+	styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
 	viewPassword = false;
@@ -17,17 +17,6 @@ export class SignupComponent implements OnInit {
 	isPassword = false;
 	value : string = "";
 	icons= {eye:faEye,noeye:faEyeSlash};
-	/*credentials = {
-		email:"",
-		password:"",
-		confPassword:"",
-		nom:"",
-		prenom:"",
-		type:"",
-		promotion:"Promotion...",
-		genie:"Génie...",
-		groupe:"Groupe...",
-	};*/
 
 	credentials = {
 		email:"",//id
@@ -35,6 +24,7 @@ export class SignupComponent implements OnInit {
 			fname:"",
 			lname:"",
 			password:"",
+			pic:"",
 			classe:{
 				year:"Promotion...",
 				specialty:"Génie...",
@@ -46,6 +36,16 @@ export class SignupComponent implements OnInit {
 		type:"",
 	};
 
+	genie = [
+		'INF',
+		'IND',
+		'CIV',
+		'MEC',
+		'ELEC',
+		'MIS',
+		'RT'
+	];
+
 	errorList = {email: false, password:false, nom:false, prenom:false, genie:false, groupe: false, promo:false};
 	constructor(private http:HttpClient,private _router : Router) { }
 
@@ -54,37 +54,59 @@ export class SignupComponent implements OnInit {
 
 	signUp(){
 		this.errorList = {email: false, password:false, nom:false, prenom:false, genie:false, groupe: false, promo:false};
+		this.credentials.student.pic="assets/person.png"
 		if(this.credentials.confPassword == this.credentials.student.password){
-				if(this.isProf){
-					this.credentials.type="teacher";
-				}else{
-					this.credentials.type="student";
-					this.credentials.student.classe.Groups.push(this.credentials.groupsAffichage);
-					this.credentials.email = this.credentials.email.toLowerCase();
-					// @ts-ignore
+			if(this.isProf){
+				this.credentials.type="teacher";
+				this.credentials.email = this.credentials.email.toLowerCase();
+				// @ts-ignore
 
-					this.SignUpBackend(this.credentials).subscribe(res=>{
-						if(res){
-							console.log("registration done");
-							alert("Inscription réussite\nVous pouvez vous connecter");
-							this._router.navigate(['/login']);
-						}else{
-							this.errorList.email = true;
-						}
+				this.SignUpBackend_prof(this.credentials).subscribe(res=>{
+					if(res){
+						console.log("registration done");
+						alert("Inscription réussite\nVous pouvez vous connecter");
+						this._router.navigate(['/']);
+					}else{
+						this.errorList.email = true;
+					}
 
-					})
+				})
+			}else{
+				this.credentials.type="student";
+				this.credentials.student.classe.Groups.push(this.credentials.groupsAffichage);
+				this.credentials.email = this.credentials.email.toLowerCase();
+				// @ts-ignore
 
-				}
+				var genie = this.getGenie(this.credentials.student.classe.specialty);
+				this.credentials.student.classe.specialty = genie;
+				this.SignUpBackend_stud(this.credentials).subscribe(res=>{
+					if(res){
+						console.log("registration done");
+						alert("Inscription réussite\nVous pouvez vous connecter");
+						this._router.navigate(['/']);
+					}else{
+						this.errorList.email = true;
+					}
+
+				})
+
+			}
 
 		}else{
 			this.errorList.password = true;
 		}
 	}
 
-	SignUpBackend(Inscription :any):Observable<any>{
+	SignUpBackend_stud(Inscription :any):Observable<any>{
 		const value = JSON.parse(JSON.stringify(Inscription));
 		value.student.password = new Md5().appendStr(Inscription.student.password).end();
 		return this.http.post<any>(base_url+'students/Register/'+Inscription.groupsAffichage,{id:Inscription.email.split("@")[0], student:value.student});
+	}
+
+	SignUpBackend_prof(Inscription :any):Observable<any>{
+		const value = JSON.parse(JSON.stringify(Inscription));
+		value.student.password = new Md5().appendStr(Inscription.student.password).end();
+		return this.http.post<any>(base_url+'profs/Register/',{id:Inscription.email.split("@")[0], teacher:value.student});
 	}
 
 
@@ -135,6 +157,14 @@ export class SignupComponent implements OnInit {
 				return this.credentials.student.classe.specialty.includes("...");
 			case 'promo':
 				return this.credentials.student.classe.year.includes("...");
+		}
+	}
+
+	private getGenie(specialty: string) {
+		for (let i = 0; i < this.genie.length; i++) {
+			if(specialty.toUpperCase().includes(this.genie[i])){
+				return this.genie[i];
+			}
 		}
 	}
 }

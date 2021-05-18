@@ -63,3 +63,8 @@
 	height: 50px;
 	opacity: 0.8;
 }
+
+
+.profilePic{
+	border-radius : 50%;
+}

@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 
 import {LoginV2Component} from './login-v2/login-v2.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {SignupComponent} from './signup/signup.component';
 import {FooterComponent} from './footer/footer.component';
@@ -84,27 +84,28 @@ export function momentAdapterFactory() {
 		ExamResultsStudComponent,
 		ExamResultsProfComponent
 	],
-	imports: [
-		HttpClientModule,
-		BrowserModule,
-		AppRoutingModule,
-		FormsModule,
-		FontAwesomeModule,
-		NgCircleProgressModule.forRoot({
-			radius: 100,
-			outerStrokeWidth: 8,
-			innerStrokeWidth: 3,
-			outerStrokeColor: '#1b3868',
-			innerStrokeColor: '#0edc00',
-			animationDuration: 300,
-		}),
-		CalendarModule.forRoot({provide: DateAdapter, useFactory: momentAdapterFactory}),
-		NgxPaginationModule,
-		BrowserAnimationsModule,
-		NgxAnimationsModule,
+    imports: [
+        HttpClientModule,
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        FontAwesomeModule,
+        NgCircleProgressModule.forRoot({
+            radius: 100,
+            outerStrokeWidth: 8,
+            innerStrokeWidth: 3,
+            outerStrokeColor: '#1b3868',
+            innerStrokeColor: '#0edc00',
+            animationDuration: 300,
+        }),
+        CalendarModule.forRoot({provide: DateAdapter, useFactory: momentAdapterFactory}),
+        NgxPaginationModule,
+        BrowserAnimationsModule,
+        NgxAnimationsModule,
+        ReactiveFormsModule,
 
 
-	],
+    ],
 	providers: [CookieService],
 	bootstrap: [AppComponent]
 })

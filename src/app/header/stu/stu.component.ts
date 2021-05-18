@@ -16,6 +16,8 @@ export class StuComponentHeader implements OnInit {
 	userName: Object = "John D.";
 	time = moment().lang('fr').format('dddd Do MMMM YYYY, HH:mm:ss');
 
+	imageSrc: string = "assets/person.png";
+
 	icons = {
 		disconnect : faPowerOff,
 		user: faUser,
@@ -40,6 +42,7 @@ export class StuComponentHeader implements OnInit {
 
 		this.http.get(url).subscribe(res=>{
 			this.userName = res['name'];
+			this.imageSrc = res['pic'];
 		})
 
 		if(window.location.pathname.includes("exams/past_exams")){

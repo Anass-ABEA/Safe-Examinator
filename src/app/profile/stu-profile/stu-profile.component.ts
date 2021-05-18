@@ -1,48 +1,118 @@
 import { Component, OnInit } from '@angular/core';
-import {Md5} from 'ts-md5';
-import {CookieService} from 'ngx-cookie-service';
-import {HttpClient} from '@angular/common/http';
-import {base_url} from '../../../environments/environment';
+import { Md5 } from 'ts-md5';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpClient } from '@angular/common/http';
+import { base_url } from '../../../environments/environment';
 import CheckCookies from '../../CheckCookies';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 import has = Reflect.has;
 
 
 
 @Component({
-  selector: 'app-stu-profile',
-  templateUrl: './stu-profile.component.html',
-  styleUrls: ['./stu-profile.component.css']
+	selector: 'app-stu-profile',
+	templateUrl: './stu-profile.component.html',
+	styleUrls: ['./stu-profile.component.css']
 })
 export class StuProfileComponent implements OnInit {
+	file = null;
 	id = "";
-  constructor(private cookie:CookieService,private http:HttpClient) { }
+	title = 'myNewApp';
+	imageSrc: string = "assets/person.png";
+	constructor(private cookie: CookieService, private http: HttpClient) { }
 	password = "5f4dcc3b5aa765d61d8327deb882cf99";
-  val1 = false;
+	val1 = false;
 	confirmChange = false;
-  data = {
-  	fname : "N/A",
-		lname : 'N/A',
+	data = {
+		fname: "N/A",
+		lname: 'N/A',
+		pic: 'N/A',
 		groupe: 'N/A',
-		year : 'N/A',
+		year: 'N/A',
 		genie: "N/A",
-		email:"N/A"
+		email: "N/A"
 	}
 	credentials = {
-  	passwordOld : "",
-		passwordNew : "",
-		passwordNewCOnf:"",
+		passwordOld: "",
+		passwordNew: "",
+		passwordNewCOnf: "",
 	}
+
 	verified = false;
 
-  ngOnInit(): void {
-  	this.id = new CheckCookies(this.cookie).getId();
-		this.http.get(base_url+"student/profileDetails/"+this.id).subscribe(res=>{
+	ngOnInit(): void {
+		this.id = new CheckCookies(this.cookie).getId();
+		this.http.get(base_url + "student/profileDetails/" + this.id).subscribe(res => {
 			// @ts-ignore
 			this.data = res;
-		})
-  }
+			//this.imageSrc ='assets/person.png';
+			this.imageSrc = this.data.pic;
 
-  // password is = "password"
+		})
+	}
+	addForm = new FormGroup({
+		image: new FormControl('', Validators.required),
+		imageSrc: new FormControl('', Validators.required)
+	});
+
+	get f() {
+		return this.addForm.controls;
+	}
+
+	onFileChange(event) {
+		var files = event.target.files;
+		this.file = files[0];
+		if (files && this.file) {
+			var reader = new FileReader();
+			const [image] = event.target.files;
+			reader.readAsDataURL(image);
+
+			reader.onload = () => {
+
+				this.imageSrc = reader.result as string;
+
+				this.addForm.patchValue({
+					imageSrc: reader.result
+				});
+
+			};
+
+		}
+
+	}
+
+
+	getBase64(event) {
+		let me = this;
+		let file = this.file;
+		let reader = new FileReader();
+		reader.readAsDataURL(file);
+
+
+		reader.onload = function () {
+
+			console.log(reader.result);
+			const id = new CheckCookies(me.cookie).getId();
+			me.http.post(base_url + "students/connect/" + id, reader.result)
+				.subscribe(res => {
+					console.log(res, reader.result);
+					alert('Uploaded Successfully.');
+				})
+		};
+		reader.onerror = function (error) {
+			console.log('Error: ', error);
+
+		};
+	}
+
+	onSubmit() {
+		this.getBase64(this);
+
+
+	}
+
+	// password is = "password"
 	passChange() {
 		// const hashedPass= new Md5().appendStr(this.credentials.passwordOld).end();
 		// // @ts-ignore
@@ -55,38 +125,38 @@ export class StuProfileComponent implements OnInit {
 
 	CheckPassword() {
 		const id = new CheckCookies(this.cookie).getId();
-			if(!this.verified){
-				const hashed =  new Md5().appendStr(this.credentials.passwordOld).end();
-				this.http.get(base_url+"students/connect/"+id+"/"+hashed).subscribe(res=>{
-					if(res == true){
-						this.verified = true;
-					}else{
-						this.verified = false;
-					}
-				})
-			}else{
-				const hashed =  new Md5().appendStr(this.credentials.passwordNew).end();
-				this.http.post(base_url+"students/update/"+id,hashed).subscribe(res=>{
-					if(res==true){
-						this.confirmChange = true;
-						this.hideAfterX();
-					}
+		if (!this.verified) {
+			const hashed = new Md5().appendStr(this.credentials.passwordOld).end();
+			this.http.get(base_url + "students/connect/" + id + "/" + hashed).subscribe(res => {
+				if (res == true) {
+					this.verified = true;
+				} else {
 					this.verified = false;
-					this.credentials = {
-						passwordOld : "",
-						passwordNew : "",
-						passwordNewCOnf:"",
-					}
-				})
-			}
+				}
+			})
+		} else {
+			const hashed = new Md5().appendStr(this.credentials.passwordNew).end();
+			this.http.post(base_url + "students/update/" + id, hashed).subscribe(res => {
+				if (res == true) {
+					this.confirmChange = true;
+					this.hideAfterX();
+				}
+				this.verified = false;
+				this.credentials = {
+					passwordOld: "",
+					passwordNew: "",
+					passwordNewCOnf: "",
+				}
+			})
+		}
 	}
 
 	hideAfterX() {
-		setTimeout(()=>{this.confirmChange = false;}, 3000);
+		setTimeout(() => { this.confirmChange = false; }, 3000);
 	}
 
 	verify() {
-  	if(!this.verified) return false;
-		return ! (this.credentials.passwordNew.length>0 &&(this.credentials.passwordNew==this.credentials.passwordNewCOnf));
+		if (!this.verified) return false;
+		return !(this.credentials.passwordNew.length > 0 && (this.credentials.passwordNew == this.credentials.passwordNewCOnf));
 	}
 }
