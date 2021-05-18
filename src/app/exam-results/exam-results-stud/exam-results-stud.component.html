@@ -16,7 +16,7 @@
 				</tr>
 				<tr>
 					<th>Heure</th>
-					<td>{{exam.title}}</td>
+					<td>{{exam.time}}</td>
 				</tr>
 				<tr>
 					<th>Durée</th>
@@ -55,8 +55,6 @@
 				{{!showDetails? 'Consulter' : 'Cacher'}} les réponses
 			</button>
 		</div>
-
-
 		<div class="row"   *animIf="showDetails; info: { startAnim: 'fadeInUp', endAnim: 'bounceOutRight', time: 400 }">
 			<ng-container *ngFor="let question of questions; let i = index;">
 				<div class="col-12 question">

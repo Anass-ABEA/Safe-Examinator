@@ -41,17 +41,24 @@ export class ExamResultsStudComponent implements OnInit {
 		profEmail: 'jdoe@emi.ac.ma',
 		note: 16,
 		total: 20,
-		Questions: null
+		Questions: null,
+		nbrQuestions : 1
 	};
 
 	ngOnInit(): void {
+		this.http.get(base_url+"students/getExamDetails/"+this.id_exam).subscribe(res=>{
+			// @ts-ignore
+			this.exam = res;
+			console.log(res);
+			this.http.get(base_url + 'exams/questions/' + this.id_exam).subscribe((res: Array<any>) => {
+				this.questions = res.slice(0,this.exam.nbrQuestions);
+			});
+			this.http.get(base_url + 'exams/responses/' + this.id_exam+"/"+this.id).subscribe((res: Array<any>) => {
+				this.choices = res.splice(0,this.exam.nbrQuestions);
+			});
+		})
 
-		this.http.get(base_url + 'exams/questions/' + this.id_exam).subscribe((res: Array<any>) => {
-			this.questions = res;
-		});
-		this.http.get(base_url + 'exams/responses/' + this.id_exam+"/"+this.id).subscribe((res: Array<any>) => {
-			this.choices = res;
-		});
+
 
 	}
 

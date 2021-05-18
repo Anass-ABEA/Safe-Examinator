@@ -103,7 +103,6 @@ export class ProgStuComponent implements OnInit {
 		});
 
 		this.getExamInfo();
-		this.getExams();
 
 		window.addEventListener('scroll', (e) => {
 			if (e['path'][1]['pageYOffset'] > 0) {
@@ -119,7 +118,6 @@ export class ProgStuComponent implements OnInit {
 			this.changeDate();
 		}, 1000);
 
-
 	}
 
 	getExamInfo() {
@@ -127,6 +125,9 @@ export class ProgStuComponent implements OnInit {
 			// @ts-ignore
 			this.exam = res;
 			this.getTime(res);
+			console.log(res);
+
+			this.getExams();
 		});
 	}
 
@@ -134,7 +135,11 @@ export class ProgStuComponent implements OnInit {
 
 		this.http.get(base_url + 'exams/questions/' + this.examId).subscribe((res: Array<any>) => {
 
-			this.questions = res.sort((a, b) => 0.5 - Math.random());
+			// @ts-ignore
+			this.questions = res.sort((a, b) => 0.5 - Math.random()).slice(0,this.exam.nbrQuestions);
+			console.log("nbrqst",this.exam.nbrQuestions);
+
+			console.log(res);
 			this.setupChoices(res);
 		});
 	}
