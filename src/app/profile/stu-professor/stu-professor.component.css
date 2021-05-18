@@ -1,0 +1,40 @@
+.left-Part{
+	border: solid 1px black;
+	background-color: #1b3868;
+	border-radius: 5px;
+}
+
+.left-Part .image{
+	width: 200px;
+	height:200px;
+	object-fit:cover;
+	border-radius: 600px;
+	background-color: white;
+	border: solid 4px white;
+}
+
+.myMargin{
+	padding-left: 30px ;
+	padding-right: 25px ;
+}
+
+
+.bg-success{
+	border-radius: 50px;
+	animation: reveal 1s forwards;
+}
+
+@keyframes reveal {
+	from {
+
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.personal-info{
+	border: solid 2px #1b3868;
+	border-radius: 5px;
+}

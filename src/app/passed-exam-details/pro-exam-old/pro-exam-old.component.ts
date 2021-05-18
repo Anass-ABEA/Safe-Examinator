@@ -61,11 +61,9 @@ export class ProExamOldComponent implements OnInit {
 	exmportExam() {
 
 		var node = document.getElementById('ExamContent');
-
 		var img;
-		var filename;
+		var filename = "SEE__"+this.exam.title+"__"+this.exam.profName + '.pdf';
 		var newImage;
-
 
 		domtoimage.toPng(node, {bgcolor: '#fff'})
 
@@ -95,7 +93,6 @@ export class ProExamOldComponent implements OnInit {
 
 
 					doc.addImage(newImage, 'PNG', 3, 10, width, height);
-					filename = 'Examen' + '.pdf';
 					doc.save(filename);
 
 				};

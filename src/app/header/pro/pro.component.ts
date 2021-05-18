@@ -16,6 +16,8 @@ export class ProComponentHeader implements OnInit {
 	userName: Object = "--";
 	time = moment().lang('fr').format('dddd Do MMMM YYYY, HH:mm:ss');
 
+	imageSrc: string = "assets/person.png";
+
 	icons = {
 		disconnect : faPowerOff,
 		user: faUser,
@@ -39,6 +41,7 @@ export class ProComponentHeader implements OnInit {
 		const url = base_url+"teachers/name/"+new CheckCookies(this.cookie).getId();
 		this.http.get(url).subscribe(res=>{
 			this.userName = res['name'];
+			this.imageSrc = res['pic'];
 
 		})
 

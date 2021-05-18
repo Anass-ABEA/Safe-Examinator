@@ -30,11 +30,16 @@ export class LoginV2Component implements OnInit {
 	nextButton(){
   		if (this.isProf){
 				this.credentials.type="teachers";
-  			if(this.isPassword){
 
+				if(this.isPassword){
+					// @ts-ignore
+					this.credentials.password= new Md5().appendStr(this.value).end(); // hashing the password
+					this.authenticate();
 				}else{
-
+					this.credentials.email=this.value;
+					this.emailExists(this.credentials.email)
 				}
+
 			}
 
   		if (!this.isProf){

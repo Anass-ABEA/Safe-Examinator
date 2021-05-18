@@ -1,1 +1,93 @@
-<p>stu-professor works!</p>
+<div class="container-fluid">
+	<div class="row pt-5 myMargin">
+		<div class="col-12 col-md-6 col-lg-8 col-xl-3 p-2 pt-3 text-white ">
+			<div class="row left-Part p-3">
+				<div class="col-12 text-center">
+					<img class ="image" src="{{imageSrc}}" >
+					<!--img src="{{imageSrc}}" *ngIf="imageSrc" style="height:150px; width:200px"-->
+				</div>
+
+				<div class="col-12 text-center pt-2 pb-5">
+					{{data.fname}}<strong>&nbsp;{{data.lname}}</strong>
+				</div>
+				<div class="col-12-md-3 container">
+					<form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+						<div class="form-group">
+							<label for="image">Modifier Image:</label>
+							<input formControlName="image" type="file" name="image" class="form-control" (change)="onFileChange($event)" id="image">
+							<div *ngIf="f.image.touched && f.image.invalid" class="alert alert-danger">
+								<div *ngIf="f.image.errors.required">Image is required.</div>
+							</div>
+						</div>
+						<div class="form-group">
+						</div>
+						<button class="btn btn-success">Enregistrer</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-md-6 col-lg-8 col-xl-9 p-2 p-lg-1">
+			<div class="row  p-lg-3">
+
+
+
+				<div class="col-md-10 offset-md-1 col-12 offset-0 p-3 pt-1 pb-5 personal-info">
+					<div class="row">
+						<div class="col-12 text-center">
+							<h2>Informations personelles</h2>
+						</div>
+					</div>
+					<p></p>
+					<div class="form-group row">
+						<div class="col-6">
+							<label for="formGroupExampleInput">Nom</label>
+							<input type="text" id="formGroupExampleInput" class="form-control" placeholder="Nom" [value]="data.lname"
+										 disabled>
+						</div>
+						<div class="col-6">
+							<label for="formGroupExampleInputx">Prénom</label>
+							<input type="text" class="form-control" id="formGroupExampleInputx" placeholder="Prénom"
+										 [value]="data.fname" disabled>
+						</div>
+
+						<div class="col-6 col-lg-4">
+							<label for="part21">Nombre d'éxamens créés</label>
+							<input type="text" class="form-control" id="part21" placeholder="Génie" [value]="data.nbrExam" disabled>
+						</div>
+
+						<div class="col-6 col-lg-4  offset-lg-4">
+							<label for="part23">Email</label>
+							<input type="text" class="form-control" id="part23" placeholder="Email" [value]="data.email" disabled>
+						</div>
+
+					</div>
+					<div class="form-group row">
+						<h4 class="text-center col-12">Mot de passe</h4>
+						<div class="col">
+							<input type="password" class="form-control" placeholder="Ancien Mot de passe" [disabled]="verified" [class.text-success]="verified"
+										 [(ngModel)]="credentials.passwordOld" >
+						</div>
+						<div class="col" *ngIf="verified">
+							<input type="password" class="form-control" placeholder="Nouveau Mot de passe"
+										 [(ngModel)]="credentials.passwordNew">
+						</div>
+						<div class="col" *ngIf="verified">
+							<input type="password" class="form-control" placeholder="Confirmation du nouveau mot de passe"
+										 [(ngModel)]="credentials.passwordNewCOnf">
+						</div>
+
+
+					</div>
+					<div class="row">
+						<div class="col-12 col-md-6 col-lg-4 offset-md-3 offset-lg-4 text-center">
+							<button class="btn btn-success w-100" [disabled]="verify()"  (click)="CheckPassword()">{{verified? 'Enregistrer':'Vérifier'}}</button>
+						</div>
+						<div class="col-10 offset-1 bg-success text-white mt-4 p-2 text-center" *ngIf="confirmChange">
+							<h3>Votre Mot de pass a été changé correctement. </h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

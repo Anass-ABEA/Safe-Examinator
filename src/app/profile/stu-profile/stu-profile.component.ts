@@ -67,19 +67,13 @@ export class StuProfileComponent implements OnInit {
 			var reader = new FileReader();
 			const [image] = event.target.files;
 			reader.readAsDataURL(image);
-
 			reader.onload = () => {
-
 				this.imageSrc = reader.result as string;
-
 				this.addForm.patchValue({
 					imageSrc: reader.result
 				});
-
 			};
-
 		}
-
 	}
 
 
@@ -108,8 +102,6 @@ export class StuProfileComponent implements OnInit {
 
 	onSubmit() {
 		this.getBase64(this);
-
-
 	}
 
 	// password is = "password"
