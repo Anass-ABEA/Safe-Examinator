@@ -15,6 +15,7 @@ export class ProgProComponent implements OnInit {
 	icons = {
 		ban : faBan,
 	}
+	iter = [];
 
 	examId= this.route.params['_value'].examId;
 
@@ -30,7 +31,6 @@ export class ProgProComponent implements OnInit {
 		noteGlobal : 30
 	}
 	connectedStud=[
-
 	];
 	id= "";
   constructor(private route :ActivatedRoute,private http:HttpClient,private cookie :CookieService) { }
@@ -40,13 +40,17 @@ export class ProgProComponent implements OnInit {
   	this.loadData(); //SET INTERVAL ON IT
 		setInterval(()=>{
 			this.loadExamDetails();
-		},1000);
+		},400);
   }
 
   loadData(){
   	this.http.get(base_url+"exam/getExamInfo/"+this.examId).subscribe(res=>{
   		// @ts-ignore
 			this.exam = res;
+			// @ts-ignore
+			for(let x= 0; x <res.qstCount;x++){
+				this.iter.push(0);
+			}
   		// @ts-ignore
 			this.exam.dateTime = new Date(this.exam.dateTime.split("WET ").join(""))
 
@@ -59,7 +63,6 @@ export class ProgProComponent implements OnInit {
 	}
 
 	getStartDate(d) {
-		console.log(d);
 		var list = d.split("WEST ");
 		d = list[0] + list[1];
 		return moment(d).lang("fr").fromNow();
@@ -76,8 +79,12 @@ export class ProgProComponent implements OnInit {
 	}
 
 	banStudent(id: string,i) {
+
   	this.connectedStud[i].isbanned = true;
-		console.log("BANNING STUDENT "+id);
+		this.http.get(base_url+"exams/ban/"+id+"/"+this.examId).subscribe(res =>{
+
+		});
+		console.log("banning student ", base_url+"exams/ban/"+id+"/"+this.examId);
 	}
 
 	getExamDate() {
@@ -90,5 +97,13 @@ export class ProgProComponent implements OnInit {
 			// @ts-ignore
 			this.connectedStud = res;
 		})
+	}
+
+	check(element: any) {
+		if(element){
+			return element.isFraud;
+		}else{
+			return false;
+		}
 	}
 }

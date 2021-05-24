@@ -7,6 +7,7 @@ import CheckCookies from '../../CheckCookies';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import has = Reflect.has;
+import {log} from 'util';
 
 
 
@@ -16,6 +17,7 @@ import has = Reflect.has;
 	styleUrls: ['./stu-profile.component.css']
 })
 export class StuProfileComponent implements OnInit {
+	progress  = 0;
 	file = null;
 	id = "";
 	title = 'myNewApp';
@@ -64,16 +66,28 @@ export class StuProfileComponent implements OnInit {
 		var files = event.target.files;
 		this.file = files[0];
 		if (files && this.file) {
+			document.getElementById("mainLoader").style.display = "block";
 			var reader = new FileReader();
 			const [image] = event.target.files;
 			reader.readAsDataURL(image);
+			reader.onprogress = function(ev){
+				if(ev.lengthComputable){
+					var pourcent = ev.loaded*100/ev.total;
+					console.log(pourcent+"%");
+					document.getElementById("loader").style.width = pourcent+"%";
+				}
+			}
 			reader.onload = () => {
+				document.getElementById("mainLoader").style.display = "none";
 				this.imageSrc = reader.result as string;
 				this.addForm.patchValue({
 					imageSrc: reader.result
 				});
 			};
 		}
+	}
+	setProgress(val){
+		this.progress = val;
 	}
 
 
@@ -92,6 +106,7 @@ export class StuProfileComponent implements OnInit {
 				.subscribe(res => {
 					console.log(res, reader.result);
 					alert('Uploaded Successfully.');
+					window.location.reload();
 				})
 		};
 		reader.onerror = function (error) {
@@ -101,7 +116,10 @@ export class StuProfileComponent implements OnInit {
 	}
 
 	onSubmit() {
+		document.getElementById("mainLoader").style.display = "block";
 		this.getBase64(this);
+
+		document.getElementById("mainLoader").style.display = "none";
 	}
 
 	// password is = "password"

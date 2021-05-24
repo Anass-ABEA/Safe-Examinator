@@ -1,7 +1,14 @@
 <div class="container-fluid">
 	<div class="row pt-5 myMargin">
 		<div class="col-12 col-md-6 col-lg-8 col-xl-3 p-2 pt-3 text-white ">
-			<div class="row left-Part p-3">
+			<div class="row left-Part p-3 position-relative">
+				<div class="loader" id="mainLoader">
+					<h3 class="text-center mt-3">Chargement de l'image...</h3>
+					<div class="loader-holder">
+						<div id="loader">
+						</div>
+					</div>
+				</div>
 				<div class="col-12 text-center">
 					<img class ="image" src="{{imageSrc}}" >
 					<!--img src="{{imageSrc}}" *ngIf="imageSrc" style="height:150px; width:200px"-->

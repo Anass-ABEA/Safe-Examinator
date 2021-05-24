@@ -1,5 +1,8 @@
 <div class="container my-5 p-md-3" *ngIf="examIntro">
 	<div class="row py-2 description">
+		<div class="col-12 text-center text-danger" *ngIf="isBanned">
+			<h3>Vous avez été expulsé de l'examen par le professeur</h3>
+		</div>
 		<div class="col-12 text-center title">
 			<h2>Examen : {{exam.title}}</h2>
 		</div>
@@ -54,7 +57,7 @@
 				</div>
 			</div>
 			<div class="starter px-5" [style]="exam.isFraudOn? {}:{'flex':'1',    'writing-mode': 'vertical-rl'}">
-				<button class="btn btn-success w-100 mx-auto align-self-center" [disabled]="allowStart" (click)="getStarted()">Commencer</button>
+				<button class="btn btn-success w-100 mx-auto align-self-center" [disabled]="allowStart || isBanned" (click)="getStarted()">Commencer</button>
 			</div>
 		</div>
 	</div>

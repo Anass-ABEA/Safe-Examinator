@@ -20,8 +20,9 @@ export class ProgStuComponent implements OnInit {
 	* FEEDBACK CONTENT IS STORED IN THIS VARIABLE (feedback) just send it to the database
 	* Using the function "closeExam()" at the end of the file
 	* */
+	checkBanned = null;
 	feedback = '';
-
+	isBanned = false;
 	width = 20;
 	/*
 	* ANSWSERS of the students are stored in here (choices) just send it to the database
@@ -136,7 +137,7 @@ export class ProgStuComponent implements OnInit {
 		this.http.get(base_url + 'exams/questions/' + this.examId).subscribe((res: Array<any>) => {
 
 			// @ts-ignore
-			this.questions = res.sort((a, b) => 0.5 - Math.random()).slice(0,this.exam.nbrQuestions);
+			this.questions = res;
 			console.log("nbrqst",this.exam.nbrQuestions);
 
 			console.log(res);
@@ -199,6 +200,14 @@ export class ProgStuComponent implements OnInit {
 			}
 			r++;
 		}
+		this.questions = res.sort((a, b) => 0.5 - Math.random()).slice(0,this.exam.nbrQuestions);
+		let list = [];
+		for(let qst of this.questions){
+			list.push(this.choices[qst.i]);
+		}
+		this.choices = [...list];
+		console.log("choices",this.choices);
+		console.log("questions",this.questions);
 	}
 
 	saveExam() {
@@ -237,6 +246,17 @@ export class ProgStuComponent implements OnInit {
 		this.http.get(base_url+"exams/addToStudent/"+this.id+"/"+this.examId).subscribe(res=>{
 			console.log(res);
 		});
+		this.checkBanned = setInterval(()=>{
+			this.http.get(base_url+"exams/isbanned/"+this.id+"/"+this.examId).subscribe(res=>{
+				if(res){
+					alert("Vous avez été exclu de l'examen par le professeur");
+					clearInterval(this.checkBanned);
+					this.isReady = false;
+					this.examIntro = true;
+					this.isBanned = true;
+				}
+			})
+		},1000);
 	}
 
 	getTimeLeft() {
@@ -394,7 +414,6 @@ export class ProgStuComponent implements OnInit {
 		console.clear();
 		const st  = moment(this.startDate).lang('fr').format('DD/MM/YYYY HH:mm:ss');;
 		const en  = moment(this.endDate).lang('fr').format('DD/MM/YYYY HH:mm:ss');
-
 
 		const data = {
 			id: this.id,

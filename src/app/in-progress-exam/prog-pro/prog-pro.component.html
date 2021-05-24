@@ -55,8 +55,16 @@
 					<td>
 						{{calculateNote(stud.note)}}
 					</td>
+				<!--
 					<td *ngFor="let x of [].constructor(exam.qstCount);let i = index">
 						<div [class.orange]="i==stud.qstCourante" [class.red]="stud.answers[i].isFraud">
+							&nbsp;
+						</div>
+					</td>
+				-->
+
+					<td *ngFor="let x of iter;let i = index">
+						<div [class.orange]="i==stud.qstCourante" [class.red]="check(stud.answers[i])">
 							&nbsp;
 						</div>
 					</td>

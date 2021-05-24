@@ -51,7 +51,7 @@
 		</div>
 
 		<div class="col-12 col-md-4 offset-md-4 mt-3">
-			<button class="btn w-100 mbtn-primary" (click)="showExamDetails()">
+			<button class="btn w-100 mbtn-primary" (click)="showExamDetails()" [disabled]="!exam.canSeeRes">
 				{{!showDetails? 'Consulter' : 'Cacher'}} les réponses
 			</button>
 		</div>
@@ -63,7 +63,7 @@
 							Question N° {{i + 1}}
 						</div>
 						<div class="col-10 align-self-center">
-							<p>{{question.body}}</p>
+							<p [class.text-danger]="choices[i].cheated">{{question.body}} {{choices[i].cheated && " | Tentative de fraude detecté"}}</p>
 						</div>
 						<div class="col-1 text-center text-muted align-self-center" >
 							{{questions[i].type==types.LONG || questions[i].type==types.SHORT ? choices[i].note+" / "+choices[i].total+" points": choices[i].total+" / "+choices[i].note+" points" }}
