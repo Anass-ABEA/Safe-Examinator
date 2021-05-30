@@ -43,6 +43,7 @@ export class StuProfileComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.id = new CheckCookies(this.cookie).getId();
+		console.log(this.id);
 		this.http.get(base_url + "student/profileDetails/" + this.id).subscribe(res => {
 			// @ts-ignore
 			this.data = res;

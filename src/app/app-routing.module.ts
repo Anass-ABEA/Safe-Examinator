@@ -9,6 +9,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {NewExamComponent} from './new-exam/new-exam.component';
 import {InProgressExamComponent} from './in-progress-exam/in-progress-exam.component';
 import {ExamResultsComponent} from './exam-results/exam-results.component';
+import {StudentexamsResultsComponent} from "./studentexams-results/studentexams-results.component";
 
 
 const routes: Routes = [
@@ -44,7 +45,11 @@ const routes: Routes = [
 	},
 	{
 		path:"examResults/:examId", component:ExamResultsComponent
+	},
+	{
+		path:"studentexamResults", component:StudentexamsResultsComponent
 	}
+
 ];
 
 @NgModule({
