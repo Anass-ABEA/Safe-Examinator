@@ -40,6 +40,7 @@
     "animate.css": "^4.1.1",
     "bootstrap": "^4.6.0",
     "express": "^4.17.1",
+    "html2canvas": "^1.0.0-alpha.12",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "ng-circle-progress": "^1.6.0",

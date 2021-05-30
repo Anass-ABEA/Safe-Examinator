@@ -1,0 +1,33 @@
+<div *ngFor="let examdatas of ExamsPasseData ">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Exam : {{examdatas.exam.title}}</h5>
+          <h5 class="card-title">Commencé à : {{examdatas.exam.start | date}}</h5>
+          <h5 class="card-title">Durée : {{examdatas.exam.length}}</h5>
+          <p class="card-text">Crée par : {{examdatas.exam.createdBy}}</p>
+          <button type="button" class="btn btn-secondary" (click)="AffichageNote(examdatas)" >Notes</button>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="showMarks" id="tabletopdf" class="container">
+  <table class="table" >
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Nom</th>
+          <th scope="col">Note ( / {{NoteTotalExam}})</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let note of NotesExamArray">
+              <th scope="row"></th>
+              <td>{{note.nom}}</td>
+              <td>{{note.note_total}}</td>
+            </tr>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-secondary" (click)="downladPdf()">Telecharger PDF</button>
+    <button type="button" class="btn btn-secondary" (click)="this.showMarks = false;">Cacher les notes</button>
+  </div>
