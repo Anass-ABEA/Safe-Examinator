@@ -57,7 +57,7 @@ export class ProfresultComponent implements OnInit {
       i++;
     }
     this.NoteTotalExam = note_tot_exam;
-    console.log(this.NotesExamArray);
+    //console.log(this.NotesExamArray);
     this.showMarks = true;
     this.showNotesMeth(this.NotesExamArray);
   }
@@ -90,5 +90,5 @@ export class ProfresultComponent implements OnInit {
     });;
     //console.log(this.NotesExamArray);
   }
-  
+
 }
