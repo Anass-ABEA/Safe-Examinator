@@ -9,46 +9,53 @@ import {ProfileComponent} from './profile/profile.component';
 import {NewExamComponent} from './new-exam/new-exam.component';
 import {InProgressExamComponent} from './in-progress-exam/in-progress-exam.component';
 import {ExamResultsComponent} from './exam-results/exam-results.component';
-import {StudentexamsResultsComponent} from "./studentexams-results/studentexams-results.component";
+
+import {StudentexamsResultsComponent} from './studentexams-results/studentexams-results.component';
+
+import {ResultsComponent} from './results/results.component';
+
 
 
 const routes: Routes = [
 	{
-		path:'*', redirectTo:'/' , pathMatch:'full'
+		path: '*', redirectTo: '/', pathMatch: 'full'
 	},
 	{
 		path: 'login', component: LoginV2Component
 	},
 	{
-		path:'signup',component:SignupComponent
+		path: 'signup', component: SignupComponent
 	},
 	{
-		path:'', component: HomeComponent
+		path: '', component: HomeComponent
 	},
 	{
-		path:'exams/past_exams', component: PastExamsComponent
+		path: 'exams/past_exams', component: PastExamsComponent
 	},
 	{
-		path:'exams/past_exams/:examid',component:PassedExamDetailsComponent
+		path: 'exams/past_exams/:examid', component: PassedExamDetailsComponent
 	},
 	{
-		path:'profile' , component: ProfileComponent
+		path: 'profile', component: ProfileComponent
 	},
 	{
-		path:'exams/newExam',component: NewExamComponent
+		path: 'exams/newExam', component: NewExamComponent
 	},
 	{
-		path:"newGroup", component:HomeComponent
+		path: 'newGroup', component: HomeComponent
 	},
 	{
-		path:"exam/:examId", component:InProgressExamComponent
+		path: 'exam/:examId', component: InProgressExamComponent
 	},
 	{
-		path:"examResults/:examId", component:ExamResultsComponent
+		path: 'examResults/:examId', component: ExamResultsComponent
 	},
 	{
-		path:"studentexamResults", component:StudentexamsResultsComponent
-	}
+		path: 'studentexamResults', component: StudentexamsResultsComponent
+	}, {
+		path: 'results', component: ResultsComponent
+	},
+
 
 ];
 

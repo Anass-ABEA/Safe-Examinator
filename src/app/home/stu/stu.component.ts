@@ -131,6 +131,7 @@ export class StuComponent implements OnInit {
 		})
 	}
 	load3exams(){
+		console.log(base_url+"exams/3examsSorted/"+this.id);
 		this.http.get(base_url+"exams/3examsSorted/"+this.id).subscribe(res=>{
 			// @ts-ignore
 			this.closeExams = res;

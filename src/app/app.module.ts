@@ -46,6 +46,8 @@ import { ExamResultsComponent } from './exam-results/exam-results.component';
 import { ExamResultsStudComponent } from './exam-results/exam-results-stud/exam-results-stud.component';
 import { ExamResultsProfComponent } from './exam-results/exam-results-prof/exam-results-prof.component';
 import { StudentexamsResultsComponent } from './studentexams-results/studentexams-results.component';
+import {ResultsComponent} from './results/results.component';
+import {ProfresultComponent} from './results/profresult/profresult.component';
 
 export function momentAdapterFactory() {
 	return adapterFactory(moment);
@@ -84,7 +86,9 @@ export function momentAdapterFactory() {
 		ExamResultsComponent,
 		ExamResultsStudComponent,
 		ExamResultsProfComponent,
-		StudentexamsResultsComponent
+		StudentexamsResultsComponent,
+		ResultsComponent,
+		ProfresultComponent
 	],
     imports: [
         HttpClientModule,
