@@ -221,7 +221,7 @@ export class NewExamComponent implements OnInit {
 
 	saveExam() {
 		// @ts-ignore
-		this.formValues.hashed = new Md5().appendStr(this.formValues.examName+this.id).end();
+		this.formValues.hashed = new Md5().appendStr(new Date()+this.id).end();
 		let note = 0;
 		for (let x of this.questionList){
 			note += Number(x.note);
