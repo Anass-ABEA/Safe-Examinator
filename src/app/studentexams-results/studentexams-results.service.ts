@@ -12,6 +12,7 @@ export class StudentexamsResultsService {
 	private apiUrl = environment.apiBaseUrl;
 	constructor(private http: HttpClient) { }
 	public getPassedExams(idStudent: string): Observable<ExamRes>{
+		console.log(`${this.apiUrl}/student/Scores/${idStudent}`);
 		return this.http.get<ExamRes>(`${this.apiUrl}/student/Scores/${idStudent}`);
 	}
 }

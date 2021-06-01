@@ -23,7 +23,7 @@ export class StudentexamsResultsComponent implements OnInit {
 
 	Exam: ExamRes = {
   	nomEtud: '',
-		listeExamens:[{
+		listeExamens:[/*{
   		note:0,
 			idConnectedStu:'',
 			idExam:'',
@@ -31,7 +31,7 @@ export class StudentexamsResultsComponent implements OnInit {
 			prof:'',
 			bareme:0,
 			dateexam: new Date(),
-  	}]
+  	}*/]
 	}
 	public getStudentExamResults(idStudent: string): void{
 		this.studentexamsresultservice.getPassedExams(idStudent).subscribe(
@@ -42,10 +42,7 @@ export class StudentexamsResultsComponent implements OnInit {
 					return new Date(b.dateexam)- new Date(a.dateexam);
 				});
 				this.Exam= res;
-				// console.log(res);
-				// console.log(res.listeExamens[0].dateexam);
-				// console.log(res.listeExamens[1].dateexam);
-				// console.log(res.listeExamens[0].dateexam>res.listeExamens[1].dateexam);
+
 			},
 
 			(error: HttpErrorResponse) => {

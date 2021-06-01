@@ -110,7 +110,6 @@ export class StuProfileComponent implements OnInit {
 			me.http.post(base_url + "students/connect/" + id, reader.result)
 				.subscribe(res => {
 					console.log(res, reader.result);
-					alert('Uploaded Successfully.');
 					document.getElementById("loading").style.display="none";
 					window.location.reload();
 				})

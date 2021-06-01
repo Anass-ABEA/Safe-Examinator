@@ -116,6 +116,7 @@ export class EditExamComponent implements OnInit {
 	}
 
 	addAnswer(i: number) {
+		// @ts-ignore
 		this.questionList[i].answers.answers.push({
 			body: '',
 			correct: false
@@ -124,6 +125,7 @@ export class EditExamComponent implements OnInit {
 
 
 	deleteQuestion(i: number, j: number) {
+		// @ts-ignore
 		this.questionList[i].answers.answers.splice(j, 1);
 	}
 
@@ -131,6 +133,7 @@ export class EditExamComponent implements OnInit {
 	duplicate(i: number) {
 		const c = this.questionList[i - 1];
 		this.addNewQuestion(i);
+		// @ts-ignore
 		this.questionList[i].answers.answers = c.answers.answers.map(x => this.cloneAnswers(x));
 		this.questionList[i].type = c.type;
 		this.questionList[i].body = c.body;

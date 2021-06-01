@@ -14,6 +14,7 @@ import {StudentexamsResultsComponent} from './studentexams-results/studentexams-
 
 import {ResultsComponent} from './results/results.component';
 import {EditExamComponent} from './edit-exam/edit-exam.component';
+import {NewGroupComponent} from './new-group/new-group.component';
 
 
 
@@ -43,7 +44,7 @@ const routes: Routes = [
 		path: 'exams/newExam', component: NewExamComponent
 	},
 	{
-		path: 'newGroup', component: HomeComponent
+		path: 'newGroup', component: NewGroupComponent
 	},
 	{
 		path: 'exam/:examId', component: InProgressExamComponent

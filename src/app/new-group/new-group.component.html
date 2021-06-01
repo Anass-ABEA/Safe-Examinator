@@ -1,0 +1,58 @@
+<app-header></app-header>
+
+
+<div class="container-fluid py-5">
+	<div class="row">
+
+		<div class="col-5 offset-1 py-3 ">
+			<div class="row">
+					<span>Nom du groupe</span>
+					<input class="form-control" type="text" value="{{grpName}}">
+			</div>
+		</div>
+
+
+		<div class="col-5 py-3">
+			<span>Génie</span>
+			<select class="form-control" [value]="genie" (selectionchange)="genieChanged()">
+				<option value="INF">Informatique</option>
+				<option  value="CIV">Civil</option>
+				<option value="ELEC">Electrique</option>
+				<option value="IND">Industriel</option>
+				<option value="MEC">Mecanique</option>
+				<option value="MIN">Minéral</option>
+				<option value="MIS">MIS</option>
+				<option value="PRO">Procédés</option>
+				<option value="RT">RT</option>
+			</select>
+		</div>
+
+		<div class="col-6 offset-3 mb-5">
+			<span>Promotion</span>
+			<select class="form-control" [value]="promo" (selectionchange)="genieChanged()">
+				<option *ngFor="let date of getDates()" value="{{date}}">{{date}}</option>
+			</select>
+		</div>
+
+		<div class="col-6">
+			<h2 class="text-center">Goupe A</h2>
+			<div class="form-control " *ngFor="let element of listGrpA">
+				<input type="checkbox" id="{{element.id}}">
+				<label for="{{element.id}}" style="width:80%" class="ml-3"> {{element.name}}</label>
+			</div>
+		</div>
+		<div class="col-6">
+			<h2 class="text-center">Goupe B</h2>
+			<div class="form-control" *ngFor="let e of listGrpB">
+				<input type="checkbox" id="{{e.id}}">
+				<label for="{{e.id}}" style="width:80%" class="ml-3"> {{e.name}}</label>
+			</div>
+		</div>
+
+		<div class="col-4 offset-4 mt-5">
+			<button class="w-100 btn btn-primary">
+				Enregistrer
+			</button>
+		</div>
+	</div>
+</div>
