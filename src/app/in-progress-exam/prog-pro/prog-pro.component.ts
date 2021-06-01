@@ -20,15 +20,15 @@ export class ProgProComponent implements OnInit {
 	examId= this.route.params['_value'].examId;
 
 	exam={
-		title:"Java",
+		title:"",
 		target:{
-			promo:"2020",
-			genie:"INF",
-			grps:"A",
+			promo:"",
+			genie:"",
+			grps:"",
 		},
 		dateTime:moment().lang("fr").format('LLLL'),
-		qstCount:6,
-		noteGlobal : 30
+		qstCount:0,
+		noteGlobal : 0
 	}
 	connectedStud=[
 	];

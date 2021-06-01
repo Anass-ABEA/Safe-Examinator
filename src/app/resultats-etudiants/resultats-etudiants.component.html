@@ -1,16 +1,23 @@
 <app-header></app-header>
 
-<div class="container-fluid py-5 px-5" *ngIf="selectedExam!=-1">
-	<h2 class="text-center">{{examList[selectedExam].title}} <span class="text-muted" style="font-size:1.5rem">| {{examList[selectedExam].date}}</span></h2>
+<div class="container-fluid py-5 px-5" *ngIf="selectedExam!=-1" id="tableToDownload">
+	<h2 class="text-center">{{examList[selectedExam].title}} <span class="text-muted"
+																																 style="font-size:1.5rem">| {{examList[selectedExam].date}}</span>
+	</h2>
+	<div class="float-right" [class.d-none]="export">
+		<button class="btn btn-primary" (click)="downloadResults()">Exporter les résultats</button>
+	</div>
 	<table class="table" style="table-layout:fixed">
 		<tr>
+			<th colspan="1">#</th>
 			<th colspan="1">Nom</th>
 			<th colspan="1">Prenom</th>
 			<th colspan="1">tentative de fraude</th>
 			<th colspan="1">Note</th>
-			<th></th>
+			<th [class.d-none]="export"></th>
 		</tr>
-		<tr *ngFor="let stud of studentsList">
+		<tr *ngFor="let stud of studentsList; let i = index">
+			<td>{{i+1}}</td>
 			<td>
 				{{stud.lname.toUpperCase()}}
 			</td>
@@ -24,8 +31,11 @@
 				{{stud.note}}
 			</td>
 
-			<td>
-				<button class="btn btn-primary" (click)="openCorrection(stud.id)"> <fa-icon [icon]="icons.pen"></fa-icon> Corriger réponse</button>
+			<td [class.d-none]="export">
+				<button class="btn btn-primary" (click)="openCorrection(stud.id)">
+					<fa-icon [icon]="icons.pen"></fa-icon>
+					Corriger réponse
+				</button>
 			</td>
 
 		</tr>
@@ -53,7 +63,10 @@
 					<div class="text-center py-3">
 						<strong>{{exam.nbrParticipants}} </strong> Participant(s)
 					</div>
-					<button class=" w-100 btn btn-primary" (click)="setSelectedExam(i)"><fa-icon [icon]="icons.eye"></fa-icon> Afficher Détails</button>
+					<button class=" w-100 btn btn-primary" (click)="setSelectedExam(i)">
+						<fa-icon [icon]="icons.eye"></fa-icon>
+						Afficher Détails
+					</button>
 				</div>
 			</div>
 		</div>

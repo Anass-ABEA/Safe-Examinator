@@ -6,6 +6,8 @@ import {CookieService} from 'ngx-cookie-service';
 import CheckCookies from '../CheckCookies';
 import * as moment from 'moment';
 import {ActivatedRoute} from '@angular/router';
+import jspdf from "jspdf";
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-resultats-etudiants',
@@ -16,21 +18,9 @@ export class ResultatsEtudiantsComponent implements OnInit {
 	selectedExam = -1;
 	id = new CheckCookies(this.cookie).getId();
 
+	export = false;
+
 	studentsList = [
-		{
-			fname:"fname",
-			lname:"lname",
-			tentativesDeFraude:"3",
-			note:"10",
-			id:"fnamenlname"
-		},
-		{
-			fname:"fname",
-			lname:"lname",
-			tentativesDeFraude:"3",
-			note:"10",
-			id:"fnamenlname"
-		}
 	]
 
 	icons = {
@@ -39,22 +29,7 @@ export class ResultatsEtudiantsComponent implements OnInit {
 	}
 
 	examList=[
-		{
-			title:"exam Title",
-			date: "lbare7",
-			genie :"INF",
-			promo :"2020",
-			nbrParticipants:"5",
-			id:"ba7"
-		},
-		{
-			title:"exam Title",
-			date: "lbare7",
-			genie :"INF",
-			promo :"2020",
-			nbrParticipants:"5",
-			id:"ba7"
-		}
+
 	]
 
   constructor(private http:HttpClient,private cookie:CookieService,private route :ActivatedRoute) { }
@@ -102,4 +77,25 @@ export class ResultatsEtudiantsComponent implements OnInit {
 	openCorrection(id: string) {
 		window.open("/correctExam/"+this.examList[this.selectedExam].id+"/"+id,"_self");
 	}
+
+	downloadResults(){
+		this.export = true;
+		var element = document.getElementById('tableToDownload');
+		html2canvas(element).then((canvas) => {
+			var doc = new jspdf();
+			console.log(canvas);
+			var imgData = canvas.toDataURL('image/png');
+			var imgHeight = canvas.height * 208 / canvas.width;
+			doc.addImage(imgData, 10, 10, 190, imgHeight);
+			doc.save(this.examList[this.selectedExam].title+"_"+this.examList[this.selectedExam].promo+'.pdf');
+			setTimeout(()=>{
+				this.export = false;
+			},2000);
+		});
+
+	}
+
+
+
+
 }

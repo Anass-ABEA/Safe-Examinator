@@ -13,7 +13,7 @@ import * as moment from 'moment';
 })
 export class ProComponentHeader implements OnInit {
 	screenWidth = window.innerWidth;
-	userName: Object = "--";
+	userName: Object = "";
 	time = moment().lang('fr').format('dddd Do MMMM YYYY, HH:mm:ss');
 
 	imageSrc: string = "assets/person.png";

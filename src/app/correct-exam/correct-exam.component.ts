@@ -16,8 +16,8 @@ export class CorrectExamComponent implements OnInit {
 	studentId = this.route.params['_value'].studentId;
 
 	exam = {
-		name: 'HELLO',
-		nomEtudiant: 'John DOE'
+		name: '',
+		nomEtudiant: ''
 	};
 
 	questions = [];

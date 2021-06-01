@@ -9,8 +9,6 @@
 									<th   class="bl text-center" scope="col">Professeur</th>
 									<th   class="bl text-center" scope="col">Date</th>
 		              <th   class="bl text-center" scope="col">Note</th>
-<!--		              <th   class="bl" scope="col">Note après rattrapage</th>-->
-		              <th   class="bl text-center" scope="col">Décision</th>
 		            </tr>
 		            </thead>
 		            <tbody>
@@ -19,8 +17,7 @@
 									<td class="text-center">  {{o.prof}}</td>
 									<td class="text-center">  {{o.dateexam}}</td>
 		              <td class="text-center">  {{o.note+"/"+o.bareme}} <br>{{Pourcentage(o.note,o.bareme)+"%"}}</td>
-		              <td class="text-center" id="idDecision" [class.bg-success]="Decision(o.note,o.bareme)"
-		                  [class.bg-danger]="!Decision(o.note,o.bareme)">  {{Decision(o.note,o.bareme) ? 'Validé' : 'Non Validé'}}</td>
+
 		            </tr>
 
 

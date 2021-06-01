@@ -32,17 +32,17 @@ export class ExamResultsStudComponent implements OnInit {
 	showDetails = false;
 
 	exam = {
-		title: 'JAVA',
-		date: '20/04/2021',
-		time: '10:00',
+		title: '',
+		date: '',
+		time: '',
 		length: {
 			h: 1,
 			m: 20
 		},
-		prof: 'J. DOE',
-		profEmail: 'jdoe@emi.ac.ma',
-		note: 16,
-		total: 20,
+		prof: '',
+		profEmail: '',
+		note: 0,
+		total: 0,
 		Questions: null,
 		nbrQuestions : 1,
 		canSeeRes :false
