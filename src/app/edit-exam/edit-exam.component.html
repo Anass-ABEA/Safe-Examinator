@@ -1,0 +1,147 @@
+<app-header></app-header>
+
+<div class="container-fuild mt-5">
+
+	<div class="row rowItem p-md-3" *ngIf="!firstPage && !thirdPage">
+		<button class="btn return-btn " (click)="firstPage = true">
+			<fa-icon [icon]="icons.back"></fa-icon>
+			Retour
+		</button>
+
+		<div class="col text-center">
+			<h4 *ngIf="!examSaved">Questions et réponses de l'examen</h4>
+			<h4 *ngIf="examSaved" class="text-success">Examen Enregistré avec success</h4>
+		</div>
+
+		<button class="btn btn-success save-btn float-right" (click)="thirdPage = true;">
+
+			Suivant
+			<fa-icon [icon]="icons.next"></fa-icon>
+		</button>
+	</div>
+
+	<div class="row p-md-3 mt-3" *ngIf="!firstPage && !thirdPage">
+		<div class="col-12 col-md-10 offset-1 col-lg-8 offset-lg-2">
+			<div class="row rowItem p-md-3 mb-md-5" *ngFor="let qst of questionList;let i = index;">
+				<div *animIf="true; info: { startAnim: 'flipInX', endAnim: 'fadeOutTopLeft', time: 500 }" class="col-12">
+					<div class="separator-bottom row" style="margin-top: 8px">
+						<div class="col">
+							<textarea class="form-control" placeholder="{{i+1}} - Question"
+												[(ngModel)]="qst.body"></textarea>
+						</div>
+						<div class="align-self-center">
+							<button class="btn questionType" data-toggle="modal" data-target="#questionType"
+											(click)="selectedQuestion = i">
+								<fa-icon [icon]="questionsIcons[qst.type]"></fa-icon>
+								{{questionsText[qst.type]}}
+							</button>
+						</div>
+					</div>
+				</div>
+				<div *animIf="true; info: { startAnim: 'flipInX', endAnim: 'fadeOutTopLeft', time: 500 }" class="col-12">
+					<ng-container *ngIf="qst.answers">
+						<div class="row p-md-2" *ngFor="let answer of qst.answers.answers let j = index;">
+							<div class="text-center" style="cursor: auto;width: 70px;padding: 6px 0"
+									 *ngIf="qst.type==='single' || qst.type ==='multiple'">
+							<span [class.text-success]="answer.correct"
+										[class.text-danger]="!answer.correct">{{answer.correct ? 'correct' : 'incorrect'}}</span>
+							</div>
+							<ng-container *ngIf="qst.type==='long'">
+								<div class="col">
+									<textarea class="form-control" disabled placeholder="réponse longue de l'étudiant"></textarea>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="qst.type==='short'">
+								<div class="col">
+									<input type="text" class="form-control" disabled placeholder="réponse courte de l'étudiant"/>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="qst.type==='file'">
+								<div class="col">
+									<input type="file" class="form-control" disabled/>
+								</div>
+							</ng-container>
+
+							<div class="col" *ngIf="qst.type!=='long' && qst.type!=='short' &&  qst.type!=='file'">
+								<input class="form-control" type="text" [(ngModel)]="questionList[i].answers.answers[j].body"
+											 placeholder="réponse" [class.correct-answer]="answer.correct">
+							</div>
+							<ng-container *ngIf="checkValidity(i)">
+								<button class="btn" (click)="reverseCorrectness(i,j)" [class.active-correct]="answer.correct"
+												data-toggle="tooltip" data-placement="bottom" title="Marquer la réponse comme correcte">
+									<fa-icon [icon]="icons.check" style="color:green;"></fa-icon>
+								</button>
+								<button class="btn" (click)="deleteQuestion(i,j)"
+												data-toggle="tooltip" data-placement="bottom" title="Supprimer la réponse">
+									<fa-icon [icon]="icons.close" style="color:red;"></fa-icon>
+								</button>
+							</ng-container>
+						</div>
+					</ng-container>
+					<div class="row p-md-2" *ngIf="checkValidity(i)">
+						<div class="col-12 add-answer">
+							<button class="btn " (click)="addAnswer(i)">
+								<fa-icon [icon]="icons.add"></fa-icon>
+								Ajouter une autre réponse
+							</button>
+						</div>
+					</div>
+					<div class="buttons-hover">
+						<label class="text-muted">Note</label>
+						<input class="form-control" min="0" type="number" style="width: 70px" data-toggle="tooltip"
+									 data-placement="right" title="Note de la question" [(ngModel)]="qst.note">
+						<button class="btn" (click)="addNewQuestion(i+1)" data-toggle="tooltip" data-placement="right"
+										title="Ajouter une nouvelle question en-dessous">
+							<fa-icon [icon]="icons.add" style="color: green"></fa-icon>
+						</button>
+						<button class="btn" (click)="duplicate(i+1)" data-toggle="tooltip" data-placement="right"
+										title="Dupliquer la question">
+							<fa-icon [icon]="icons.duplicate" style="color:#1b3868"></fa-icon>
+						</button>
+						<button class="btn" *ngIf="i!=0" (click)="delete(i)" data-toggle="tooltip" data-placement="right"
+										title="Supprimer de la question">
+							<fa-icon [icon]="icons.trash" style="color: red"></fa-icon>
+						</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="row rowItem p-md-3" *ngIf="thirdPage">
+		<button class="btn return-btn " (click)="thirdPage=false">
+			<fa-icon [icon]="icons.back"></fa-icon>
+			Retour
+		</button>
+
+		<div class="col text-center">
+			<h4>Paramètres finaux de l'examen</h4>
+		</div>
+
+		<button class="btn btn-success save-btn float-right" (click)="saveExam()">
+			<fa-icon [icon]="icons.save"></fa-icon>
+			Enregistrer
+		</button>
+
+		<div class="col-12 mt-3">
+			<div class="row">
+				<label class="col">
+					<strong>Nombre de questions à afficher</strong>
+					<span class="text-muted"> Nombre de questions: {{questionList.length}}</span>
+
+					<input type="number" class="form-control" min="1" max="{{questionList.length}}"
+								 [(ngModel)]="display" placeholder="Nombre de questions à afficher">
+				</label>
+				<div class="min-max align-self-end">
+					<button class="btn" (click)="setDisplay('1')">min</button>
+					<button class="btn" (click)="setDisplay(''+questionList.length)">max</button>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>

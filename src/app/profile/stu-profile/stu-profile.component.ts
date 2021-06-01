@@ -6,8 +6,7 @@ import { base_url } from '../../../environments/environment';
 import CheckCookies from '../../CheckCookies';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import has = Reflect.has;
-import {log} from 'util';
+import {faHourglass} from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -17,6 +16,10 @@ import {log} from 'util';
 	styleUrls: ['./stu-profile.component.css']
 })
 export class StuProfileComponent implements OnInit {
+
+	icons={
+		hourglass : faHourglass
+	}
 	progress  = 0;
 	file = null;
 	id = "";
@@ -103,10 +106,12 @@ export class StuProfileComponent implements OnInit {
 
 			console.log(reader.result);
 			const id = new CheckCookies(me.cookie).getId();
+			document.getElementById("loading").style.display="block";
 			me.http.post(base_url + "students/connect/" + id, reader.result)
 				.subscribe(res => {
 					console.log(res, reader.result);
 					alert('Uploaded Successfully.');
+					document.getElementById("loading").style.display="none";
 					window.location.reload();
 				})
 		};

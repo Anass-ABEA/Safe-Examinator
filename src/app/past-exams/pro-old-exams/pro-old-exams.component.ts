@@ -111,7 +111,7 @@ export class ProOldExamsComponent implements OnInit {
 	}
 
 	editExam(id: string) {
-
+		window.open("/updateExam/"+id,"_self");
 	}
 
 

@@ -92,7 +92,7 @@ export class ProgProComponent implements OnInit {
 	}
 
 	loadExamDetails() {
-		this.http.get(base_url+"exam/g/"+this.examId).subscribe(res=>{
+		this.http.get(base_url+"exam/getCoStudents/"+this.examId).subscribe(res=>{
 			console.log(res);
 			// @ts-ignore
 			this.connectedStud = res;

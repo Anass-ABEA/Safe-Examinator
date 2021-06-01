@@ -13,6 +13,7 @@ import {ExamResultsComponent} from './exam-results/exam-results.component';
 import {StudentexamsResultsComponent} from './studentexams-results/studentexams-results.component';
 
 import {ResultsComponent} from './results/results.component';
+import {EditExamComponent} from './edit-exam/edit-exam.component';
 
 
 
@@ -54,7 +55,9 @@ const routes: Routes = [
 		path: 'studentexamResults', component: StudentexamsResultsComponent
 	}, {
 		path: 'results', component: ResultsComponent
-	},
+	},{
+		path: 'updateExam/:examId', component: EditExamComponent
+	}
 
 
 ];

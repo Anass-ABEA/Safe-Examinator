@@ -76,13 +76,12 @@
 									</div>
 
 									<div class="col-12 text-center incomming-exams">
-										<button class="btn " (click)="changeVisibility(card.id,card.visible,i)"> <fa-icon [icon]="!card.visible? icons.eye:icons.noEye"></fa-icon> rendre {{card.visible? "Invisible":"Visible"}}</button>
-										<button class="btn " (click)="startExam(card.id,card.started,i)"> <fa-icon [icon]="!card.started? icons.check:icons.close"></fa-icon> {{card.started? "Arreter":"Démarer"}} l'examen</button>
-										<button class="btn " (click)="editExam(card.id)"> <fa-icon [icon]="icons.pen"></fa-icon> Modifier l'examen</button>
-										<button class="btn animate" (click)="openExam(card.id)">Afficher l'examen</button>
+										<button class="btn w-40" (click)="changeVisibility(card.id,card.visible,i)"> <fa-icon [icon]="!card.visible? icons.eye:icons.noEye"></fa-icon> rendre {{card.visible? "Invisible":"Visible"}}</button>
+										<button class="btn w-40"  (click)="startExam(card.id,card.started,i)"> <fa-icon [icon]="!card.started? icons.check:icons.close"></fa-icon> {{card.started? "Arreter":"Démarer"}} l'examen</button>
+										<button class="btn w-40" (click)="editExam(card.id)"> <fa-icon [icon]="icons.pen"></fa-icon> Modifier l'examen</button>
+										<button class="btn animate w-40" (click)="openExam(card.id)">Afficher l'examen</button>
 									</div>
 								</div>
-
 							</div>
 
 						</ng-container>

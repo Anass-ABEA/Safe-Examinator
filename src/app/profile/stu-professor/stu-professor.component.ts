@@ -5,6 +5,7 @@ import CheckCookies from '../../CheckCookies';
 import {base_url} from '../../../environments/environment';
 import {Md5} from 'ts-md5';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {faHourglass, faHourglassStart} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-pro-profile',
@@ -12,7 +13,9 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./stu-professor.component.css']
 })
 export class StuProfessorComponent implements OnInit {
-
+	icons={
+		hourglass : faHourglassStart
+	}
 	data = {
 		fname: "N/A",
 		lname: 'N/A',
@@ -35,8 +38,7 @@ export class StuProfessorComponent implements OnInit {
 	password = "5f4dcc3b5aa765d61d8327deb882cf99";
 	val1 = false;
 	confirmChange = false;
-
-
+	uploadingImage = false;
 
   ngOnInit(): void {
 		this.id = new CheckCookies(this.cookie).getId();
@@ -81,14 +83,18 @@ export class StuProfessorComponent implements OnInit {
 		reader.readAsDataURL(file);
 
 
+
+
 		reader.onload = function () {
 
 			console.log(reader.result);
 			const id = new CheckCookies(me.cookie).getId();
+			document.getElementById("loading").style.display="block";
 			me.http.post(base_url + "teachers/updateImage/" + id, reader.result)
 				.subscribe(res => {
 					console.log(res, reader.result);
-					alert('Uploaded Successfully.');
+					document.getElementById("loading").style.display="none";
+					window.location.reload();
 				})
 		};
 		reader.onerror = function (error) {
@@ -96,6 +102,7 @@ export class StuProfessorComponent implements OnInit {
 
 		};
 	}
+
 
 	onSubmit() {
 		this.getBase64();

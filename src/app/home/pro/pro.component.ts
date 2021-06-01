@@ -231,7 +231,7 @@ export class ProComponent implements OnInit {
 	}
 
 	openExam(id: any) {
-		window.open("/exams/past_exams/"+id,"_self");
+		window.open("/updateExam/"+id,"_self");
 	}
 
 	StartExam(id: any, i: number) {
