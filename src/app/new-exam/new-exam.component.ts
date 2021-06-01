@@ -24,10 +24,14 @@ import {base_url} from '../../environments/environment';
 	styleUrls: ['./new-exam.component.css']
 })
 export class NewExamComponent implements OnInit {
+
+
 	id = "";
 	showScrollTop = false;
 	firstPage = true;
 	thirdPage = false;
+
+
 
 	selectedQuestion = 0;
 
@@ -94,8 +98,7 @@ export class NewExamComponent implements OnInit {
 	// elements received from database
 	groups = [
 		'A',
-		'B',
-		'rat_SE'
+		'B'
 	];
 
 
@@ -158,6 +161,10 @@ export class NewExamComponent implements OnInit {
 		})
 		this.promotions = this.getPromotions();
 
+		this.http.get(base_url+"getGroupfromProf/"+this.id).subscribe(res=>{
+			// @ts-ignore
+			this.groups = this.groups.concat(res);
+		})
 	}
 	getPromotions() {
 		var d = new Date().getFullYear();

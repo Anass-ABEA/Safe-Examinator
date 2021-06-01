@@ -115,4 +115,7 @@ export class ProOldExamsComponent implements OnInit {
 	}
 
 
+	showResults(id: any) {
+		window.open("/results/"+id,"_self");
+	}
 }

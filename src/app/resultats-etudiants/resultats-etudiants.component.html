@@ -1,0 +1,61 @@
+<app-header></app-header>
+
+<div class="container-fluid py-5 px-5" *ngIf="selectedExam!=-1">
+	<h2 class="text-center">{{examList[selectedExam].title}} <span class="text-muted" style="font-size:1.5rem">| {{examList[selectedExam].date}}</span></h2>
+	<table class="table" style="table-layout:fixed">
+		<tr>
+			<th colspan="1">Nom</th>
+			<th colspan="1">Prenom</th>
+			<th colspan="1">tentative de fraude</th>
+			<th colspan="1">Note</th>
+			<th></th>
+		</tr>
+		<tr *ngFor="let stud of studentsList">
+			<td>
+				{{stud.lname.toUpperCase()}}
+			</td>
+			<td>
+				{{stud.fname}}
+			</td>
+			<td>
+				{{stud.tentativesDeFraude}}
+			</td>
+			<td>
+				{{stud.note}}
+			</td>
+
+			<td>
+				<button class="btn btn-primary" (click)="openCorrection(stud.id)"> <fa-icon [icon]="icons.pen"></fa-icon> Corriger réponse</button>
+			</td>
+
+		</tr>
+	</table>
+</div>
+
+<div class="container-fluid py-5">
+	<div class="row">
+		<div class="col p-3" *ngFor="let exam of examList;let i = index">
+			<div class="card m-auto " style="width:400px">
+				<div class="card-body">
+					<h5 class="card-title text-center">{{exam.title}}</h5>
+					<div class="d-flex">
+						<strong style="flex:1">Génie</strong>
+						<span style="flex:1">{{exam.genie}}</span>
+					</div>
+					<div class="d-flex">
+						<strong style="flex:1">Promotion</strong>
+						<span style="flex:1">{{exam.promo}}</span>
+					</div>
+					<div class="d-flex">
+						<strong style="flex:1">Date d'examen</strong>
+						<span style="flex:1">{{exam.date}}</span>
+					</div>
+					<div class="text-center py-3">
+						<strong>{{exam.nbrParticipants}} </strong> Participant(s)
+					</div>
+					<button class=" w-100 btn btn-primary" (click)="setSelectedExam(i)"><fa-icon [icon]="icons.eye"></fa-icon> Afficher Détails</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

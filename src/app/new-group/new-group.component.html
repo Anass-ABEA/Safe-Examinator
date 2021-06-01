@@ -4,17 +4,21 @@
 <div class="container-fluid py-5">
 	<div class="row">
 
+		<div class="col-12 text-success my-4 text-center" *ngIf="grpSaved">
+			<h2>Groupe "{{grpName}}" ajoutée avec success</h2>
+		</div>
+
 		<div class="col-5 offset-1 py-3 ">
 			<div class="row">
 					<span>Nom du groupe</span>
-					<input class="form-control" type="text" value="{{grpName}}">
+					<input class="form-control" type="text" [(ngModel)]="grpName">
 			</div>
 		</div>
 
 
 		<div class="col-5 py-3">
 			<span>Génie</span>
-			<select class="form-control" [value]="genie" (selectionchange)="genieChanged()">
+			<select class="form-control" [(ngModel)]="genie" (selectionchange)="genieChanged()" (change)="genieChanged()">
 				<option value="INF">Informatique</option>
 				<option  value="CIV">Civil</option>
 				<option value="ELEC">Electrique</option>
@@ -29,28 +33,28 @@
 
 		<div class="col-6 offset-3 mb-5">
 			<span>Promotion</span>
-			<select class="form-control" [value]="promo" (selectionchange)="genieChanged()">
-				<option *ngFor="let date of getDates()" value="{{date}}">{{date}}</option>
+			<select class="form-control" [(ngModel)]="promo" (selectionchange)="genieChanged()" (change)="genieChanged()">
+				<option *ngFor="let date of getDates()" value="{{date-1}}">{{date-1}}</option>
 			</select>
 		</div>
 
 		<div class="col-6">
 			<h2 class="text-center">Goupe A</h2>
-			<div class="form-control " *ngFor="let element of listGrpA">
-				<input type="checkbox" id="{{element.id}}">
+			<div class="form-control " *ngFor="let element of listGrpA;let i = index">
+				<input type="checkbox" id="{{element.id}}" (change)="flip(true,i)">
 				<label for="{{element.id}}" style="width:80%" class="ml-3"> {{element.name}}</label>
 			</div>
 		</div>
 		<div class="col-6">
 			<h2 class="text-center">Goupe B</h2>
-			<div class="form-control" *ngFor="let e of listGrpB">
-				<input type="checkbox" id="{{e.id}}">
+			<div class="form-control" *ngFor="let e of listGrpB;let i = index">
+				<input type="checkbox" id="{{e.id}}" (change)="flip(false,i)">
 				<label for="{{e.id}}" style="width:80%" class="ml-3"> {{e.name}}</label>
 			</div>
 		</div>
 
 		<div class="col-4 offset-4 mt-5">
-			<button class="w-100 btn btn-primary">
+			<button class="w-100 btn btn-primary" (click)="savGroup()" [disabled]="grpName.length==0">
 				Enregistrer
 			</button>
 		</div>

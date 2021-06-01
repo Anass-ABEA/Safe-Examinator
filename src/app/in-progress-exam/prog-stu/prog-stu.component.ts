@@ -138,7 +138,7 @@ export class ProgStuComponent implements OnInit {
 
 			// @ts-ignore
 			this.questions = res;
-			console.log("nbrqst",this.exam.nbrQuestions);
+			console.log("questions : ",this.questions);
 
 			console.log(res);
 			this.setupChoices(res);
@@ -424,6 +424,7 @@ export class ProgStuComponent implements OnInit {
 		};
 		console.log(this.choices[this.i].index,"data to be sent", data);
 		// send the curent data to the database
+		console.log("DATA TO SEND" , data);
 		this.http.post(base_url + 'exams/updateresult/' + this.examId, data).subscribe(res => {
 			console.log(res);
 		});

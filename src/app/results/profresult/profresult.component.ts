@@ -44,29 +44,34 @@ export class ProfresultComponent implements OnInit {
 		return this.http.get<any>(base_url + 'examsss/' + id);
 	}
 
-	AffichageNote(examdata: any) { //quand on click sur note, le systeme fait appel a cette fonction pour afficher le tableau des notes
+	AffichageNote(examdata : any){ //quand on click sur note, le systeme fait appel a cette fonction pour afficher le tableau des notes
 		this.NotesExamArray = [];
-		var note_tot = 0;
-		var note_tot_exam = 0;
-		//console.log(examdata.exam.connectedStudents[0].id);
 		var i = 0;
-		while (i < examdata.exam.connectedStudents.length) {
+		while(i<examdata.exam.connectedStudents.length){
+			var note_tot = 0;
+			var note_tot_exam = 0;
 			examdata.exam.connectedStudents[i].reponses.forEach(element => {
-				note_tot += element.total;
-				note_tot_exam += element.note;
+				note_tot+= element.total;
+				note_tot_exam+= element.note;
 			});
-			var obj: NotesExam = {
-				nom: examdata.exam.connectedStudents[i].id,
-				note_total: note_tot
-			};
-			//console.log(obj);
-			this.NotesExamArray.push(obj);
+			this.getStudent(examdata.exam.connectedStudents[i].id)
+				.subscribe(studentHolder=>{
+					var obj : NotesExam={
+						nom: studentHolder.student.lname.toUpperCase() +" " +studentHolder.student.fname,
+						note_total : note_tot_exam
+					};
+					this.NotesExamArray.push(obj);
+				});
 			i++;
 		}
 		this.NoteTotalExam = note_tot_exam;
-		//console.log(this.NotesExamArray);
-		this.showMarks = true;
+		console.log(this.NotesExamArray);
 		this.showNotesMeth(this.NotesExamArray);
+		this.showMarks = true;
+	}
+
+	getStudent(id:any): Observable<any>{
+		return this.http.get<any>(base_url +"students/"+id);
 	}
 
 	downladPdf() { //transformer le tableau en un doc pdf
@@ -83,14 +88,15 @@ export class ProfresultComponent implements OnInit {
 
 	showNotesMeth(notes: any) { //trier la liste des note
 		this.showMarks = true;
+		console.log("notes",notes);
 		this.NotesExamArray = notes.sort(function(a, b) {
-			var nameA = a.nom.toUpperCase();
-			var nameB = b.nom.toUpperCase();
+			const nameA = a.nom.toUpperCase();
+			const nameB = b.nom.toUpperCase();
 			if (nameA < nameB) {
-				return -1;
+				return 1;
 			}
 			if (nameA > nameB) {
-				return 1;
+				return -1;
 			}
 			// names must be equal
 			return 0;

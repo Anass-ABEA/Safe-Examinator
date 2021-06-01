@@ -15,6 +15,8 @@ import {StudentexamsResultsComponent} from './studentexams-results/studentexams-
 import {ResultsComponent} from './results/results.component';
 import {EditExamComponent} from './edit-exam/edit-exam.component';
 import {NewGroupComponent} from './new-group/new-group.component';
+import {ResultatsEtudiantsComponent} from './resultats-etudiants/resultats-etudiants.component';
+import {CorrectExamComponent} from './correct-exam/correct-exam.component';
 
 
 
@@ -54,10 +56,18 @@ const routes: Routes = [
 	},
 	{
 		path: 'studentexamResults', component: StudentexamsResultsComponent
-	}, {
-		path: 'results', component: ResultsComponent
-	},{
+	},
+	{
+		path: 'results', component: ResultatsEtudiantsComponent
+	},
+	{
+		path: 'results/:examId', component: ResultatsEtudiantsComponent
+	},
+	{
 		path: 'updateExam/:examId', component: EditExamComponent
+	},
+	{
+		path: 'correctExam/:examId/:studentId', component: CorrectExamComponent
 	}
 
 

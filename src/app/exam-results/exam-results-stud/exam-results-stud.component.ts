@@ -11,8 +11,10 @@ import CheckCookies from '../../CheckCookies';
 	styleUrls: ['./exam-results-stud.component.css']
 })
 export class ExamResultsStudComponent implements OnInit {
+
 	id = new CheckCookies(this.cookie).getId();
 	id_exam = this.route.params['_value'].examId;
+
 	types = {
 		SHORT: 0,
 		LONG: 1,
@@ -47,10 +49,11 @@ export class ExamResultsStudComponent implements OnInit {
 	};
 
 	ngOnInit(): void {
-		this.http.get(base_url+"students/getExamDetails/"+this.id_exam).subscribe(res=>{
+		console.log("details",this.id,this.id_exam);
+		this.http.get(base_url+"students/getExamDetails/"+this.id_exam+"/"+this.id).subscribe(res=>{
 			// @ts-ignore
 			this.exam = res;
-
+			console.log("EXAM DETAILS ",res);
 			this.http.get(base_url + 'exams/responses/' + this.id_exam+"/"+this.id).subscribe((res: Array<any>) => {
 				this.choices = res;
 				console.log("answers",this.choices);
@@ -63,8 +66,6 @@ export class ExamResultsStudComponent implements OnInit {
 
 
 			});
-
-
 
 		})
 
